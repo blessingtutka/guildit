@@ -1,20 +1,22 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { createServer, getServerPort } from '@devvit/web/server';
-import { api } from './routes/api';
-import { forms } from './routes/forms';
-import { menu } from './routes/menu';
-import { triggers } from './routes/triggers';
+import { internal } from './routes/internal';
+import { player } from './routes/player.route';
+import { guild } from './routes/guild.route';
+import { action } from './routes/action.route';
+import { leaderboard } from './routes/leaderboard.route';
 
 const app = new Hono();
-const internal = new Hono();
 
-internal.route('/menu', menu);
-internal.route('/form', forms);
-internal.route('/triggers', triggers);
-
-app.route('/api', api);
+// Devvit-platform routes (menu actions, post creation, etc.)
 app.route('/internal', internal);
+
+//  Webview REST API
+app.route('/api/player', player);
+app.route('/api/guild', guild);
+app.route('/api/action', action);
+app.route('/api/leaderboard', leaderboard);
 
 serve({
   fetch: app.fetch,
