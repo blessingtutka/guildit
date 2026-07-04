@@ -1,63 +1,137 @@
+/* eslint-disable react-refresh/only-export-components */
 import './index.css';
 
-import { navigateTo } from '@devvit/web/client';
-import { context, requestExpandedMode } from '@devvit/web/client';
-import { StrictMode } from 'react';
+import { requestExpandedMode, context } from '@devvit/web/client';
+import React, { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import type { PlayerClass } from '../shared/api';
+import { CLASS_META } from '../shared/web';
+import { Landmark, Swords } from 'lucide-react';
+import { ClassIcon } from './components/common/ClassIcon';
 
-export const Splash = () => {
+type Stats = {
+  totalPlayers: number;
+  guildCount: number;
+  byClass: Record<PlayerClass, number>;
+};
+
+const CLASS_ORDER: PlayerClass[] = ['RANGER', 'MENDER', 'WARDER', 'WEAVER'];
+
+const Splash = () => {
+  const [stats, setStats] = useState<Stats | null>(null);
+
+  useEffect(() => {
+    fetch('/api/leaderboard/stats')
+      .then((r) => r.json() as Promise<Stats>)
+      .then(setStats)
+      .catch(() => {
+        // silently fail — stats are cosmetic
+      });
+  }, []);
+
   return (
-    <div className="flex relative flex-col justify-center items-center min-h-screen gap-4 bg-white dark:bg-gray-900">
-      <img
-        className="object-contain w-1/2 max-w-[250px] mx-auto"
-        src="/snoo.png"
-        alt="Snoo"
+    <div className="flex relative flex-col justify-center items-center min-h-screen gap-5 bg-background overflow-hidden px-5">
+      {/* Background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at 50% 35%, rgba(139,94,60,0.18), transparent 65%)',
+        }}
       />
-      <div className="flex flex-col items-center gap-2">
-        <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
-          Hey {context.username ?? 'user'} 👋
+
+      {/* Logo */}
+      <div className="flex flex-col items-center gap-1.5 relative">
+        <img
+          src="/logo.png"
+          alt="Guildit Logo"
+          className="h-16 animate-bounce-subtle"
+        />
+        <h1 className="font-display text-4xl font-black tracking-[0.2em] text-primary">
+          GUILDIT
         </h1>
-        <p className="text-base text-center text-gray-600 dark:text-gray-300">
-          Edit{' '}
-          <span className="bg-[#e5ebee] dark:bg-gray-700 px-1 py-0.5 rounded">
-            src/client/splash.tsx
-          </span>{' '}
-          to get started.
+        <p className="text-sm text-muted-foreground italic text-center">
+          Choose your class. Forge your guild. Leave your mark.
         </p>
       </div>
-      <div className="flex items-center justify-center mt-5">
+
+      {/* Stats bar */}
+      <div className="relative w-full max-w-sm bg-card border border-border rounded-2xl px-4 py-3 flex justify-around gap-2">
+        <StatPill
+          label="Adventurers"
+          value={stats?.totalPlayers ?? '—'}
+          icon={<Swords className="size-5 text-foreground" />}
+        />
+        <div className="w-px bg-border self-stretch" />
+        <StatPill
+          label="Guilds"
+          value={stats?.guildCount ?? '—'}
+          icon={<Landmark className="size-5 text-foreground" />}
+        />
+      </div>
+
+      {/* Per-class counts */}
+      <div className="relative w-full max-w-sm grid grid-cols-4 gap-2">
+        {CLASS_ORDER.map((cls) => {
+          const meta = CLASS_META[cls];
+          const count = stats?.byClass[cls] ?? null;
+          return (
+            <div
+              key={cls}
+              className="flex flex-col items-center gap-1.5 bg-card border border-border rounded-xl py-2.5 px-1"
+              style={{ borderColor: `${meta.color}35` }}
+            >
+              <ClassIcon classMeta={meta} />
+
+              <span
+                className="text-xs font-bold leading-none"
+                style={{ color: meta.color }}
+              >
+                {meta.name}
+              </span>
+              <span className="text-xs text-muted-foreground font-semibold">
+                {count ?? '—'}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Welcome + CTA */}
+      <div className="flex flex-col items-center gap-3 relative w-full max-w-sm">
+        <p className="text-sm text-muted-foreground text-center">
+          Ready,{' '}
+          <span className="font-semibold text-foreground">
+            {context.username ?? 'adventurer'}
+          </span>
+          ? Your class awaits.
+        </p>
         <button
-          className="flex items-center justify-center bg-[#d93900] dark:bg-orange-600 text-white w-auto h-10 rounded-full cursor-pointer transition-colors px-4 hover:bg-[#c23300] dark:hover:bg-orange-700"
+          className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold py-3.5 rounded-full cursor-pointer transition-all hover:scale-[1.03] hover:shadow-lg active:scale-[0.97] text-base"
           onClick={(e) => requestExpandedMode(e.nativeEvent, 'game')}
         >
-          Tap to Start
+          <Swords className="size-5" /> Pick Your Class
         </button>
       </div>
-      <footer className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 text-[0.8em] text-gray-600 dark:text-gray-400">
-        <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
-          onClick={() => navigateTo('https://developers.reddit.com/docs')}
-        >
-          Docs
-        </button>
-        <span className="text-gray-300 dark:text-gray-600">|</span>
-        <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
-          onClick={() => navigateTo('https://www.reddit.com/r/Devvit')}
-        >
-          r/Devvit
-        </button>
-        <span className="text-gray-300 dark:text-gray-600">|</span>
-        <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
-          onClick={() => navigateTo('https://discord.com/invite/R7yu2wh9Qz')}
-        >
-          Discord
-        </button>
-      </footer>
     </div>
   );
 };
+
+function StatPill({
+  label,
+  value,
+  icon,
+}: Readonly<{ label: string; value: number | string; icon: React.ReactNode }>) {
+  return (
+    <div className="flex flex-col items-center gap-0.5">
+      {icon}
+      <span className="text-base font-black text-foreground leading-none tabular-nums">
+        {typeof value === 'number' ? value.toLocaleString() : value}
+      </span>
+      <span className="text-xs text-muted-foreground">{label}</span>
+    </div>
+  );
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
