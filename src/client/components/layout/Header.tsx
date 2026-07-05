@@ -1,11 +1,15 @@
 import type { Player, PlayerClass } from '../../../shared/api';
-import { CLASS_META } from '../../../shared/web';
+import { CLASS_META, AppNotification } from '../../../shared/web';
 import { PlayerAvatar } from '../common/PlayerAvatar';
+import { NotificationBell } from './NotificationBell';
 
 type HeaderProps = Readonly<{
   player?: Player | null;
   onBack?: () => void;
   title?: string;
+  notifications?: AppNotification[];
+  onSelectNotification?: (notification: AppNotification) => void;
+  onViewAllNotifications?: () => void;
 }>;
 
 const CLASS_COLOR: Record<PlayerClass, string> = {
@@ -15,12 +19,20 @@ const CLASS_COLOR: Record<PlayerClass, string> = {
   WEAVER: 'text-weaver',
 };
 
-export function Header({ player, onBack, title }: HeaderProps) {
+export function Header({
+  player,
+  onBack,
+  title,
+  notifications,
+  onSelectNotification,
+  onViewAllNotifications,
+}: HeaderProps) {
   const meta = player?.class ? CLASS_META[player.class] : null;
+  const showBell =
+    !!notifications && !!onSelectNotification && !!onViewAllNotifications;
 
   return (
     <header className="flex items-center gap-3 px-3 py-2.5 border-b border-border bg-card shrink-0">
-      {/* Back button or logo */}
       {onBack ? (
         <button
           type="button"
@@ -47,20 +59,24 @@ export function Header({ player, onBack, title }: HeaderProps) {
         </div>
       )}
 
-      {/* Page title (when using back button) */}
       {title && (
         <span className="font-display text-sm font-bold tracking-wide text-foreground truncate flex-1">
           {title}
         </span>
       )}
 
-      {/* Spacer when no title */}
       {!title && <div className="flex-1 min-w-0" />}
 
-      {/* Player badge */}
+      {showBell && (
+        <NotificationBell
+          notifications={notifications!}
+          onSelect={onSelectNotification!}
+          onViewAll={onViewAllNotifications!}
+        />
+      )}
+
       {player && meta && (
         <div className="flex items-center gap-2 shrink-0">
-          {/* Points + level pill */}
           <div className="hidden xs:flex flex-col items-end leading-none">
             <span className={`text-xs font-bold ${CLASS_COLOR[player.class!]}`}>
               {meta.name} · Lv.{player.level}
@@ -69,7 +85,6 @@ export function Header({ player, onBack, title }: HeaderProps) {
               {player.points.toLocaleString()} pts
             </span>
           </div>
-          {/* Mobile: just level */}
           <span
             className="xs:hidden text-xs font-bold px-1.5 py-0.5 rounded-full"
             style={{
@@ -84,7 +99,6 @@ export function Header({ player, onBack, title }: HeaderProps) {
         </div>
       )}
 
-      {/* Pre-class: just avatar/initials */}
       {player && !player.class && <PlayerAvatar player={player} size="sm" />}
     </header>
   );
