@@ -1,38 +1,48 @@
 import { ClassChip } from './ClassChip';
 import { CLASS_META } from '../../../shared/web';
-import type { PlayerClass } from '../../../shared/api';
+import type { PlayerClass, Player } from '../../../shared/api';
 import { DUEL_ADVANTAGE_MULTIPLIER } from '../../../shared/api';
-import { ChevronLeft, TriangleAlert, Zap } from 'lucide-react';
+import {
+  ChevronLeft,
+  TriangleAlert,
+  Zap,
+  Swords,
+  UserPlus,
+} from 'lucide-react';
+import { classColor } from '@/lib/class-colors';
+import { OpponentEntry } from '@/hooks/useDuel';
 
 type DuelSetupViewProps = Readonly<{
-  playerClass: PlayerClass;
-  playerColor: string;
-  opponentClass: PlayerClass;
-  opponentColor: string;
+  player: Player;
+  opponent: OpponentEntry | null;
   hasAdvantage: boolean;
   opponentHasAdvantage: boolean;
   onStart: () => void;
-  onNewOpponent: () => void;
+  onInviteOpponent: () => void;
   onBack: () => void;
 }>;
 
 export function DuelSetupView({
-  playerClass,
-  playerColor,
-  opponentClass,
-  opponentColor,
+  player,
+  opponent,
   hasAdvantage,
   opponentHasAdvantage,
   onStart,
-  onNewOpponent,
+  onInviteOpponent,
   onBack,
 }: DuelSetupViewProps) {
+  const playerClass = player.class as PlayerClass;
+  const playerColor = classColor(player.class as PlayerClass);
+  const opponentClass = opponent?.class;
+  const opponentColor = classColor(opponentClass);
+
   const playerMeta = CLASS_META[playerClass];
-  const opponentMeta = CLASS_META[opponentClass];
+  const opponentMeta = opponentClass ? CLASS_META[opponentClass] : null;
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center gap-6 px-6 py-8 text-center">
-      <div className="text-5xl animate-bounce-subtle">⚔️</div>
+      <Swords className="size-12 text-primary" strokeWidth={1.5} />
+
       <div>
         <h1 className="font-display text-2xl font-bold tracking-wider text-foreground mb-2">
           Class Duel
@@ -47,17 +57,21 @@ export function DuelSetupView({
         </p>
       </div>
 
-      {/* Matchup preview */}
       <div className="flex items-center gap-4 w-full max-w-sm">
         <ClassChip cls={playerClass} label="You" color={playerColor} />
+
         <span className="font-display text-2xl font-bold text-muted-foreground">
           VS
         </span>
-        <ClassChip cls={opponentClass} label="Rival" color={opponentColor} />
+
+        <ClassChip
+          cls={opponentClass}
+          label={opponent?.username ?? 'To start a duel'}
+          color={opponentColor}
+        />
       </div>
 
-      {/* Advantage indicator */}
-      {(hasAdvantage || opponentHasAdvantage) && (
+      {opponent && opponentMeta && (hasAdvantage || opponentHasAdvantage) && (
         <div
           className="text-xs px-3 py-1.5 rounded-full border font-semibold flex items-center gap-1.5"
           style={
@@ -88,20 +102,30 @@ export function DuelSetupView({
       <div className="flex flex-col w-full max-w-sm gap-3">
         <button
           onClick={onStart}
-          className="w-full py-3.5 rounded-xl font-bold text-white text-lg transition-all hover:scale-105 hover:shadow-lg active:scale-95"
-          style={{ backgroundColor: playerColor }}
+          disabled={!opponent}
+          className={`flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-white text-lg transition-all ${
+            opponent
+              ? 'hover:scale-105 hover:shadow-lg active:scale-95'
+              : 'opacity-50 cursor-not-allowed'
+          }`}
+          style={{ backgroundColor: opponent ? playerColor : '#64748b' }}
         >
-          ⚔️ Start Duel
+          <Swords className="size-5" />
+          {opponent ? 'Start Duel' : 'Waiting for opponent...'}
         </button>
         <button
-          onClick={onNewOpponent}
-          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          onClick={onInviteOpponent}
+          className="flex items-center justify-center gap-1.5 text-sm rounded-xl text-muted-foreground hover:text-foreground py-2.5 border border-muted-foreground
+          hover:border-foreground transition-colors"
+          disabled={!!opponent}
         >
-          🎲 Invite Opponent
+          <UserPlus className="size-3.5" />
+          {opponent ? 'Opponent invited' : 'Invite Opponent'}
         </button>
         <button
           onClick={onBack}
-          className="text-sm text-muted-foreground hover:text-foreground flex items-center justify-center gap-1 transition-colors"
+          className="text-sm text-muted-foreground rounded-xl hover:text-foreground flex items-center justify-center gap-1 py-2.5 border border-muted-foreground
+          hover:border-foreground transition-colors"
         >
           <ChevronLeft className="size-3.5" /> Back
         </button>
