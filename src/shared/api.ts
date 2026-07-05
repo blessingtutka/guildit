@@ -206,17 +206,33 @@ export interface ReclassPreview {
 // MINI-GAMES
 // ===============================================
 
+// Duel
+export const INVITE_EXPIRY_MS = 86400000; // 24h
+
 export type MiniGameType = 'SOLO_TRIAL' | 'DUEL' | 'GUILD_RAID';
 
 export interface Duel {
   duelId: string;
-  challenger: string; // userId
-  challenged: string; // userId
-  stake: number; // points each puts in
-  prompt: string; // same prompt sent to both
+  challenger: string;
+  challenged: string;
+  stake: number;
+  prompt: string;
   status: 'pending' | 'active' | 'complete';
   winnerId: string | null;
   expiresAt: number; // ex: expires if not accepted in 24h
+}
+
+export interface DuelInvite {
+  inviteId: string;
+  duelId?: string;
+  fromUserId: string;
+  fromUsername: string;
+  fromClass: PlayerClass;
+  toUserId: string;
+  toUsername: string;
+  status: 'pending' | 'expired' | 'accepted' | 'cancelled' | 'declined';
+  createdAt: number;
+  expiresAt: number;
 }
 
 // Class advantage in duels (rock-paper-scissors)
@@ -231,9 +247,9 @@ export const DUEL_ADVANTAGE_MULTIPLIER = 1.3;
 
 export interface GuildRaid {
   raidId: string;
-  attackerId: string; // guildId
-  defenderId: string; // guildId
-  weekOf: string; // ISO date string YYYY-MM-DD
+  attackerId: string;
+  defenderId: string;
+  weekOf: string;
   status: 'pending' | 'active' | 'resolved';
   attackScore: number;
   defendScore: number;
