@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ProgressBar } from '../common/ProgressBar';
 import { PlayerAvatar } from '../common/PlayerAvatar';
 import { Button } from '../ui/button';

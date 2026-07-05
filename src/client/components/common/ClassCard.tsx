@@ -46,6 +46,7 @@ export function ClassCard({
   const [hovered, setHovered] = useState(false);
 
   const style = CLASS_STYLES[meta.key];
+  const Icon = meta.icon;
 
   const active = hovered || selected;
 
@@ -147,12 +148,12 @@ export function ClassCard({
         ) : (
           <span
             className={`
-                text-4xl transition-all duration-300
+                transition-all duration-300
                 group-hover:scale-110 group-hover:rotate-6
                 ${active ? 'scale-110 rotate-6' : ''}
               `}
           >
-            {meta.icon}
+            <Icon className="h-10 w-10" />
           </span>
         )}
 

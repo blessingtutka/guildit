@@ -86,6 +86,7 @@ export function ActionPage({
             player={player}
             usedToday={usedToday}
             totalPossible={totalPossibleToday}
+            color={color}
           />
 
           <div className="space-y-2">
@@ -99,6 +100,7 @@ export function ActionPage({
                 color={color}
                 status={statuses[action]}
                 isPerforming={performing === action}
+                anyPerforming={performing !== null}
                 onPerform={(a) => void handleAction(a)}
               />
             ))}

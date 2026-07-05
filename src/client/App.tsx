@@ -1,4 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
 import { WelcomePage } from './pages/WelcomePage';
 import { HomePage } from './pages/HomePage';
 import { GuildPage } from './pages/GuildPage';
@@ -12,9 +19,19 @@ import { useGuild } from './hooks/useGuild';
 import { useTheme } from './hooks/useTheme';
 import { Toaster } from './components/ui/sonner';
 import { context } from '@devvit/web/client';
-import type { Player } from '../shared/api';
+import type { GuildStatus, Player, PlayerClass } from '../shared/api';
 import type { AppPage } from './pages/HomePage';
 import { TriangleAlert } from 'lucide-react';
+
+const PAGE_ROUTES: Record<AppPage, string> = {
+  home: '/home',
+  guild: '/guild',
+  actions: '/actions',
+  leaderboard: '/leaderboard',
+  'solo-trial': '/solo-trial',
+  duel: '/duel',
+  'guild-raid': '/guild-raid',
+};
 
 export default function App() {
   useTheme();
@@ -31,16 +48,15 @@ export default function App() {
   const [localPlayer, setLocalPlayer] = useState<
     (Player & { level: number }) | null
   >(null);
-  const [page, setPage] = useState<AppPage>('home');
 
   const { guild, fetchGuild } = useGuild(userId);
 
-  // Sync local player state with the hook's player
   useEffect(() => {
-    if (player) setLocalPlayer(player);
+    if (player) {
+      setLocalPlayer(player);
+    }
   }, [player]);
 
-  // Load guild when player has one
   useEffect(() => {
     const guildId = localPlayer?.guildId;
     if (guildId) {
@@ -56,79 +72,140 @@ export default function App() {
   if (error) return <ErrorScreen message={error} />;
   if (!localPlayer) return <SplashScreen />;
 
-  // Class selection flow
-  if (!localPlayer.class) {
-    return <WelcomePage player={localPlayer} onClassSelect={setClass} />;
-  }
-
-  // Page router
-  if (page === 'guild') {
-    return (
-      <GuildPage
-        player={localPlayer}
-        onBack={() => setPage('home')}
-        onPlayerUpdate={(updated) => {
-          handlePlayerUpdate(updated);
-          if (updated.guildId) void fetchGuild(updated.guildId);
-        }}
-      />
-    );
-  }
-
-  if (page === 'actions') {
-    return (
-      <ActionPage
-        player={localPlayer}
-        onPlayerUpdate={handlePlayerUpdate}
-        onBack={() => setPage('home')}
-      />
-    );
-  }
-
-  if (page === 'leaderboard') {
-    return (
-      <LeaderboardPage player={localPlayer} onBack={() => setPage('home')} />
-    );
-  }
-
-  if (page === 'solo-trial') {
-    return (
-      <SoloTrialPage
-        player={localPlayer}
-        onPlayerUpdate={handlePlayerUpdate}
-        onBack={() => setPage('home')}
-      />
-    );
-  }
-
-  if (page === 'duel') {
-    return <DuelPage player={localPlayer} onBack={() => setPage('home')} />;
-  }
-
-  if (page === 'guild-raid' && guild) {
-    return (
-      <GuildRaidPage
-        player={localPlayer}
-        guild={guild}
-        onPlayerUpdate={handlePlayerUpdate}
-        onBack={() => setPage('home')}
-      />
-    );
-  }
-
-  // Home / hub
   return (
-    <div className="relative w-full h-full">
-      <Toaster position="top-center" richColors />
-      <HomePage
-        player={localPlayer}
+    <HashRouter>
+      <AppRouter
+        localPlayer={localPlayer}
         guild={guild}
-        onNavigate={(target) => setPage(target)}
-        onReclass={async (cls) => {
-          await reclass(cls);
-        }}
+        onPlayerUpdate={handlePlayerUpdate}
+        onSetClass={setClass}
+        onReclass={reclass}
+        onFetchGuild={fetchGuild}
       />
-    </div>
+    </HashRouter>
+  );
+}
+
+type AppRouterProps = Readonly<{
+  localPlayer: Player & { level: number };
+  guild: GuildStatus | null;
+  onPlayerUpdate: (updated: Player & { level: number }) => void;
+  onSetClass: (cls: PlayerClass) => Promise<void>;
+  onReclass: (cls: PlayerClass) => Promise<unknown>;
+  onFetchGuild: (guildId: string) => Promise<unknown>;
+}>;
+
+function AppRouter({
+  localPlayer,
+  guild,
+  onPlayerUpdate,
+  onSetClass,
+  onReclass,
+  onFetchGuild,
+}: AppRouterProps) {
+  const navigate = useNavigate();
+
+  const handleNavigate = (page: AppPage) => {
+    void navigate(PAGE_ROUTES[page]);
+  };
+
+  const handleBackToHome = () => {
+    void navigate(PAGE_ROUTES.home);
+  };
+
+  if (!localPlayer.class) {
+    return (
+      <Routes>
+        <Route
+          path="/welcome"
+          element={
+            <WelcomePage player={localPlayer} onClassSelect={onSetClass} />
+          }
+        />
+        <Route path="*" element={<Navigate to="/welcome" replace />} />
+      </Routes>
+    );
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to={PAGE_ROUTES.home} replace />} />
+      <Route
+        path={PAGE_ROUTES.home}
+        element={
+          <div className="relative w-full h-full">
+            <Toaster position="top-center" richColors />
+            <HomePage
+              player={localPlayer}
+              guild={guild}
+              onNavigate={handleNavigate}
+              onReclass={async (cls) => {
+                await onReclass(cls);
+              }}
+            />
+          </div>
+        }
+      />
+      <Route
+        path={PAGE_ROUTES.guild}
+        element={
+          <GuildPage
+            player={localPlayer}
+            onBack={handleBackToHome}
+            onPlayerUpdate={(updated) => {
+              onPlayerUpdate(updated);
+              if (updated.guildId) void onFetchGuild(updated.guildId);
+            }}
+          />
+        }
+      />
+      <Route
+        path={PAGE_ROUTES.actions}
+        element={
+          <ActionPage
+            player={localPlayer}
+            onPlayerUpdate={onPlayerUpdate}
+            onBack={handleBackToHome}
+          />
+        }
+      />
+      <Route
+        path={PAGE_ROUTES.leaderboard}
+        element={
+          <LeaderboardPage player={localPlayer} onBack={handleBackToHome} />
+        }
+      />
+      <Route
+        path={PAGE_ROUTES['solo-trial']}
+        element={
+          <SoloTrialPage
+            player={localPlayer}
+            onPlayerUpdate={onPlayerUpdate}
+            onBack={handleBackToHome}
+          />
+        }
+      />
+      <Route
+        path={PAGE_ROUTES.duel}
+        element={<DuelPage player={localPlayer} onBack={handleBackToHome} />}
+      />
+      <Route
+        path={PAGE_ROUTES['guild-raid']}
+        element={
+          guild ? (
+            <GuildRaidPage
+              player={localPlayer}
+              guild={guild}
+              onPlayerUpdate={onPlayerUpdate}
+              onBack={handleBackToHome}
+            />
+          ) : (
+            <Navigate to={PAGE_ROUTES.home} replace />
+          )
+        }
+      />
+      <Route path="*" element={<Navigate to={PAGE_ROUTES.home} replace />} />
+    </Routes>
   );
 }
 

@@ -56,6 +56,7 @@ export function ClassPickerDrawer({
   if (!cls) return null;
 
   const meta = CLASS_META[cls];
+  const Icon = meta.icon;
   const total = available.length;
 
   const prev = () => setIdx((i) => (i === 0 ? total - 1 : i - 1));
@@ -103,7 +104,10 @@ export function ClassPickerDrawer({
             {/* Class card */}
             <div
               className="flex-1 flex flex-col items-center gap-3 rounded-2xl border-2 p-5 text-center transition-all duration-300"
-              style={{ borderColor: meta.color, backgroundColor: `${meta.color}12` }}
+              style={{
+                borderColor: meta.color,
+                backgroundColor: `${meta.color}12`,
+              }}
             >
               {meta.image ? (
                 <img
@@ -112,20 +116,31 @@ export function ClassPickerDrawer({
                   className="w-20 h-20 object-contain animate-bounce-subtle"
                 />
               ) : (
-                <span className="text-5xl animate-bounce-subtle">{meta.icon}</span>
+                <Icon className="h-12 w-12 animate-bounce-subtle" />
               )}
               <div>
-                <p className="font-display text-xl font-bold" style={{ color: meta.color }}>
+                <p
+                  className="font-display text-xl font-bold"
+                  style={{ color: meta.color }}
+                >
                   {meta.name}
                 </p>
-                <p className="text-xs text-muted-foreground italic mt-0.5">{meta.tagline}</p>
+                <p className="text-xs text-muted-foreground italic mt-0.5">
+                  {meta.tagline}
+                </p>
               </div>
-              <p className="text-sm text-foreground/80 leading-relaxed">{meta.description}</p>
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                {meta.description}
+              </p>
 
               {/* Affinity badges */}
               <div className="flex flex-wrap gap-1 justify-center">
                 {meta.affinity.map((a) => (
-                  <Badge key={a} variant="secondary" className="text-[10px] px-1.5 py-0">
+                  <Badge
+                    key={a}
+                    variant="secondary"
+                    className="text-[10px] px-1.5 py-0"
+                  >
                     {a.replace(/_/g, ' ')}
                   </Badge>
                 ))}
@@ -154,7 +169,8 @@ export function ClassPickerDrawer({
                   className="h-1.5 rounded-full transition-all duration-300"
                   style={{
                     width: i === idx ? '24px' : '6px',
-                    backgroundColor: i === idx ? meta.color : 'var(--color-border)',
+                    backgroundColor:
+                      i === idx ? meta.color : 'var(--color-border)',
                   }}
                   aria-label={`Select class ${i + 1}`}
                 />
@@ -172,7 +188,8 @@ export function ClassPickerDrawer({
               <p className="text-xs text-muted-foreground">
                 Switching costs{' '}
                 <span className="font-bold text-destructive">
-                  {reclassPreview.cost.toLocaleString()} pts ({reclassPreview.taxRate}%)
+                  {reclassPreview.cost.toLocaleString()} pts (
+                  {reclassPreview.taxRate}%)
                 </span>
                 . You'll drop from Level {reclassPreview.currentLevel} → Level{' '}
                 {reclassPreview.newLevel}.
@@ -194,9 +211,16 @@ export function ClassPickerDrawer({
           >
             {loading
               ? 'Applying...'
-              : (confirmLabel ? confirmLabel(cls) : `Become a ${meta.name}`)}
+              : confirmLabel
+                ? confirmLabel(cls)
+                : `Become a ${meta.name}`}
           </Button>
-          <Button variant="outline" onClick={onClose} disabled={loading} className="w-full">
+          <Button
+            variant="outline"
+            onClick={onClose}
+            disabled={loading}
+            className="w-full"
+          >
             Cancel
           </Button>
         </DrawerFooter>
