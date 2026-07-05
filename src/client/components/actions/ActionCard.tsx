@@ -36,13 +36,13 @@ export function ActionCard({
           ? 'opacity-40 cursor-not-allowed border-border'
           : 'hover:scale-[1.02] hover:shadow-md active:scale-[0.99] cursor-pointer'
       }`}
-      style={!exhausted ? { borderColor: `${color}` } : {}}
+      style={exhausted ? {} : { borderColor: `${color}` }}
     >
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5">
           <span
             className="text-sm font-bold"
-            style={!exhausted ? { color } : {}}
+            style={exhausted ? {} : { color }}
           >
             {label.label}
           </span>
@@ -56,7 +56,7 @@ export function ActionCard({
       </div>
 
       <div className="flex flex-col items-end gap-1.5 shrink-0 ml-3">
-        <span className="text-sm font-bold" style={!exhausted ? { color } : {}}>
+        <span className="text-sm font-bold" style={exhausted ? {} : { color }}>
           +{ACTION_BASE_POINTS[action]}
         </span>
         <div className="flex gap-1">

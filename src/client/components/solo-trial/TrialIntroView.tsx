@@ -71,7 +71,8 @@ export function TrialIntroView({
       </button>
       <button
         onClick={onBack}
-        className="text-sm text-muted-foreground hover:text-foreground flex items-center justify-center gap-1 transition-colors"
+        className="w-full max-w-sm text-sm text-muted-foreground rounded-xl hover:text-foreground flex items-center justify-center gap-1 py-2.5 border border-muted-foreground
+          hover:border-foreground transition-colors"
       >
         <ChevronLeft className="size-3.5" /> Back
       </button>

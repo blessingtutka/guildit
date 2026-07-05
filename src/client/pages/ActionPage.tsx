@@ -80,7 +80,7 @@ export function ActionPage({
   return (
     <>
       <Toaster position="top-center" richColors />
-      <PageShell player={player} onBack={onBack}>
+      <PageShell player={player} onBack={onBack} title="Daily Actions">
         <div className="flex flex-col gap-4 px-4 pt-4 pb-6">
           <ActionHeroBanner
             player={player}
