@@ -6,6 +6,7 @@ import { player } from './routes/player.route';
 import { guild } from './routes/guild.route';
 import { action } from './routes/action.route';
 import { leaderboard } from './routes/leaderboard.route';
+import { duel } from './routes/duel.route';
 
 const app = new Hono();
 
@@ -17,6 +18,9 @@ app.route('/api/player', player);
 app.route('/api/guild', guild);
 app.route('/api/action', action);
 app.route('/api/leaderboard', leaderboard);
+
+// Game
+app.route('/api/duel', duel);
 
 serve({
   fetch: app.fetch,
