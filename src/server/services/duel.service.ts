@@ -255,7 +255,6 @@ async function challengeDuel(
   stake: number
 ): Promise<Duel> {
   const challenger = await redis.hGetAll(`player:${challengerId}`);
-  const challenged = await redis.hGetAll(`player:${challengedId}`);
 
   const challengerPoints = Number.parseInt(challenger.points || '0');
   if (challengerPoints < stake) {
