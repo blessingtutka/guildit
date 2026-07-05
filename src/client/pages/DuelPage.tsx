@@ -1,203 +1,280 @@
-import { useState, useCallback } from 'react';
-import { Header } from '../components/layout/Header';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { DUEL_ADVANTAGE } from '../../shared/api';
+import type { Player, PlayerClass, DuelInvite } from '../../shared/api';
+import type { AppNotification } from '../../shared/web';
+import { useDuel, type OpponentEntry } from '../hooks/useDuel';
+import { useNotifications } from '../hooks/Usenotifications';
+import { SearchOpponent } from '../components/duel/SearchOppenent';
+import { InvitationsPage } from '../components/duel/Invitation';
 import { DuelSetupView } from '../components/duel/DuelSetupView';
-import { DuelBattleView } from '../components/duel/DuelBattleView';
-import { DuelResultView } from '../components/duel/DuelResultView';
-import { CLASS_META } from '../../shared/web';
-import { classColor } from '../lib/class-colors';
-import type { Player, PlayerClass } from '../../shared/api';
-import { DUEL_ADVANTAGE, DUEL_ADVANTAGE_MULTIPLIER } from '../../shared/api';
+import {
+  InviteDetailDrawer,
+  type InviteDirection,
+} from '../components/duel/InviteDetailDrawer';
+import { Header } from '../components/layout/Header';
+import { createDuelGame } from '../phaser/DuelGame';
+import type { DuelLogPayload } from '../phaser/scenes/BoardScene';
 
-type DuelPageProps = Readonly<{
+interface DuelPageProps {
   player: Player & { level: number };
-  onBack: () => void;
-}>;
-
-type DuelPhase = 'setup' | 'draw' | 'resolve' | 'result';
-
-type CardData = {
-  label: string;
-  value: number;
-  emoji: string;
-};
-
-const CLASS_CARDS: Record<PlayerClass, CardData[]> = {
-  RANGER: [
-    { label: 'Scout', value: 6, emoji: '🔭' },
-    { label: 'Ambush', value: 9, emoji: '🏹' },
-    { label: 'Track', value: 7, emoji: '👣' },
-    { label: 'Waypoint', value: 5, emoji: '🗺️' },
-  ],
-  MENDER: [
-    { label: 'Heal', value: 7, emoji: '💚' },
-    { label: 'Bolster', value: 8, emoji: '✨' },
-    { label: 'Sanctuary', value: 10, emoji: '🌿' },
-    { label: 'Revive', value: 6, emoji: '💫' },
-  ],
-  WARDER: [
-    { label: 'Shield', value: 8, emoji: '🛡️' },
-    { label: 'Guard', value: 9, emoji: '⚔️' },
-    { label: 'Fortify', value: 7, emoji: '🏰' },
-    { label: 'Verdict', value: 6, emoji: '⚖️' },
-  ],
-  WEAVER: [
-    { label: 'Invoke', value: 9, emoji: '🌀' },
-    { label: 'Craft', value: 8, emoji: '🎨' },
-    { label: 'Inspire', value: 10, emoji: '💡' },
-    { label: 'Enchant', value: 7, emoji: '✨' },
-  ],
-};
-
-const ALL_CLASSES: PlayerClass[] = ['RANGER', 'MENDER', 'WARDER', 'WEAVER'];
-
-function randomOpponent(exclude: PlayerClass): PlayerClass {
-  const others = ALL_CLASSES.filter((c) => c !== exclude);
-  return (others[Math.floor(Math.random() * others.length)] ??
-    ALL_CLASSES[0]) as PlayerClass;
+  onBack?: () => void;
+  onExit?: () => void;
 }
 
-function pickCard(cls: PlayerClass): CardData {
-  const deck = CLASS_CARDS[cls];
-  return (deck[Math.floor(Math.random() * deck.length)] ?? deck[0]) as CardData;
-}
+type View = 'search' | 'invitations' | 'preview' | 'playing';
 
-// Need CLASS_META for the reset fallback - already imported above via web.ts
-void CLASS_META;
-
-export function DuelPage({ player, onBack }: DuelPageProps) {
-  const playerClass = player.class as PlayerClass;
-  const playerColor = classColor(playerClass);
-
-  const [phase, setPhase] = useState<DuelPhase>('setup');
-  const [opponentClass, setOpponentClass] = useState<PlayerClass>(
-    randomOpponent(playerClass)
-  );
-  const [playerCard, setPlayerCard] = useState<CardData | null>(null);
-  const [opponentCard, setOpponentCard] = useState<CardData | null>(null);
-  const [winner, setWinner] = useState<'player' | 'opponent' | 'tie' | null>(
+export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
+  const [view, setView] = useState<View>('preview');
+  const [previewOpponent, setPreviewOpponent] = useState<OpponentEntry | null>(
     null
   );
-  const [playerHp, setPlayerHp] = useState(100);
-  const [opponentHp, setOpponentHp] = useState(100);
-  const [round, setRound] = useState(1);
-  const [isResolving, setIsResolving] = useState(false);
+  const [duelLog, setDuelLog] = useState<DuelLogPayload | null>(null);
+  const [openDuelId, setOpenDuelId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [detailInvite, setDetailInvite] = useState<{
+    invite: DuelInvite;
+    direction: InviteDirection;
+  } | null>(null);
 
-  const opponentColor = classColor(opponentClass);
-  const hasAdvantage = DUEL_ADVANTAGE[playerClass] === opponentClass;
-  const opponentHasAdvantage = DUEL_ADVANTAGE[opponentClass] === playerClass;
+  const {
+    opponents,
+    loadingOpponents,
+    incoming,
+    outgoing,
+    error,
+    sendInvite,
+    acceptInvite,
+    declineInvite,
+    cancelInvite,
+  } = useDuel(player.userId);
 
-  const handleDraw = useCallback(() => {
-    const pCard = pickCard(playerClass);
-    const oCard = pickCard(opponentClass);
-    setPlayerCard(pCard);
-    setOpponentCard(oCard);
-    setIsResolving(true);
-    setPhase('resolve');
+  const { notifications } = useNotifications(player.userId);
 
-    setTimeout(() => {
-      let pScore = pCard.value;
-      let oScore = oCard.value;
+  const openDuel = useCallback(async (id: string) => {
+    const res = await fetch(`/api/duel/${id}`);
+    const log: DuelLogPayload = await res.json();
+    setOpenDuelId(id);
+    setDuelLog(log);
+    setDetailInvite(null);
+    setView('playing');
+  }, []);
 
-      if (hasAdvantage) pScore *= DUEL_ADVANTAGE_MULTIPLIER;
-      if (opponentHasAdvantage) oScore *= DUEL_ADVANTAGE_MULTIPLIER;
+  useEffect(() => {
+    const accepted = [...incoming, ...outgoing].find(
+      (i) => i.status === 'accepted' && i.duelId
+    );
+    if (accepted?.duelId && accepted.duelId !== openDuelId) {
+      void openDuel(accepted.duelId);
+    }
+  }, [incoming, outgoing, openDuelId, openDuel]);
 
-      const pDmg = Math.max(0, Math.round(oScore * 10));
-      const oDmg = Math.max(0, Math.round(pScore * 10));
+  const handleHeaderBack = useCallback(() => {
+    const exit = onBack ?? onExit;
+    if (view === 'invitations') {
+      setView(previewOpponent ? 'preview' : 'search');
+      return;
+    }
 
-      const newPlayerHp = Math.max(0, playerHp - pDmg);
-      const newOpponentHp = Math.max(0, opponentHp - oDmg);
+    if (view === 'search') {
+      setView('preview');
+      return;
+    }
 
-      setPlayerHp(newPlayerHp);
-      setOpponentHp(newOpponentHp);
-      setIsResolving(false);
+    exit?.();
+  }, [onBack, onExit, previewOpponent, view]);
 
-      if (newPlayerHp === 0 || newOpponentHp === 0 || round >= 3) {
-        if (newPlayerHp > newOpponentHp) {
-          setWinner('player');
-        } else if (newOpponentHp > newPlayerHp) {
-          setWinner('opponent');
-        } else {
-          setWinner('tie');
-        }
-        setPhase('result');
-      } else {
-        setRound((r) => r + 1);
-        setPhase('draw');
-        setPlayerCard(null);
-        setOpponentCard(null);
+  const handleSelectNotification = useCallback(
+    (notification: AppNotification) => {
+      const invite = notification.payload as DuelInvite | undefined;
+      if (invite) {
+        setDetailInvite({ invite, direction: 'incoming' });
+        setView('invitations');
       }
-    }, 1200);
-  }, [
-    playerClass,
-    opponentClass,
-    hasAdvantage,
-    opponentHasAdvantage,
-    playerHp,
-    opponentHp,
-    round,
-  ]);
+    },
+    []
+  );
 
-  const handleReset = () => {
-    const newOpp = randomOpponent(playerClass);
-    setOpponentClass(newOpp);
-    setPhase('setup');
-    setPlayerCard(null);
-    setOpponentCard(null);
-    setWinner(null);
-    setPlayerHp(100);
-    setOpponentHp(100);
-    setRound(1);
+  const handleViewAllNotifications = useCallback(() => {
+    setView('invitations');
+  }, []);
+
+  const handleStartDuel = async () => {
+    if (!previewOpponent) return;
+    setBusyId(previewOpponent.userId);
+    try {
+      await sendInvite(previewOpponent.userId);
+      setView('invitations');
+    } catch (err) {
+      console.error('Failed to send invite:', err);
+    } finally {
+      setBusyId(null);
+    }
   };
 
+  const handleAccept = async (inviteId: string) => {
+    setBusyId(inviteId);
+    try {
+      const result = await acceptInvite(inviteId);
+      if (result?.duelId) await openDuel(result.duelId);
+    } catch (err) {
+      console.error('Failed to accept invite:', err);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleDecline = async (inviteId: string) => {
+    setBusyId(inviteId);
+    try {
+      await declineInvite(inviteId);
+      setDetailInvite(null);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleCancel = async (inviteId: string) => {
+    setBusyId(inviteId);
+    try {
+      await cancelInvite(inviteId);
+      setDetailInvite(null);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const pendingOutgoingByOpponent = new Map(
+    outgoing.filter((i) => i.status === 'pending').map((i) => [i.toUserId, i])
+  );
+
+  const pageTitle =
+    view === 'invitations'
+      ? 'Invitations'
+      : view === 'search'
+        ? 'Find Opponent'
+        : 'Duel Setup';
+
+  if (view === 'playing' && duelLog) {
+    return (
+      <DuelReplay
+        player={player}
+        log={duelLog}
+        onClose={() => (onBack ?? onExit)?.()}
+        notifications={notifications}
+        onSelectNotification={handleSelectNotification}
+        onViewAllNotifications={handleViewAllNotifications}
+      />
+    );
+  }
+
   return (
-    <div className="flex flex-col w-full min-h-full bg-background overflow-hidden">
-      <Header player={player} />
+    <div className="flex flex-col h-full bg-background">
+      <Header
+        player={player}
+        onBack={handleHeaderBack}
+        title={pageTitle}
+        notifications={notifications}
+        onSelectNotification={handleSelectNotification}
+        onViewAllNotifications={handleViewAllNotifications}
+      />
 
-      {phase === 'setup' && (
+      {view === 'invitations' ? (
+        <InvitationsPage
+          incoming={incoming}
+          outgoing={outgoing}
+          busyId={busyId}
+          onAccept={handleAccept}
+          onDecline={handleDecline}
+          onCancel={handleCancel}
+        />
+      ) : view === 'preview' ? (
         <DuelSetupView
-          playerClass={playerClass}
-          playerColor={playerColor}
-          opponentClass={opponentClass}
-          opponentColor={opponentColor}
-          hasAdvantage={hasAdvantage}
-          opponentHasAdvantage={opponentHasAdvantage}
-          onStart={() => setPhase('draw')}
-          onNewOpponent={handleReset}
-          onBack={onBack}
+          player={player}
+          opponent={previewOpponent}
+          hasAdvantage={
+            !!previewOpponent &&
+            DUEL_ADVANTAGE[player.class as PlayerClass] ===
+              previewOpponent.class
+          }
+          opponentHasAdvantage={
+            !!previewOpponent &&
+            DUEL_ADVANTAGE[previewOpponent.class] === player.class
+          }
+          onStart={handleStartDuel}
+          onInviteOpponent={() => setView('search')}
+          onBack={handleHeaderBack}
         />
-      )}
+      ) : (
+        <>
+          <SearchOpponent
+            opponents={opponents}
+            loading={loadingOpponents}
+            error={error}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            pendingOutgoingByOpponent={pendingOutgoingByOpponent}
+            busyId={busyId}
+            onSelectOpponent={(opponent) => {
+              setPreviewOpponent(opponent);
+              setView('preview');
+            }}
+            onExit={handleHeaderBack}
+          />
 
-      {(phase === 'draw' || phase === 'resolve') && (
-        <DuelBattleView
-          playerClass={playerClass}
-          playerColor={playerColor}
-          opponentClass={opponentClass}
-          opponentColor={opponentColor}
-          playerHp={playerHp}
-          opponentHp={opponentHp}
-          playerCard={playerCard}
-          opponentCard={opponentCard}
-          round={round}
-          phase={phase as 'draw' | 'resolve'}
-          isResolving={isResolving}
-          username={player.username}
-          onDraw={handleDraw}
-        />
+          <InviteDetailDrawer
+            invite={detailInvite?.invite ?? null}
+            direction={detailInvite?.direction ?? 'incoming'}
+            open={!!detailInvite}
+            busy={busyId === detailInvite?.invite.inviteId}
+            onClose={() => setDetailInvite(null)}
+            onAccept={handleAccept}
+            onDecline={handleDecline}
+            onCancel={handleCancel}
+          />
+        </>
       )}
+    </div>
+  );
+}
 
-      {phase === 'result' && winner && (
-        <DuelResultView
-          winner={winner}
-          playerClass={playerClass}
-          playerColor={playerColor}
-          opponentClass={opponentClass}
-          opponentColor={opponentColor}
-          playerHp={playerHp}
-          opponentHp={opponentHp}
-          onReset={handleReset}
-          onBack={onBack}
-        />
-      )}
+function DuelReplay({
+  player,
+  log,
+  onClose,
+  notifications,
+  onSelectNotification,
+  onViewAllNotifications,
+}: {
+  player: Player & { level: number };
+  log: DuelLogPayload;
+  onClose: () => void;
+  notifications: AppNotification[];
+  onSelectNotification: (notification: AppNotification) => void;
+  onViewAllNotifications: () => void;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const game = createDuelGame(containerRef.current, log);
+    return () => game.destroy(true);
+  }, [log]);
+
+  return (
+    <div className="flex flex-col w-full h-full bg-background">
+      <Header
+        player={player}
+        onBack={onClose}
+        title="Conversation Duel"
+        notifications={notifications}
+        onSelectNotification={onSelectNotification}
+        onViewAllNotifications={onViewAllNotifications}
+      />
+      <div
+        ref={containerRef}
+        className="flex-1 flex items-center justify-center"
+      />
     </div>
   );
 }
