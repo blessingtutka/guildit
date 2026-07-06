@@ -1,7 +1,8 @@
 import type { Player, PlayerClass } from '../../../shared/api';
-import { CLASS_META, AppNotification } from '../../../shared/web';
-import { PlayerAvatar } from '../common/PlayerAvatar';
+import { CLASS_META } from '../../../shared/web';
+import type { AppNotification } from '../../../shared/notification';
 import { NotificationBell } from './NotificationBell';
+import { PlayerAvatar } from '../common/PlayerAvatar';
 
 type HeaderProps = Readonly<{
   player?: Player | null;
@@ -23,12 +24,12 @@ export function Header({
   player,
   onBack,
   title,
-  notifications,
+  notifications = [],
   onSelectNotification,
   onViewAllNotifications,
 }: HeaderProps) {
   const meta = player?.class ? CLASS_META[player.class] : null;
-  const bellNotifications = notifications ?? [];
+
   const handleSelectNotification = onSelectNotification ?? (() => undefined);
   const handleViewAllNotifications =
     onViewAllNotifications ?? (() => undefined);
@@ -70,7 +71,7 @@ export function Header({
       {!title && <div className="flex-1 min-w-0" />}
 
       <NotificationBell
-        notifications={bellNotifications}
+        notifications={notifications}
         onSelect={handleSelectNotification}
         onViewAll={handleViewAllNotifications}
       />

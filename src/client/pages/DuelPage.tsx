@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DUEL_ADVANTAGE } from '../../shared/api';
 import type { Player, PlayerClass, DuelInvite } from '../../shared/api';
-import type { AppNotification } from '../../shared/web';
+import type { AppNotification } from '../../shared/notification';
 import { useDuel, type OpponentEntry } from '../hooks/useDuel';
 import { useNotifications } from '../hooks/Usenotifications';
 import { SearchOpponent } from '../components/duel/SearchOppenent';
@@ -49,7 +50,7 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
     cancelInvite,
   } = useDuel(player.userId);
 
-  const { notifications } = useNotifications(player.userId);
+  const { notifications, markAsRead } = useNotifications(player.userId);
 
   const openDuel = useCallback(async (id: string) => {
     const res = await fetch(`/api/duel/${id}`);
@@ -59,6 +60,21 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
     setDetailInvite(null);
     setView('playing');
   }, []);
+
+  // If a URL param requests opening a duel, handle it.
+  const location = useLocation();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const open = params.get('open');
+    if (open && open !== openDuelId) {
+      void openDuel(open);
+      // remove the param from the URL without reloading
+      params.delete('open');
+      const search = params.toString();
+      const newUrl = `${location.pathname}${search ? `?${search}` : ''}`;
+      globalThis.history.replaceState({}, '', newUrl);
+    }
+  }, [location.search, openDuel, openDuelId]);
 
   useEffect(() => {
     const accepted = [...incoming, ...outgoing].find(
@@ -86,13 +102,21 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
 
   const handleSelectNotification = useCallback(
     (notification: AppNotification) => {
+      void (async () => {
+        try {
+          await markAsRead(notification.id);
+        } catch (err) {
+          // ignore
+        }
+      })();
+
       const invite = notification.payload as DuelInvite | undefined;
       if (invite) {
         setDetailInvite({ invite, direction: 'incoming' });
         setView('invitations');
       }
     },
-    []
+    [markAsRead]
   );
 
   const handleViewAllNotifications = useCallback(() => {
@@ -270,7 +294,7 @@ function DuelReplay({
     >
       <div
         ref={containerRef}
-        className="flex min-h-full items-center justify-center"
+        className="flex h-full min-h-full w-full items-center justify-center"
       />
     </PageShell>
   );

@@ -22,9 +22,11 @@ import { context } from '@devvit/web/client';
 import type { GuildStatus, Player, PlayerClass } from '../shared/api';
 import type { AppPage } from './pages/HomePage';
 import { TriangleAlert } from 'lucide-react';
+import { NotificationPage } from './pages/NotificationPage';
 
 const PAGE_ROUTES: Record<AppPage, string> = {
   home: '/home',
+  notifications: '/notifications',
   guild: '/guild',
   actions: '/actions',
   leaderboard: '/leaderboard',
@@ -133,6 +135,17 @@ function AppRouter({
   return (
     <Routes>
       <Route path="/" element={<Navigate to={PAGE_ROUTES.home} replace />} />
+      <Route
+        path={PAGE_ROUTES.notifications}
+        element={
+          <div className="relative h-full w-full">
+            <NotificationPage
+              userId={localPlayer.userId}
+              onBack={handleBackToHome}
+            />
+          </div>
+        }
+      />
       <Route
         path={PAGE_ROUTES.home}
         element={

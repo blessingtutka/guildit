@@ -89,7 +89,7 @@ export function InviteDetailDrawer({
           {isPending && direction === 'incoming' && (
             <>
               <Button
-                onClick={() => onAccept(invite.inviteId)}
+                onClick={() => void onAccept(invite.inviteId)}
                 disabled={busy}
                 className="w-full font-bold text-white flex items-center justify-center gap-2"
                 style={{ backgroundColor: color, border: 'none' }}
@@ -99,7 +99,7 @@ export function InviteDetailDrawer({
               </Button>
               <Button
                 variant="outline"
-                onClick={() => onDecline(invite.inviteId)}
+                onClick={() => void onDecline(invite.inviteId)}
                 disabled={busy}
                 className="w-full flex items-center justify-center gap-2"
               >
@@ -112,7 +112,7 @@ export function InviteDetailDrawer({
           {isPending && direction === 'outgoing' && (
             <Button
               variant="outline"
-              onClick={() => onCancel(invite.inviteId)}
+              onClick={() => void onCancel(invite.inviteId)}
               disabled={busy}
               className="w-full flex items-center justify-center gap-2 text-destructive"
             >

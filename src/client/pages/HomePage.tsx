@@ -16,6 +16,7 @@ import type {
 
 export type AppPage =
   | 'home'
+  | 'notifications'
   | 'guild'
   | 'actions'
   | 'leaderboard'
