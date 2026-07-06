@@ -141,21 +141,3 @@ export const ACTION_LABELS: Record<
     description: 'Create content that gets saved',
   },
 };
-
-// ===============================================
-// NOTIFICATIONS
-// ===============================================
-
-export type NotificationType = 'duel_invite';
-
-export interface AppNotification {
-  id: string;
-  type: NotificationType;
-  title: string;
-  subtitle?: string;
-  createdAt: number;
-  avatarInitial: string;
-  avatarColor: string;
-
-  payload: unknown;
-}
