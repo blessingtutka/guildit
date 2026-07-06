@@ -7,6 +7,7 @@ import { guild } from './routes/guild.route';
 import { action } from './routes/action.route';
 import { leaderboard } from './routes/leaderboard.route';
 import { duel } from './routes/duel.route';
+import { notification } from './routes/notification.route';
 
 const app = new Hono();
 
@@ -18,6 +19,7 @@ app.route('/api/player', player);
 app.route('/api/guild', guild);
 app.route('/api/action', action);
 app.route('/api/leaderboard', leaderboard);
+app.route('/api/notifications', notification);
 
 // Game
 app.route('/api/duel', duel);

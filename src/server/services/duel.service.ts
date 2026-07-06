@@ -11,14 +11,15 @@ import {
   DUEL_ADVANTAGE_MULTIPLIER,
   INVITE_EXPIRY_MS,
 } from '../../shared/api';
-import { ACTION_LABELS } from '../../shared/web';
+import { ACTION_LABELS, CLASS_META } from '../../shared/web';
 import { NotFoundError, ValidationError, ConflictError } from '../utils/errors';
+import { createNotification } from './notification.service';
 
 const DEFAULT_STAKE = 10;
 
-// ═════════════════════════════════════════════════════════════════════════════
+// ==============================================================================
 // TYPES
-// ═════════════════════════════════════════════════════════════════════════════
+// ==============================================================================
 
 export interface TurnLogEntry {
   turn: number;
@@ -44,12 +45,16 @@ export interface DuelResult {
   turns: TurnLogEntry[];
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// INVITES — the layer that exists BEFORE a real Duel record
-// ═════════════════════════════════════════════════════════════════════════════
+// ==============================================================================
+// INVITES
+// ==============================================================================
 
 function inviteKey(id: string) {
   return `invite:${id}`;
+}
+
+function memberOf(entry: string | { member: string; score: number }): string {
+  return typeof entry === 'string' ? entry : entry.member;
 }
 
 export async function sendInvite(
@@ -70,10 +75,10 @@ export async function sendInvite(
     throw new ConflictError('You need a class before dueling');
   if (!toPlayer.class) throw new ConflictError('That player has no class yet');
 
-  const outgoings = await redis.zRange(`invites:outgoing:${fromUserId}`, 0, -1);
-  for (const outgoing of outgoings) {
-    const existingId =
-      typeof outgoing === 'string' ? outgoing : outgoing.member;
+  const outgoingIds = (
+    await redis.zRange(`invites:outgoing:${fromUserId}`, 0, -1)
+  ).map(memberOf);
+  for (const existingId of outgoingIds) {
     const existing = await readInvite(redis, existingId);
     if (
       existing &&
@@ -116,6 +121,19 @@ export async function sendInvite(
     member: inviteId,
   });
 
+  // Notify the recipient
+  const fromClassMeta = CLASS_META[fromPlayer.class as PlayerClass];
+  await createNotification(redis, {
+    userId: toUserId,
+    type: 'duel_invite',
+    title: `${fromPlayer.username} challenged you to a duel`,
+    subtitle: fromClassMeta.name,
+    avatarInitial:
+      (fromPlayer.username as string).charAt(0).toUpperCase() || '?',
+    avatarColor: fromClassMeta.color,
+    payload: invite,
+  });
+
   return invite;
 }
 
@@ -140,13 +158,8 @@ export async function listIncomingInvites(
   redis: RedisClient,
   userId: string
 ): Promise<DuelInvite[]> {
-  const incomingInvites = await redis.zRange(
-    `invites:incoming:${userId}`,
-    0,
-    -1
-  );
-  const ids = incomingInvites.map((invite) =>
-    typeof invite === 'string' ? invite : invite.member
+  const ids = (await redis.zRange(`invites:incoming:${userId}`, 0, -1)).map(
+    memberOf
   );
   const invites = await Promise.all(ids.map((id) => readInvite(redis, id)));
   return invites.filter(
@@ -158,21 +171,13 @@ export async function listOutgoingInvites(
   redis: RedisClient,
   userId: string
 ): Promise<DuelInvite[]> {
-  const outgoingInvites = await redis.zRange(
-    `invites:outgoing:${userId}`,
-    0,
-    -1
+  const ids = (await redis.zRange(`invites:outgoing:${userId}`, 0, -1)).map(
+    memberOf
   );
-  const ids = outgoingInvites.map((invite) =>
-    typeof invite === 'string' ? invite : invite.member
-  );
-
   const invites = await Promise.all(ids.map((id) => readInvite(redis, id)));
   return invites.filter((i): i is DuelInvite => i !== null);
 }
 
-// Accepting = the whole duel resolves right here, synchronously, before this
-// function even returns. That's the entire "multiplayer" trick.
 export async function acceptInvite(
   redis: RedisClient,
   inviteId: string,
@@ -198,6 +203,22 @@ export async function acceptInvite(
   await redis.set(inviteKey(inviteId), JSON.stringify(invite));
   await cleanupInviteIndexes(redis, invite);
 
+  // Notify the ORIGINAL sender that their challenge was accepted
+  const accepterPlayer = await redis.hGetAll(`player:${accepterId}`);
+  const accepterClassMeta = accepterPlayer.class
+    ? CLASS_META[accepterPlayer.class as PlayerClass]
+    : null;
+
+  await createNotification(redis, {
+    userId: invite.fromUserId,
+    type: 'duel_accepted',
+    title: `${invite.toUsername} accepted your challenge`,
+    subtitle: accepterClassMeta?.name,
+    avatarInitial: invite.toUsername[0]?.toUpperCase() ?? '?',
+    avatarColor: accepterClassMeta?.color ?? '#c8a84b',
+    payload: { duelId: duel.duelId, inviteId },
+  });
+
   return result;
 }
 
@@ -216,6 +237,16 @@ export async function declineInvite(
   invite.status = 'declined';
   await redis.set(inviteKey(inviteId), JSON.stringify(invite));
   await cleanupInviteIndexes(redis, invite);
+
+  // Notify the original sender of the decline
+  await createNotification(redis, {
+    userId: invite.fromUserId,
+    type: 'duel_declined',
+    title: `${invite.toUsername} declined your challenge`,
+    avatarInitial: invite.toUsername[0]?.toUpperCase() ?? '?',
+    avatarColor: '#8891aa',
+    payload: { inviteId },
+  });
 
   return invite;
 }
@@ -244,9 +275,9 @@ async function cleanupInviteIndexes(redis: RedisClient, invite: DuelInvite) {
   await redis.zRem(`invites:outgoing:${invite.fromUserId}`, [invite.inviteId]);
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// DUEL — the actual resolved contest, created only via acceptInvite above
-// ═════════════════════════════════════════════════════════════════════════════
+// ==============================================================================
+// DUEL
+// ==============================================================================
 
 async function challengeDuel(
   redis: RedisClient,
