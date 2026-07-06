@@ -73,16 +73,19 @@ export default function App() {
   if (!localPlayer) return <SplashScreen />;
 
   return (
-    <HashRouter>
-      <AppRouter
-        localPlayer={localPlayer}
-        guild={guild}
-        onPlayerUpdate={handlePlayerUpdate}
-        onSetClass={setClass}
-        onReclass={reclass}
-        onFetchGuild={fetchGuild}
-      />
-    </HashRouter>
+    <>
+      <Toaster position="top-center" richColors />
+      <HashRouter>
+        <AppRouter
+          localPlayer={localPlayer}
+          guild={guild}
+          onPlayerUpdate={handlePlayerUpdate}
+          onSetClass={setClass}
+          onReclass={reclass}
+          onFetchGuild={fetchGuild}
+        />
+      </HashRouter>
+    </>
   );
 }
 
@@ -133,8 +136,7 @@ function AppRouter({
       <Route
         path={PAGE_ROUTES.home}
         element={
-          <div className="relative w-full h-full">
-            <Toaster position="top-center" richColors />
+          <div className="relative h-full w-full">
             <HomePage
               player={localPlayer}
               guild={guild}

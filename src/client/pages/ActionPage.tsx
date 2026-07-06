@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { PageShell } from '../components/common/PageShell';
-import { Toaster } from '../components/ui/sonner';
 import { ActionHeroBanner } from '../components/actions/ActionHeroBanner';
 import { ActionCard } from '../components/actions/ActionCard';
 import { PassiveEventsCard } from '../components/actions/PassiveEventsCard';
@@ -78,37 +77,34 @@ export function ActionPage({
   );
 
   return (
-    <>
-      <Toaster position="top-center" richColors />
-      <PageShell player={player} onBack={onBack} title="Daily Actions">
-        <div className="flex flex-col gap-4 px-4 pt-4 pb-6">
-          <ActionHeroBanner
-            player={player}
-            usedToday={usedToday}
-            totalPossible={totalPossibleToday}
-            color={color}
-          />
+    <PageShell player={player} onBack={onBack} title="Daily Actions">
+      <div className="flex flex-col gap-4 px-4 pt-4 pb-6">
+        <ActionHeroBanner
+          player={player}
+          usedToday={usedToday}
+          totalPossible={totalPossibleToday}
+          color={color}
+        />
 
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">
-              Daily Actions
-            </p>
-            {actions.map((action) => (
-              <ActionCard
-                key={action}
-                action={action}
-                color={color}
-                status={statuses[action]}
-                isPerforming={performing === action}
-                anyPerforming={performing !== null}
-                onPerform={(a) => void handleAction(a)}
-              />
-            ))}
-          </div>
-
-          <PassiveEventsCard meta={meta} color={color} />
+        <div className="space-y-2">
+          <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">
+            Daily Actions
+          </p>
+          {actions.map((action) => (
+            <ActionCard
+              key={action}
+              action={action}
+              color={color}
+              status={statuses[action]}
+              isPerforming={performing === action}
+              anyPerforming={performing !== null}
+              onPerform={(a) => void handleAction(a)}
+            />
+          ))}
         </div>
-      </PageShell>
-    </>
+
+        <PassiveEventsCard meta={meta} color={color} />
+      </div>
+    </PageShell>
   );
 }

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Header } from '../components/layout/Header';
-import { Toaster } from '../components/ui/sonner';
 import { GuildHubView } from '../components/guild/GuildHubView';
 import { CreateGuildDrawer } from '../components/guild/CreateGuildDrawer';
 import { BrowseGuildsView } from '../components/guild/BrowseGuildsView';
@@ -10,6 +8,7 @@ import { LeaveGuildDrawer } from '../components/guild/LeaveGuildDrawer';
 import { useGuild } from '../hooks/useGuild';
 import { classColor } from '../lib/class-colors';
 import type { Player } from '../../shared/api';
+import { PageShell } from '@/components/common/PageShell';
 
 type GuildPageProps = Readonly<{
   player: Player & { level: number };
@@ -95,15 +94,11 @@ export function GuildPage({ player, onPlayerUpdate, onBack }: GuildPageProps) {
   };
 
   return (
-    <>
-      <Toaster position="top-center" richColors />
-      <div className="flex flex-col w-full min-h-full bg-background overflow-hidden">
-        <Header player={player} />
-
+    <PageShell player={player} onBack={onBack} title="Guilds">
+      <div className="flex min-h-full flex-col bg-background">
         {view === 'hub' && (
           <GuildHubView
             playerColor={playerColor}
-            onBack={onBack}
             onCreate={() => setCreateDrawerOpen(true)}
             onBrowse={() => setView('browse')}
           />
@@ -127,7 +122,6 @@ export function GuildPage({ player, onPlayerUpdate, onBack }: GuildPageProps) {
             player={player}
             playerColor={playerColor}
             leaving={leaving}
-            onBack={onBack}
             onLeave={() => setLeaveDrawerOpen(true)}
           />
         )}
@@ -155,6 +149,6 @@ export function GuildPage({ player, onPlayerUpdate, onBack }: GuildPageProps) {
         onConfirm={() => void handleLeave()}
         loading={leaving}
       />
-    </>
+    </PageShell>
   );
 }

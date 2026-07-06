@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
-import { Header } from '../components/layout/Header';
-import { Toaster } from '../components/ui/sonner';
+import { PageShell } from '../components/common/PageShell';
 import { RaidIntroView } from '../components/guild-raid/RaidIntroView';
 import { RaidBattleView } from '../components/guild-raid/RaidBattleView';
 import { RaidResultView } from '../components/guild-raid/RaidResultView';
@@ -150,11 +149,8 @@ export function GuildRaidPage({
   void ACTION_DAILY_CAPS;
 
   return (
-    <>
-      <Toaster position="top-center" richColors />
-      <div className="flex flex-col w-full min-h-full bg-background overflow-hidden">
-        <Header player={player} />
-
+    <PageShell player={player} onBack={onBack} title="Guild Raid">
+      <div className="flex min-h-full flex-col bg-background">
         {phase === 'intro' && (
           <RaidIntroView
             guild={guild}
@@ -192,6 +188,6 @@ export function GuildRaidPage({
           />
         )}
       </div>
-    </>
+    </PageShell>
   );
 }

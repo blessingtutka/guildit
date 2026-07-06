@@ -45,9 +45,10 @@ export function NotificationBell({
 
       <DropdownMenuContent
         align="end"
+        side="bottom"
         sideOffset={8}
         collisionPadding={12}
-        className="w-[calc(100vw-24px)] max-w-80 p-0 overflow-hidden"
+        className="z-[120] w-[min(320px,calc(100vw-24px))] p-0 overflow-hidden"
       >
         <DropdownMenuLabel className="px-4 py-3">
           Notifications

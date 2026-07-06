@@ -11,7 +11,7 @@ import {
   InviteDetailDrawer,
   type InviteDirection,
 } from '../components/duel/InviteDetailDrawer';
-import { Header } from '../components/layout/Header';
+import { PageShell } from '../components/common/PageShell';
 import { createDuelGame } from '../phaser/DuelGame';
 import type { DuelLogPayload } from '../phaser/scenes/BoardScene';
 
@@ -169,16 +169,14 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-background">
-      <Header
-        player={player}
-        onBack={handleHeaderBack}
-        title={pageTitle}
-        notifications={notifications}
-        onSelectNotification={handleSelectNotification}
-        onViewAllNotifications={handleViewAllNotifications}
-      />
-
+    <PageShell
+      player={player}
+      onBack={handleHeaderBack}
+      title={pageTitle}
+      notifications={notifications}
+      onSelectNotification={handleSelectNotification}
+      onViewAllNotifications={handleViewAllNotifications}
+    >
       {view === 'invitations' ? (
         <InvitationsPage
           incoming={incoming}
@@ -234,7 +232,7 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
           />
         </>
       )}
-    </div>
+    </PageShell>
   );
 }
 
@@ -262,19 +260,18 @@ function DuelReplay({
   }, [log]);
 
   return (
-    <div className="flex flex-col w-full h-full bg-background">
-      <Header
-        player={player}
-        onBack={onClose}
-        title="Conversation Duel"
-        notifications={notifications}
-        onSelectNotification={onSelectNotification}
-        onViewAllNotifications={onViewAllNotifications}
-      />
+    <PageShell
+      player={player}
+      onBack={onClose}
+      title="Conversation Duel"
+      notifications={notifications}
+      onSelectNotification={onSelectNotification}
+      onViewAllNotifications={onViewAllNotifications}
+    >
       <div
         ref={containerRef}
-        className="flex-1 flex items-center justify-center"
+        className="flex min-h-full items-center justify-center"
       />
-    </div>
+    </PageShell>
   );
 }

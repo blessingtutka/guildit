@@ -28,8 +28,10 @@ export function Header({
   onViewAllNotifications,
 }: HeaderProps) {
   const meta = player?.class ? CLASS_META[player.class] : null;
-  const showBell =
-    !!notifications && !!onSelectNotification && !!onViewAllNotifications;
+  const bellNotifications = notifications ?? [];
+  const handleSelectNotification = onSelectNotification ?? (() => undefined);
+  const handleViewAllNotifications =
+    onViewAllNotifications ?? (() => undefined);
 
   return (
     <header className="flex items-center gap-3 px-3 py-2.5 border-b border-border bg-card shrink-0">
@@ -67,13 +69,11 @@ export function Header({
 
       {!title && <div className="flex-1 min-w-0" />}
 
-      {showBell && (
-        <NotificationBell
-          notifications={notifications!}
-          onSelect={onSelectNotification!}
-          onViewAll={onViewAllNotifications!}
-        />
-      )}
+      <NotificationBell
+        notifications={bellNotifications}
+        onSelect={handleSelectNotification}
+        onViewAll={handleViewAllNotifications}
+      />
 
       {player && meta && (
         <div className="flex items-center gap-2 shrink-0">

@@ -3,7 +3,7 @@ import { CLASS_META } from '../../../shared/web';
 import { CLASS_COLORS } from '../../lib/class-colors';
 import type { Player, PlayerClass, GuildStatus } from '../../../shared/api';
 import { ClassIcon } from '../common/ClassIcon';
-import { ChevronLeft, Landmark } from 'lucide-react';
+import { Landmark } from 'lucide-react';
 
 const ALL_CLASSES: PlayerClass[] = ['RANGER', 'MENDER', 'WARDER', 'WEAVER'];
 
@@ -12,7 +12,6 @@ type MyGuildViewProps = Readonly<{
   player: Player & { level: number };
   playerColor: string;
   leaving: boolean;
-  onBack: () => void;
   onLeave: () => void;
 }>;
 
@@ -21,18 +20,10 @@ export function MyGuildView({
   player,
   playerColor,
   leaving,
-  onBack,
   onLeave,
 }: MyGuildViewProps) {
   return (
     <div className="flex flex-col flex-1 px-4 py-4 gap-4 overflow-y-auto">
-      <button
-        onClick={onBack}
-        className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
-      >
-        <ChevronLeft className="size-3.5" /> Back
-      </button>
-
       {/* Guild Header */}
       <div className="bg-card border border-border rounded-2xl p-5 text-center relative overflow-hidden">
         <div

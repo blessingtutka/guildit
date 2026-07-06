@@ -1,4 +1,4 @@
-import type React from 'react';
+import type { ReactNode } from 'react';
 import { Header } from '../layout/Header';
 import type { Player } from '../../../shared/api';
 
@@ -6,8 +6,13 @@ type PageShellProps = Readonly<{
   player?: Player | null;
   onBack?: () => void;
   title?: string;
-  children: React.ReactNode;
-  overlay?: React.ReactNode;
+  children: ReactNode;
+  overlay?: ReactNode;
+  notifications?: import('../../../shared/web').AppNotification[];
+  onSelectNotification?: (
+    notification: import('../../../shared/web').AppNotification
+  ) => void;
+  onViewAllNotifications?: () => void;
 }>;
 
 export function PageShell({
@@ -16,16 +21,28 @@ export function PageShell({
   title,
   children,
   overlay,
+  notifications,
+  onSelectNotification,
+  onViewAllNotifications,
 }: PageShellProps) {
   return (
-    <div className="flex flex-col w-full h-full bg-background overflow-hidden">
+    <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-background">
       <Header
         {...(player === undefined ? {} : { player: player ?? null })}
         {...(onBack === undefined ? {} : { onBack })}
         {...(title === undefined ? {} : { title })}
+        {...(notifications === undefined ? {} : { notifications })}
+        {...(onSelectNotification === undefined
+          ? {}
+          : { onSelectNotification })}
+        {...(onViewAllNotifications === undefined
+          ? {}
+          : { onViewAllNotifications })}
       />
       {overlay}
-      <div className="flex flex-col flex-1 overflow-y-auto">{children}</div>
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
+        {children}
+      </div>
     </div>
   );
 }

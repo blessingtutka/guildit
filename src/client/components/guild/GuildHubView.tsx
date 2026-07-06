@@ -1,34 +1,19 @@
-import {
-  ChevronLeft,
-  Landmark,
-  Search,
-  UserRound,
-  UsersRound,
-  X,
-} from 'lucide-react';
+import { Landmark, Search, UserRound, UsersRound, X } from 'lucide-react';
 import { GUILD_MULTIPLIERS } from '../../../shared/api';
 
 type GuildHubViewProps = Readonly<{
   playerColor: string;
-  onBack: () => void;
   onCreate: () => void;
   onBrowse: () => void;
 }>;
 
 export function GuildHubView({
   playerColor,
-  onBack,
   onCreate,
   onBrowse,
 }: GuildHubViewProps) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center gap-6 px-6 py-8">
-      <button
-        onClick={onBack}
-        className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ChevronLeft className="size-3.5" /> Back
-      </button>
       <div className="text-center flex flex-col items-center gap-2">
         <Landmark className="size-12 text-foreground mb-3" />
         <h1 className="font-display text-2xl font-bold tracking-wider text-foreground mb-2">

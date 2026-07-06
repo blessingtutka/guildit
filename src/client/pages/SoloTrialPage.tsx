@@ -1,7 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
-import { Header } from '../components/layout/Header';
-import { Toaster } from '../components/ui/sonner';
 import { TrialIntroView } from '../components/solo-trial/TrialIntroView';
 import { TrialPlayView } from '../components/solo-trial/TrialPlayView';
 import { TrialCompleteView } from '../components/solo-trial/TrialCompleteView';
@@ -9,6 +7,7 @@ import { useAction } from '../hooks/useAction';
 import { classColor } from '../lib/class-colors';
 import type { Player, PlayerClass, ActionType } from '../../shared/api';
 import { CLASS_ACTIONS, ACTION_BASE_POINTS } from '../../shared/api';
+import { PageShell } from '@/components/common/PageShell';
 
 type SoloTrialPageProps = Readonly<{
   player: Player & { level: number };
@@ -93,11 +92,8 @@ export function SoloTrialPage({
   );
 
   return (
-    <>
-      <Toaster position="top-center" richColors />
-      <div className="flex flex-col w-full min-h-full bg-background overflow-hidden">
-        <Header player={player} />
-
+    <PageShell player={player} onBack={onBack} title="Solo Trial">
+      <div className="flex min-h-full flex-col bg-background">
         {trialState === 'intro' && (
           <TrialIntroView
             actions={actions}
@@ -130,6 +126,6 @@ export function SoloTrialPage({
           />
         )}
       </div>
-    </>
+    </PageShell>
   );
 }
