@@ -5,6 +5,7 @@ import type {
 } from '../../shared/notification';
 import { NotFoundError, ConflictError } from '../utils/errors';
 import { publishToUser } from '../utils/realtime';
+import { JsonValue } from '@devvit/web/shared';
 
 const NOTIFICATION_TTL_SECONDS = 14 * 24 * 60 * 60; // 2 weeks
 const MAX_STORED_PER_USER = 50;
@@ -55,11 +56,11 @@ export async function createNotification(
     await Promise.all(toDrop.map((oldId) => redis.del(notifKey(oldId))));
   }
 
-  const notificationJson = JSON.stringify(notification);
+  const jsonSafeNotification = JSON.parse(
+    JSON.stringify(notification)
+  ) as JsonValue;
 
-  // Best-effort push. Never blocks or throws — see realtime.ts for why.
-  await publishToUser(input.userId, notificationJson);
-
+  await publishToUser(input.userId, jsonSafeNotification);
   return notification;
 }
 
