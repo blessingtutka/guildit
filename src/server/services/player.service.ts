@@ -25,23 +25,66 @@ function hydratePlayer(
   };
 }
 
+// helper: get the payer snoovatar
+export async function getSnoovatar(
+  redis: RedisClient,
+  userId: string,
+  reddit: { getSnoovatarUrl(username: string): Promise<string | undefined> }
+): Promise<string | null> {
+  const key = `player:${userId}`;
+  const existing = await redis.hGetAll(key);
+  if (!existing || !existing.userId) {
+    throw new NotFoundError(`Player ${userId} not found`);
+  }
+  if (existing.snoovatar) return existing.snoovatar;
+
+  try {
+    const snoovatar = await reddit.getSnoovatarUrl(existing.username!);
+    if (snoovatar) {
+      await redis.hSet(key, { snoovatar });
+      return snoovatar;
+    }
+  } catch (err) {
+    console.warn('[player.service] getSnoovatar failed:', err);
+  }
+  return null;
+}
+
 // create or get player
 export async function createOrGetPlayer(
   redis: RedisClient,
   userId: string,
   username: string,
-  snoovatar?: string
+  reddit?: { getSnoovatarUrl(username: string): Promise<string | undefined> }
 ): Promise<Player & { level: number }> {
   const key = `player:${userId}`;
   const existing = await redis.hGetAll(key);
 
   if (existing && existing.userId) {
-    // Update snoovatar if it changed
-    if (snoovatar && existing.snoovatar !== snoovatar) {
-      await redis.hSet(key, { snoovatar });
-      return hydratePlayer(userId, { ...existing, snoovatar });
+    // Existing player, but snoovatar was never captured (first attempt
+    // failed, or they had no Snoovatar set at signup time and got one
+    // since) — retry now, best-effort, and persist it if we get one.
+    if (!existing.snoovatar && reddit) {
+      try {
+        const snoovatar = await reddit.getSnoovatarUrl(username);
+        if (snoovatar) {
+          await redis.hSet(key, { snoovatar });
+          existing.snoovatar = snoovatar;
+        }
+      } catch (err) {
+        console.warn('[player.service] Retry snoovatar fetch failed:', err);
+      }
     }
     return hydratePlayer(userId, existing);
+  }
+
+  let snoovatar: string | null = null;
+  if (reddit) {
+    try {
+      snoovatar = (await reddit.getSnoovatarUrl(username)) || null;
+    } catch (err) {
+      console.warn('[player.service] Failed to fetch snoovatar:', err);
+    }
   }
 
   await redis.hSet(key, {
@@ -50,7 +93,7 @@ export async function createOrGetPlayer(
     class: '',
     points: '0',
     guildId: '',
-    snoovatar: snoovatar ?? '',
+    snoovatar: snoovatar || '',
   });
 
   return {
@@ -60,7 +103,7 @@ export async function createOrGetPlayer(
     points: 0,
     level: 1,
     guildId: null,
-    snoovatar: snoovatar ?? null,
+    snoovatar,
   };
 }
 

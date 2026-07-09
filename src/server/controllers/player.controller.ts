@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { redis } from '@devvit/web/server';
+import { redis, reddit } from '@devvit/web/server';
 import * as playerService from '../services/player.service';
 import { handleError } from '../utils/handle-error';
 import { ValidationError } from '../utils/errors';
@@ -12,7 +12,6 @@ export async function getOrCreatePlayer(c: Context) {
     const userId = (body.userId as string | undefined)?.trim();
     const username =
       (body.username as string | undefined)?.trim() || 'anonymous';
-    const snoovatar = (body.snoovatar as string | undefined)?.trim();
 
     if (!userId) throw new ValidationError('userId is required');
 
@@ -20,7 +19,7 @@ export async function getOrCreatePlayer(c: Context) {
       redis,
       userId,
       username,
-      snoovatar
+      reddit
     );
     return c.json(player);
   } catch (error) {
