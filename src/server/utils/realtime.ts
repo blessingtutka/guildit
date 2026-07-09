@@ -2,7 +2,7 @@ import { realtime } from '@devvit/web/server';
 import { JsonValue } from '@devvit/web/shared';
 
 export function userChannel(userId: string): string {
-  return `user:${userId}:notifications`;
+  return `user_${userId}_notifications`;
 }
 
 // publishToUser

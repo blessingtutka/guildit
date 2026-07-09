@@ -1,11 +1,17 @@
 export type NotificationType =
+  // Duel notification
   | 'duel_invite'
   | 'duel_accepted'
   | 'duel_declined'
+
+  // guild notification
   | 'guild_invite'
   | 'guild_joined'
   | 'level_up'
-  | 'raid_result';
+  | 'raid_result'
+
+  // Action notification
+  | 'points_earned';
 
 export interface AppNotification {
   id: string;
