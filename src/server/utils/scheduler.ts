@@ -1,5 +1,5 @@
 export interface DelayedCheckPayload {
-  action: 'CHECK_POST_SCORE' | 'CHECK_COMMENT_SCORE';
+  action: 'CHECK_POST_SCORE' | 'CHECK_COMMENT_SCORE' | 'CHECK_REPLY_CHAIN';
   userId: string;
   redditId: string;
   [key: string]: string;

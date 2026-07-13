@@ -6,13 +6,11 @@ import { scheduleDelayedCheck } from '../utils/scheduler';
 import { classifyText } from '../utils/content-heuristics';
 import { createNotification } from '../services/notification.service';
 import type { RedisClient as TriggerRedis } from '@devvit/public-api';
-import type {
-  RedisClient,
-  RedisClient as ServerRedis,
-} from '@devvit/web/server';
+import type { RedisClient } from '@devvit/web/server';
 
 const CRAFT_CHECK_DELAY_MS = 24 * 60 * 60 * 1000;
 const COUNSEL_CHECK_DELAY_MS = 12 * 60 * 60 * 1000;
+const INSPIRE_CHECK_DELAY_MS = 24 * 60 * 60 * 1000;
 
 const CLASS_AVATAR_COLOR: Record<PlayerClass, string> = {
   RANGER: '#E07B39',
@@ -21,8 +19,8 @@ const CLASS_AVATAR_COLOR: Record<PlayerClass, string> = {
   WEAVER: '#9B59B6',
 };
 
-export function asServerRedis(redis: TriggerRedis): ServerRedis {
-  return redis as unknown as ServerRedis;
+export function asServerRedis(redis: TriggerRedis): RedisClient {
+  return redis as unknown as RedisClient;
 }
 
 async function getPlayer(redis: RedisClient, userId: string) {
@@ -59,6 +57,16 @@ Devvit.addTrigger({
     const body = event.comment?.body;
     if (!userId || !commentId) return;
 
+    let parentId = event.comment?.parentId;
+    if (!parentId) {
+      try {
+        const fullComment = await context.reddit.getCommentById(commentId);
+        parentId = fullComment?.parentId;
+      } catch (err) {
+        console.warn('[reddit-events] Could not resolve parentId:', err);
+      }
+    }
+
     const player = await getPlayer(redis, userId);
     if (!player?.userId || !player.class) return;
 
@@ -66,7 +74,9 @@ Devvit.addTrigger({
     const classification = classifyText(body);
 
     const event_ = classification.isDefendingUser
-      ? 'DEFENSE_REPLY'
+      ? playerClass === 'WARDER'
+        ? 'WARDER_GUARD'
+        : 'DEFENSE_REPLY'
       : classification.isSupportiveContext
         ? 'SUPPORTIVE_REPLY'
         : 'COMMENT_CREATED';
@@ -88,12 +98,51 @@ Devvit.addTrigger({
         player.username!,
         playerClass,
         points,
-        event_ === 'DEFENSE_REPLY'
-          ? 'Defended someone in a comment'
-          : event_ === 'SUPPORTIVE_REPLY'
-            ? 'Wrote a supportive comment'
-            : 'Commented'
+        event_ === 'WARDER_GUARD'
+          ? 'Defended someone as a Warder'
+          : event_ === 'DEFENSE_REPLY'
+            ? 'Defended someone in a comment'
+            : event_ === 'SUPPORTIVE_REPLY'
+              ? 'Wrote a supportive comment'
+              : 'Commented'
       );
+    }
+
+    if (parentId) {
+      try {
+        const isCommentParent = parentId.startsWith('t1_');
+        const parentAuthorId = isCommentParent
+          ? (await context.reddit.getCommentById(parentId))?.authorId
+          : (await context.reddit.getPostById(parentId))?.authorId;
+
+        if (parentAuthorId && parentAuthorId !== userId) {
+          const parentPlayer = await getPlayer(redis, parentAuthorId);
+          if (parentPlayer?.userId && parentPlayer.class) {
+            const parentClass = parentPlayer.class as PlayerClass;
+            const replyPoints = calculatePassivePoints('REPLY_RECEIVED', {
+              upvotesReceived: 0,
+              repliesTriggered: 0,
+              isDefendingUser: false,
+              isSupportiveContext: false,
+              threadSentiment: 'neutral',
+              playerClass: parentClass,
+            });
+            if (replyPoints !== 0) {
+              await addPoints(redis, parentAuthorId, replyPoints);
+              await notifyPointsEarned(
+                redis,
+                parentAuthorId,
+                parentPlayer.username!,
+                parentClass,
+                replyPoints,
+                'Someone replied to you'
+              );
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('[reddit-events] REPLY_RECEIVED check skipped:', err);
+      }
     }
 
     if (playerClass === 'MENDER') {
@@ -101,6 +150,14 @@ Devvit.addTrigger({
         context,
         { action: 'CHECK_COMMENT_SCORE', userId, redditId: commentId },
         COUNSEL_CHECK_DELAY_MS
+      );
+    }
+
+    if (playerClass === 'WEAVER') {
+      await scheduleDelayedCheck(
+        context,
+        { action: 'CHECK_REPLY_CHAIN', userId, redditId: commentId },
+        INSPIRE_CHECK_DELAY_MS
       );
     }
   },
