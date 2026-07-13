@@ -1,25 +1,6 @@
 import { useCallback, useState } from 'react';
-import type { ActionType, Player } from '../../shared/api';
-
-export interface ActionResult {
-  player: Player & { level: number };
-  pointsEarned: number;
-  leveledUp: boolean;
-  remainingToday: number;
-}
-
-export interface ActionStatus {
-  cap: number;
-  usedToday: number;
-  remaining: number;
-}
-
-interface ActionState {
-  statuses: Partial<Record<ActionType, ActionStatus>>;
-  lastResult: ActionResult | null;
-  loading: boolean;
-  error: string | null;
-}
+import type { ActionType, ActionStatus, Player } from '../../shared/api';
+import { SYSTEM_VERIFIED_ACTIONS } from '../../shared/api';
 
 interface ApiError {
   status: 'error';
@@ -28,118 +9,97 @@ interface ApiError {
 
 async function parseOrThrow<T>(res: Response): Promise<T> {
   const data = await res.json();
-  if (!res.ok) {
+  if (!res.ok)
     throw new Error((data as ApiError).message || `HTTP ${res.status}`);
-  }
   return data as T;
 }
 
-export function useAction(userId: string | null) {
-  const [state, setState] = useState<ActionState>({
-    statuses: {},
-    lastResult: null,
-    loading: false,
-    error: null,
-  });
+export function isSystemVerified(action: ActionType): boolean {
+  return SYSTEM_VERIFIED_ACTIONS.includes(action);
+}
 
+export interface PerformResult {
+  player: Player & { level: number };
+  action: ActionType;
+  pointsEarned: number;
+  leveledUp: boolean;
+  remainingToday: number;
+}
+
+export function useAction(userId: string | null) {
+  const [statuses, setStatuses] = useState<
+    Partial<Record<ActionType, ActionStatus>>
+  >({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetches status for exactly the actions the caller cares about — no
+  // assumption about class membership baked into the hook itself.
+  const fetchAllStatuses = useCallback(
+    async (actions: ActionType[]) => {
+      if (!userId || actions.length === 0) return;
+      try {
+        setLoading(true);
+        const results = await Promise.all(
+          actions.map((action) =>
+            fetch(
+              `/api/action/status?userId=${encodeURIComponent(userId)}&action=${action}`
+            )
+              .then((res) => parseOrThrow<ActionStatus>(res))
+              .then((status) => [action, status] as const)
+          )
+        );
+        setStatuses(Object.fromEntries(results));
+      } catch (err) {
+        console.error('Failed to load action statuses:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load actions');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userId]
+  );
+
+  // Returns null on failure (instead of throwing) so callers can do
+  // `if (result) { ... }` without a try/catch at every call site — the
+  // error is captured in state instead, for a toast/banner to show.
   const perform = useCallback(
-    async (action: ActionType): Promise<ActionResult | null> => {
+    async (action: ActionType): Promise<PerformResult | null> => {
       if (!userId) return null;
       try {
-        setState((s) => ({ ...s, loading: true, error: null }));
         const res = await fetch('/api/action', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId, action }),
         });
-        const result = await parseOrThrow<ActionResult>(res);
-        setState((s) => ({
-          ...s,
-          loading: false,
-          lastResult: result,
-          // update the status for this action
-          statuses: {
-            ...s.statuses,
+        const result = await parseOrThrow<PerformResult>(res);
+
+        setStatuses((prev) => {
+          const existing = prev[action];
+          const cap = existing?.cap ?? result.remainingToday + 1;
+          return {
+            ...prev,
             [action]: {
-              ...(s.statuses[action] ?? { cap: 1, usedToday: 0 }),
-              usedToday:
-                (s.statuses[action]?.usedToday ?? 0) +
-                1,
+              cap,
+              usedToday: cap - result.remainingToday,
               remaining: result.remainingToday,
             },
-          },
-        }));
+          };
+        });
+
         return result;
       } catch (err) {
-        const msg =
-          err instanceof Error ? err.message : 'Failed to perform action';
-        setState((s) => ({ ...s, loading: false, error: msg }));
-        return null;
-      }
-    },
-    [userId]
-  );
-
-  const fetchStatus = useCallback(
-    async (action: ActionType): Promise<ActionStatus | null> => {
-      if (!userId) return null;
-      try {
-        const res = await fetch(
-          `/api/action/status?userId=${userId}&action=${action}`
+        console.error('Failed to perform action:', err);
+        setError(
+          err instanceof Error ? err.message : 'Failed to perform action'
         );
-        const data = await parseOrThrow<ActionStatus>(res);
-        setState((s) => ({
-          ...s,
-          statuses: { ...s.statuses, [action]: data },
-        }));
-        return data;
-      } catch {
         return null;
       }
     },
     [userId]
   );
 
-  const fetchAllStatuses = useCallback(
-    async (actions: ActionType[]) => {
-      if (!userId) return;
-      const results = await Promise.all(
-        actions.map((a) =>
-          fetch(`/api/action/status?userId=${userId}&action=${a}`)
-            .then((r) => r.json() as Promise<ActionStatus>)
-            .then((d) => [a, d] as [ActionType, ActionStatus])
-            .catch(() => null)
-        )
-      );
-      const newStatuses: Partial<Record<ActionType, ActionStatus>> = {};
-      for (const r of results) {
-        if (r) newStatuses[r[0]] = r[1];
-      }
-      setState((s) => ({
-        ...s,
-        statuses: { ...s.statuses, ...newStatuses },
-      }));
-    },
-    [userId]
-  );
+  const clearError = useCallback(() => setError(null), []);
 
-  const clearError = useCallback(() => {
-    setState((s) => ({ ...s, error: null }));
-  }, []);
-
-  const clearLastResult = useCallback(() => {
-    setState((s) => ({ ...s, lastResult: null }));
-  }, []);
-
-  return {
-    statuses: state.statuses,
-    lastResult: state.lastResult,
-    loading: state.loading,
-    error: state.error,
-    perform,
-    fetchStatus,
-    fetchAllStatuses,
-    clearError,
-    clearLastResult,
-  } as const;
+  return { statuses, loading, error, clearError, perform, fetchAllStatuses };
 }

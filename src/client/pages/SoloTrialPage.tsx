@@ -6,7 +6,7 @@ import { TrialCompleteView } from '../components/solo-trial/TrialCompleteView';
 import { useAction } from '../hooks/useAction';
 import { classColor } from '../lib/class-colors';
 import type { Player, PlayerClass, ActionType } from '../../shared/api';
-import { CLASS_ACTIONS, ACTION_BASE_POINTS } from '../../shared/api';
+import { MANUAL_CLASS_ACTIONS, ACTION_BASE_POINTS } from '../../shared/api';
 import { PageShell } from '@/components/common/PageShell';
 
 type SoloTrialPageProps = Readonly<{
@@ -30,7 +30,8 @@ export function SoloTrialPage({
 }: SoloTrialPageProps) {
   const playerClass = player.class as PlayerClass;
   const color = classColor(playerClass);
-  const actions = CLASS_ACTIONS[playerClass];
+
+  const actions = MANUAL_CLASS_ACTIONS[playerClass];
 
   const [trialState, setTrialState] = useState<TrialState>('intro');
   const [cards, setCards] = useState<CardState[]>(
@@ -50,7 +51,9 @@ export function SoloTrialPage({
 
   useEffect(() => {
     void fetchAllStatuses(actions);
-  }, [fetchAllStatuses, actions]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAllStatuses, playerClass]);
 
   useEffect(() => {
     if (error) {
@@ -65,7 +68,7 @@ export function SoloTrialPage({
       if (!card || card.flipped || flipping) return;
       const status = statuses[action];
       if (status && status.remaining <= 0) {
-        toast.error('⏳ No uses left for this action today');
+        toast.error('No uses left for this action today');
         return;
       }
 
@@ -77,13 +80,16 @@ export function SoloTrialPage({
         onPlayerUpdate(result.player);
         setTotalEarned((t) => t + result.pointsEarned);
         if (result.leveledUp) setLeveledUp(true);
-        setCards((prev) => {
-          const next = prev.map((c, idx) =>
+
+        const remainingUnflipped = cards.filter((c) => !c.flipped).length;
+
+        setCards((prev) =>
+          prev.map((c, idx) =>
             idx === cardIdx ? { ...c, flipped: true as const } : c
-          );
-          return next;
-        });
-        if (cards.filter((c) => !c.flipped).length === 1) {
+          )
+        );
+
+        if (remainingUnflipped === 1) {
           setTimeout(() => setTrialState('complete'), 500);
         }
       }

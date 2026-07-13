@@ -1,8 +1,8 @@
 import { ProgressBar } from '../common/ProgressBar';
 import { ACTION_LABELS } from '../../../shared/web';
-import type { ActionType } from '../../../shared/api';
-import type { ActionStatus } from '../../hooks/useAction';
-import { Check, ChevronLeft, Sparkles } from 'lucide-react';
+import { isSystemVerified } from '../../hooks/useAction';
+import type { ActionType, ActionStatus } from '../../../shared/api';
+import { Check, ChevronLeft, Sparkles, ShieldCheck } from 'lucide-react';
 
 type CardState = {
   action: ActionType;
@@ -65,6 +65,7 @@ export function TrialPlayView({
           const status = statuses[card.action];
           const available = !status || status.remaining > 0;
           const isFlipping = flipping === card.action;
+          const isAuto = isSystemVerified(card.action);
 
           return (
             <div
@@ -82,33 +83,47 @@ export function TrialPlayView({
                 {/* Front (unflipped) */}
                 <button
                   type="button"
-                  onClick={() => onFlip(card.action, i)}
-                  disabled={card.flipped || !!flipping}
+                  onClick={() => !isAuto && onFlip(card.action, i)}
+                  disabled={
+                    card.flipped || !!flipping || (isAuto && !available)
+                  }
                   className={`absolute inset-0 w-full h-full rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all duration-200 ${
                     card.flipped
                       ? 'pointer-events-none'
-                      : available
-                        ? 'cursor-pointer hover:scale-105 hover:shadow-lg active:scale-95'
-                        : 'cursor-not-allowed opacity-40'
+                      : isAuto
+                        ? 'cursor-default'
+                        : available
+                          ? 'cursor-pointer hover:scale-105 hover:shadow-lg active:scale-95'
+                          : 'cursor-not-allowed opacity-40'
                   }`}
                   style={{
                     backfaceVisibility: 'hidden',
                     backgroundColor: `${color}15`,
-                    borderColor: `${color}`,
+                    borderColor: isAuto ? `${color}80` : color,
+                    borderStyle: isAuto ? 'dashed' : 'solid',
                   }}
                 >
                   {isFlipping ? (
                     <Sparkles className="size-7.5 text-foreground animate-spin" />
                   ) : (
                     <>
-                      <img
-                        src="/logo.png"
-                        alt="Guildit Logo"
-                        className="h-20"
-                      />
+                      {isAuto ? (
+                        <ShieldCheck className="size-8" style={{ color }} />
+                      ) : (
+                        <img
+                          src="/logo.png"
+                          alt="Guildit Logo"
+                          className="h-20"
+                        />
+                      )}
                       <span className="text-xs font-semibold text-muted-foreground">
                         {ACTION_LABELS[card.action].label}
                       </span>
+                      {isAuto && (
+                        <span className="text-[10px] text-muted-foreground text-center px-2 leading-tight">
+                          Earned automatically — post real content to unlock
+                        </span>
+                      )}
                     </>
                   )}
                 </button>

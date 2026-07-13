@@ -1,8 +1,7 @@
+import { ChevronLeft, Sparkles } from 'lucide-react';
 import { ACTION_LABELS } from '../../../shared/web';
-import { ACTION_BASE_POINTS } from '../../../shared/api';
-import type { ActionType } from '../../../shared/api';
-import type { ActionStatus } from '../../hooks/useAction';
-import { ChevronLeft, Sword } from 'lucide-react';
+import type { ActionType, ActionStatus } from '../../../shared/api';
+import { ACTION_BASE_POINTS, ACTION_DAILY_CAPS } from '../../../shared/api';
 
 type TrialIntroViewProps = Readonly<{
   actions: ActionType[];
@@ -19,63 +18,82 @@ export function TrialIntroView({
   onStart,
   onBack,
 }: TrialIntroViewProps) {
+  const anyAvailable = actions.some((a) => {
+    const s = statuses[a];
+    return !s || s.remaining > 0;
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center gap-6 px-6 py-8 text-center">
-      <Sword
-        className="w-24 h-24 rounded-full flex items-center justify-center text-5xl animate-bounce-subtle"
-        style={{ background: `${color}20` }}
-      />
-      <div>
-        <h1 className="font-display text-2xl font-bold tracking-wider text-foreground mb-2">
+    <div className="flex flex-col flex-1 px-4 py-4 gap-4">
+      <button
+        onClick={onBack}
+        className="text-sm text-muted-foreground flex items-center gap-1 hover:text-foreground self-start"
+      >
+        <ChevronLeft className="size-3.5" /> Back
+      </button>
+
+      <div className="text-center flex flex-col items-center gap-2 mt-2">
+        <Sparkles className="size-10" style={{ color }} />
+        <h1
+          className="font-display text-xl font-bold tracking-wide"
+          style={{ color }}
+        >
           Solo Trial
         </h1>
-        <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-          Flip all 4 action cards to complete your trial and earn points. Each
-          card uses one of your daily action slots.
+        <p className="text-sm text-muted-foreground max-w-xs">
+          Flip each card to complete a class action and earn points. Some
+          actions are limited to a set number of uses per day.
         </p>
       </div>
 
-      {/* Action preview */}
-      <div className="w-full max-w-sm bg-card border border-border rounded-2xl p-4 space-y-2">
-        {actions.map((a) => {
-          const status = statuses[a];
-          const canUse = !status || status.remaining > 0;
+      <div className="flex flex-col gap-2 mt-2">
+        {actions.map((action) => {
+          const status = statuses[action];
+          const remaining = status?.remaining ?? ACTION_DAILY_CAPS[action];
+          const cap = status?.cap ?? ACTION_DAILY_CAPS[action];
+          const depleted = remaining <= 0;
+
           return (
-            <div key={a} className="flex items-center justify-between text-sm">
-              <span
-                className={
-                  canUse
-                    ? 'text-foreground'
-                    : 'text-muted-foreground line-through'
-                }
-              >
-                {ACTION_LABELS[a].label}
-              </span>
-              <span
-                className="font-bold"
-                style={{ color: canUse ? color : undefined }}
-              >
-                +{ACTION_BASE_POINTS[a]} pts
-              </span>
+            <div
+              key={action}
+              className="flex items-center justify-between p-3 rounded-xl border"
+              style={{
+                borderColor: depleted ? 'var(--color-border)' : `${color}40`,
+                backgroundColor: depleted ? 'transparent' : `${color}0d`,
+                opacity: depleted ? 0.5 : 1,
+              }}
+            >
+              <div>
+                <p className="text-sm font-semibold text-foreground">
+                  {ACTION_LABELS[action].label}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {ACTION_LABELS[action].description}
+                </p>
+              </div>
+              <div className="text-right shrink-0 ml-3">
+                <p className="text-sm font-bold" style={{ color }}>
+                  +{ACTION_BASE_POINTS[action]}
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                  {remaining}/{cap} today
+                </p>
+              </div>
             </div>
           );
         })}
       </div>
 
-      <button
-        onClick={onStart}
-        className="w-full max-w-sm py-3.5 rounded-xl font-bold text-white text-lg transition-all hover:scale-105 hover:shadow-lg active:scale-95"
-        style={{ backgroundColor: color }}
-      >
-        Begin Trial
-      </button>
-      <button
-        onClick={onBack}
-        className="w-full max-w-sm text-sm text-muted-foreground rounded-xl hover:text-foreground flex items-center justify-center gap-1 py-2.5 border border-muted-foreground
-          hover:border-foreground transition-colors"
-      >
-        <ChevronLeft className="size-3.5" /> Back
-      </button>
+      <div className="mt-auto pt-2">
+        <button
+          onClick={onStart}
+          disabled={!anyAvailable}
+          className="w-full py-3.5 rounded-xl font-bold text-white text-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:scale-105 active:enabled:scale-95"
+          style={{ backgroundColor: color }}
+        >
+          {anyAvailable ? 'Start Trial' : 'All actions used today'}
+        </button>
+      </div>
     </div>
   );
 }

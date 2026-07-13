@@ -38,7 +38,9 @@ Devvit.addSchedulerJob<DelayedCheckPayload>({
         const comment = await reddit.getCommentById(redditId);
         const replyCount = (comment as any)?.numReplies ?? 0;
         if (replyCount >= INSPIRE_REPLY_THRESHOLD) {
-          await logAction(redis, userId, 'WEAVER_INSPIRE');
+          await logAction(redis, userId, 'WEAVER_INSPIRE', {
+            systemVerified: true,
+          });
         }
       }
     } catch (err) {
