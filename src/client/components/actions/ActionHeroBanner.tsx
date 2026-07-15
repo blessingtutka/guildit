@@ -1,18 +1,14 @@
-import { ProgressBar } from '../common/ProgressBar';
 import { CLASS_META } from '../../../shared/web';
 import type { Player, PlayerClass } from '../../../shared/api';
 
 type ActionHeroBannerProps = Readonly<{
   player: Player & { level: number };
-  usedToday: number;
-  totalPossible: number;
   color: string;
 }>;
 
 export function ActionHeroBanner({
   player,
-  usedToday,
-  totalPossible,
+
   color,
 }: ActionHeroBannerProps) {
   const meta = CLASS_META[player.class as PlayerClass];
@@ -40,19 +36,6 @@ export function ActionHeroBanner({
           {meta.name}
         </p>
         <p className="text-xs text-muted-foreground italic">{meta.tagline}</p>
-      </div>
-      <div className="mt-4">
-        <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
-          <span>Today's Actions</span>
-          <span>
-            {usedToday}/{totalPossible}
-          </span>
-        </div>
-        <ProgressBar
-          value={(usedToday / Math.max(totalPossible, 1)) * 100}
-          color={color}
-          animated
-        />
       </div>
     </div>
   );
