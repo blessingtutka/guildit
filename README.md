@@ -1,27 +1,59 @@
-## Devvit React Starter
+# GuildIt ⚔️
 
-A starter to build web applications on Reddit's developer platform
+A social fantasy game built on Reddit using Devvit.  
+Players join a class, earn points through Reddit interactions, complete challenges, duel other players, and contribute to their guild's progression.
 
-- [Devvit](https://developers.reddit.com/): A way to build and deploy immersive games on Reddit
-- [Vite](https://vite.dev/): For compiling the webView
-- [React](https://react.dev/): For UI
-- [Hono](https://hono.dev/): For backend logic
-- [Tailwind](https://tailwindcss.com/): For styles
-- [TypeScript](https://www.typescriptlang.org/): For type safety
+GuildIt transforms Reddit community activity into a cooperative game experience where positive contributions become rewards.
 
-## Getting Started
+## Tech Stack
 
-> Make sure you have Node 22 downloaded on your machine before running!
+- **Devvit** - Reddit game platform and app infrastructure
+- **React + TypeScript** - Frontend UI and game interface
+- **Vite** - WebView bundling and development
+- **Hono** - Backend API and server logic
+- **Tailwind CSS** - Styling
+- **Phaser** - Game engine powering the duel system (will be use for future advanced battle mechanics)
+- **Redis** - Game state, player data, progression, and leaderboard storage
 
-1. Run `npm create devvit@latest --template=react`
-2. Go through the installation wizard. You will need to create a Reddit account and connect it to Reddit developers
-3. Copy the command on the success page into your terminal
+## Features
 
-## Commands
+- 🏰 **Classes & Guilds**
+  - Choose between Ranger, Mender, Warder, and Weaver
+  - Build your guild and contribute to collective progress
 
-- `npm run dev`: Starts a development server where you can develop your application live on Reddit.
-- `npm run build`: Builds your client and server projects
-- `npm run deploy`: Uploads a new version of your app
-- `npm run launch`: Publishes your app for review
-- `npm run login`: Logs your CLI into Reddit
-- `npm run type-check`: Type checks, lints, and prettifies your app
+- 🎯 **Daily Trials**
+  - Complete class-based challenges
+  - Earn points through verified server-side actions
+
+- ⚔️ **Asynchronous Duels**
+  - Challenge other players with card-based battles
+  - Compete without requiring both players online at the same time
+
+- 🏆 **Leaderboard & Progression**
+  - Track player rankings based on earned points
+  - Compare individual and guild performance
+  - Climb the leaderboard through gameplay and community contributions
+
+## Development
+
+Requirements:
+
+- Node.js 22+
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the project:
+
+```bash
+npm run dev
+```
+
+## Looking for Collaborators
+
+GuildIt is only the beginning. I am looking for passionate developers, designers, and game creators who want to continue building something impactful around social gaming and community-driven experiences.
+
+If you are interested in exploring new game mechanics, improving the platform, or helping transform Reddit interactions into meaningful gameplay, feel free to reach out and join the journey.
