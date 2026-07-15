@@ -110,7 +110,7 @@ const Splash = () => {
           className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold py-3.5 rounded-full cursor-pointer transition-all hover:scale-[1.03] hover:shadow-lg active:scale-[0.97] text-base"
           onClick={(e) => requestExpandedMode(e.nativeEvent, 'game')}
         >
-          <Swords className="size-5" /> Pick Your Class
+          <Swords className="size-5" /> Start
         </button>
       </div>
     </div>
