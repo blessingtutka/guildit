@@ -6,8 +6,14 @@ import {
   CLASS_ACTIONS,
   SYSTEM_VERIFIED_ACTIONS,
 } from '../../shared/api';
-import { NotFoundError, ConflictError, RateLimitError } from '../utils/errors';
+import {
+  NotFoundError,
+  ConflictError,
+  RateLimitError,
+  ValidationError,
+} from '../utils/errors';
 import { addPoints } from './player.service';
+import { submitAnswer } from '../core/challenge.core';
 
 export interface ActionStatus {
   cap: number;
@@ -42,7 +48,7 @@ export async function getActionStatus(
   return { cap, usedToday: used, remaining: Math.max(cap - used, 0) };
 }
 
-// getClassActionStatus
+//  getClassActionStatus
 export async function getClassActionStatus(
   redis: RedisClient,
   userId: string,
@@ -65,18 +71,29 @@ export interface LogActionResult {
   pointsEarned: number;
   leveledUp: boolean;
   remainingToday: number;
+  challengeResult?: { correct: boolean; explanation?: string };
 }
 
 export async function logAction(
   redis: RedisClient,
   userId: string,
   action: ActionType,
-
-  options: { systemVerified?: boolean } = {}
+  options: {
+    systemVerified?: boolean;
+    challenge?: { challengeId: string; chosenOptionId: string };
+  } = {}
 ): Promise<LogActionResult> {
-  if (SYSTEM_VERIFIED_ACTIONS.includes(action) && !options.systemVerified) {
+  const isSystemAction = SYSTEM_VERIFIED_ACTIONS.includes(action);
+
+  if (isSystemAction && !options.systemVerified) {
     throw new ConflictError(
       `${action} is awarded automatically once verified — it can't be triggered manually`
+    );
+  }
+
+  if (!isSystemAction && !options.challenge) {
+    throw new ValidationError(
+      `${action} requires completing a challenge first — call GET /api/challenge, then submit the answer here`
     );
   }
 
@@ -106,20 +123,35 @@ export async function logAction(
     );
   }
 
-  const points = ACTION_BASE_POINTS[action];
+  // Resolve points
+  let points = ACTION_BASE_POINTS[action];
+  let challengeResult: LogActionResult['challengeResult'];
+
+  if (options.challenge) {
+    const result = submitAnswer(
+      options.challenge.challengeId,
+      options.challenge.chosenOptionId
+    );
+    points = Math.round(ACTION_BASE_POINTS[action] * result.scoreFraction);
+    challengeResult = {
+      correct: result.correct,
+      explanation: result.explanation,
+    };
+  }
 
   await redis.set(key, String(used + 1));
   if (used === 0) {
-    await redis.expire(key, 86400); // auto-reset after 24h
+    await redis.expire(key, 86400);
   }
 
-  const result = await addPoints(redis, userId, points);
+  const addResult = await addPoints(redis, userId, points);
 
   return {
-    player: result.player,
+    player: addResult.player,
     action,
     pointsEarned: points,
-    leveledUp: result.leveledUp,
+    leveledUp: addResult.leveledUp,
     remainingToday: cap - (used + 1),
+    challengeResult,
   };
 }

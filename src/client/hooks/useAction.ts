@@ -1,5 +1,11 @@
 import { useCallback, useState } from 'react';
-import type { ActionType, ActionStatus, Player } from '../../shared/api';
+import type {
+  ActionType,
+  ActionStatus,
+  Player,
+  PlayerClass,
+  ClientChallenge,
+} from '../../shared/api';
 import { SYSTEM_VERIFIED_ACTIONS } from '../../shared/api';
 
 interface ApiError {
@@ -24,6 +30,7 @@ export interface PerformResult {
   pointsEarned: number;
   leveledUp: boolean;
   remainingToday: number;
+  challengeResult?: { correct: boolean; explanation?: string };
 }
 
 export function useAction(userId: string | null) {
@@ -33,8 +40,6 @@ export function useAction(userId: string | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetches status for exactly the actions the caller cares about — no
-  // assumption about class membership baked into the hook itself.
   const fetchAllStatuses = useCallback(
     async (actions: ActionType[]) => {
       if (!userId || actions.length === 0) return;
@@ -60,17 +65,36 @@ export function useAction(userId: string | null) {
     [userId]
   );
 
-  // Returns null on failure (instead of throwing) so callers can do
-  // `if (result) { ... }` without a try/catch at every call site — the
-  // error is captured in state instead, for a toast/banner to show.
+  const fetchChallenge = useCallback(
+    async (playerClass: PlayerClass): Promise<ClientChallenge | null> => {
+      try {
+        const res = await fetch(
+          `/api/action/challenge?playerClass=${playerClass}`
+        );
+        return await parseOrThrow<ClientChallenge>(res);
+      } catch (err) {
+        console.error('Failed to load challenge:', err);
+        setError(
+          err instanceof Error ? err.message : 'Failed to load challenge'
+        );
+        return null;
+      }
+    },
+    []
+  );
+
   const perform = useCallback(
-    async (action: ActionType): Promise<PerformResult | null> => {
+    async (
+      action: ActionType,
+      challengeId: string,
+      chosenOptionId: string
+    ): Promise<PerformResult | null> => {
       if (!userId) return null;
       try {
         const res = await fetch('/api/action', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, action }),
+          body: JSON.stringify({ userId, action, challengeId, chosenOptionId }),
         });
         const result = await parseOrThrow<PerformResult>(res);
 
@@ -101,5 +125,13 @@ export function useAction(userId: string | null) {
 
   const clearError = useCallback(() => setError(null), []);
 
-  return { statuses, loading, error, clearError, perform, fetchAllStatuses };
+  return {
+    statuses,
+    loading,
+    error,
+    clearError,
+    perform,
+    fetchAllStatuses,
+    fetchChallenge,
+  };
 }

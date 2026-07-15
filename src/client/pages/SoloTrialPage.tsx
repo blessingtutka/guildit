@@ -3,9 +3,15 @@ import { toast } from 'sonner';
 import { TrialIntroView } from '../components/solo-trial/TrialIntroView';
 import { TrialPlayView } from '../components/solo-trial/TrialPlayView';
 import { TrialCompleteView } from '../components/solo-trial/TrialCompleteView';
+import { ChallengeModal } from '../components/solo-trial/Challengemodal';
 import { useAction } from '../hooks/useAction';
 import { classColor } from '../lib/class-colors';
-import type { Player, PlayerClass, ActionType } from '../../shared/api';
+import type {
+  Player,
+  PlayerClass,
+  ActionType,
+  ClientChallenge,
+} from '../../shared/api';
 import { MANUAL_CLASS_ACTIONS, ACTION_BASE_POINTS } from '../../shared/api';
 import { PageShell } from '@/components/common/PageShell';
 
@@ -30,7 +36,6 @@ export function SoloTrialPage({
 }: SoloTrialPageProps) {
   const playerClass = player.class as PlayerClass;
   const color = classColor(playerClass);
-
   const actions = MANUAL_CLASS_ACTIONS[playerClass];
 
   const [trialState, setTrialState] = useState<TrialState>('intro');
@@ -45,13 +50,22 @@ export function SoloTrialPage({
   const [leveledUp, setLeveledUp] = useState(false);
   const [flipping, setFlipping] = useState<ActionType | null>(null);
 
-  const { statuses, perform, fetchAllStatuses, error, clearError } = useAction(
-    player.userId
-  );
+  // Which card is currently mid-challenge, and the question fetched for it.
+  const [activeCardIdx, setActiveCardIdx] = useState<number | null>(null);
+  const [activeChallenge, setActiveChallenge] =
+    useState<ClientChallenge | null>(null);
+
+  const {
+    statuses,
+    perform,
+    fetchAllStatuses,
+    fetchChallenge,
+    error,
+    clearError,
+  } = useAction(player.userId);
 
   useEffect(() => {
     void fetchAllStatuses(actions);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchAllStatuses, playerClass]);
 
@@ -73,29 +87,57 @@ export function SoloTrialPage({
       }
 
       setFlipping(action);
-      const result = await perform(action);
+      const challenge = await fetchChallenge(playerClass);
       setFlipping(null);
 
-      if (result) {
-        onPlayerUpdate(result.player);
-        setTotalEarned((t) => t + result.pointsEarned);
-        if (result.leveledUp) setLeveledUp(true);
+      if (!challenge) return;
 
-        const remainingUnflipped = cards.filter((c) => !c.flipped).length;
-
-        setCards((prev) =>
-          prev.map((c, idx) =>
-            idx === cardIdx ? { ...c, flipped: true as const } : c
-          )
-        );
-
-        if (remainingUnflipped === 1) {
-          setTimeout(() => setTrialState('complete'), 500);
-        }
-      }
+      setActiveCardIdx(cardIdx);
+      setActiveChallenge(challenge);
     },
-    [cards, flipping, statuses, perform, onPlayerUpdate]
+    [cards, flipping, statuses, fetchChallenge, playerClass]
   );
+
+  const handleSubmitAnswer = useCallback(
+    async (optionId: string) => {
+      if (activeCardIdx === null || !activeChallenge) return null;
+      const card = cards[activeCardIdx];
+      if (!card) return null;
+
+      const result = await perform(
+        card.action,
+        activeChallenge.challengeId,
+        optionId
+      );
+      if (!result) return null;
+
+      onPlayerUpdate(result.player);
+      setTotalEarned((t) => t + result.pointsEarned);
+      if (result.leveledUp) setLeveledUp(true);
+
+      const remainingUnflipped = cards.filter((c) => !c.flipped).length;
+
+      setCards((prev) =>
+        prev.map((c, idx) =>
+          idx === activeCardIdx
+            ? { ...c, flipped: true as const, points: result.pointsEarned }
+            : c
+        )
+      );
+
+      if (remainingUnflipped === 1) {
+        setTimeout(() => setTrialState('complete'), 800);
+      }
+
+      return result.challengeResult ?? { correct: true };
+    },
+    [activeCardIdx, activeChallenge, cards, perform, onPlayerUpdate]
+  );
+
+  const handleCloseChallenge = useCallback(() => {
+    setActiveCardIdx(null);
+    setActiveChallenge(null);
+  }, []);
 
   return (
     <PageShell player={player} onBack={onBack} title="Solo Trial">
@@ -131,6 +173,14 @@ export function SoloTrialPage({
             onBack={onBack}
           />
         )}
+
+        <ChallengeModal
+          challenge={activeChallenge}
+          color={color}
+          open={activeChallenge !== null}
+          onSubmit={handleSubmitAnswer}
+          onClose={handleCloseChallenge}
+        />
       </div>
     </PageShell>
   );

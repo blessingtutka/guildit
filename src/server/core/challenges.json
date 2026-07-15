@@ -1,0 +1,3285 @@
+[
+  {
+    "challengeId": "rng_001",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "Which of these is NOT a natural biome?",
+    "options": [
+      { "id": "a", "label": "Tundra" },
+      { "id": "b", "label": "Taiga" },
+      { "id": "c", "label": "Cafeteria" },
+      { "id": "d", "label": "Savanna" }
+    ],
+    "correctOptionId": "c",
+    "explanation": "Cafeteria is not a biome; it's a place to eat. The others are real biomes."
+  },
+  {
+    "challengeId": "rng_002",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A new post about a little-known hiking trail gets 2 upvotes in an hour. What should a Ranger do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Ignore it – low engagement means it's not interesting"
+      },
+      { "id": "b", "label": "Upvote and leave a comment to boost visibility" },
+      { "id": "c", "label": "Report it as spam" },
+      { "id": "d", "label": "Downvote to keep the feed clean" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Rangers surface hidden gems; an upvote and comment can help the post reach more people."
+  },
+  {
+    "challengeId": "rng_003",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "The best way to find quality content is to sort by 'Top' of all time.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Top posts are already well-known; Rangers find fresh, underappreciated content in 'New' or 'Rising'."
+  },
+  {
+    "challengeId": "rng_004",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You stumble upon a comment with 0 upvotes that offers a detailed, helpful solution to a common problem. What's the Ranger response?",
+    "options": [
+      { "id": "a", "label": "Upvote it and reply to thank the author" },
+      { "id": "b", "label": "Copy the solution and post it as your own" },
+      {
+        "id": "c",
+        "label": "Ignore it – if it were good, it would have upvotes"
+      },
+      { "id": "d", "label": "Downvote to keep the thread clean" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Acknowledging and elevating quality content is the heart of the Ranger class."
+  },
+  {
+    "challengeId": "rng_005",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A post that is well-written but has a typo in the title is not worth surfacing.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Typos don't diminish value; Rangers look past surface imperfections to find substance."
+  },
+  {
+    "challengeId": "rng_006",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "Which of these is a sign that a post might be undervalued?",
+    "options": [
+      { "id": "a", "label": "It has 100 comments but only 5 upvotes" },
+      { "id": "b", "label": "It was posted at 3 AM on a Tuesday" },
+      { "id": "c", "label": "It has a vague title" },
+      { "id": "d", "label": "It contains a single sentence" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "High comments but low upvotes often means the post sparked discussion but flew under the radar – perfect for a Ranger."
+  },
+  {
+    "challengeId": "rng_007",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a subreddit with great content but only 500 members. As a Ranger, you should:",
+    "options": [
+      { "id": "a", "label": "Keep it to yourself – it's your secret" },
+      {
+        "id": "b",
+        "label": "Share it in a comment on a popular post to give it exposure"
+      },
+      {
+        "id": "c",
+        "label": "Message the moderators to ask them to promote it"
+      },
+      {
+        "id": "d",
+        "label": "Do nothing – small subreddits are small for a reason"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Rangers help undiscovered communities grow by spreading the word organically."
+  },
+  {
+    "challengeId": "rng_008",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "It's more important to find posts that are factually correct than posts that are interesting.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers value both accuracy and engagement; an interesting but slightly flawed post can still spark valuable discussion."
+  },
+  {
+    "challengeId": "rng_009",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A user posts a long, personal story about overcoming adversity, but it gets downvoted. What should a Ranger do?",
+    "options": [
+      { "id": "a", "label": "Upvote and leave an encouraging comment" },
+      { "id": "b", "label": "Report it for being off-topic" },
+      { "id": "c", "label": "Downvote to follow the crowd" },
+      { "id": "d", "label": "Ignore it – it's not your job to fix everything" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers support authenticity and courage, even if the crowd doesn't immediately appreciate it."
+  },
+  {
+    "challengeId": "rng_010",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Sorting by 'Controversial' is a good way for a Ranger to find hidden gems.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Controversial posts often contain content that challenges the status quo – exactly the kind of thing a Ranger might uncover."
+  },
+  {
+    "challengeId": "rng_011",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You spot a post with a great idea but it's poorly formatted and hard to read. What's the Ranger move?",
+    "options": [
+      { "id": "a", "label": "Politely suggest how to improve formatting" },
+      { "id": "b", "label": "Downvote for low quality" },
+      { "id": "c", "label": "Copy the idea and repost it better" },
+      { "id": "d", "label": "Report it as spam" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers nurture good content by helping it shine, not by discarding it."
+  },
+  {
+    "challengeId": "rng_012",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should only engage with posts that have at least 10 upvotes to ensure quality.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers are scouts – they venture into the wilderness of low-upvote posts to find treasures."
+  },
+  {
+    "challengeId": "rng_013",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "Which of these is the best way to encourage a new content creator who posted their first piece?",
+    "options": [
+      { "id": "a", "label": "Give constructive feedback and encouragement" },
+      { "id": "b", "label": "Tell them it's not good enough yet" },
+      { "id": "c", "label": "Ignore it – they need to earn attention" },
+      { "id": "d", "label": "Share it only if it's perfect" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers foster growth by providing helpful guidance and support to newcomers."
+  },
+  {
+    "challengeId": "rng_014",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger's main goal is to accumulate as many upvotes as possible for themselves.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers are not about self-promotion; they are about elevating others' content."
+  },
+  {
+    "challengeId": "rng_015",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that was removed by automod but appears legitimate and valuable. What do you do?",
+    "options": [
+      { "id": "a", "label": "Message the moderators to request a review" },
+      { "id": "b", "label": "Repost it yourself and claim credit" },
+      { "id": "c", "label": "Leave it – automod is always right" },
+      { "id": "d", "label": "Comment in the thread to complain about removal" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers advocate for good content, even if it means gently nudging the mods."
+  },
+  {
+    "challengeId": "rng_016",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Quality content always rises to the top on its own, so Rangers don't need to intervene.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "The algorithm isn't perfect; Rangers actively help good content get noticed."
+  },
+  {
+    "challengeId": "rng_017",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A subreddit is flooded with low-effort memes, but buried within is a serious discussion post. How should a Ranger handle it?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Upvote and comment to bring attention to the serious post"
+      },
+      { "id": "b", "label": "Downvote the memes to clear the way" },
+      { "id": "c", "label": "Post a meme in the discussion thread" },
+      { "id": "d", "label": "Ignore it – it's a meme subreddit" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers seek out substantive content even in noisy environments and help it stand out."
+  },
+  {
+    "challengeId": "rng_018",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should always sort by 'Hot' to find the best content.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Hot is already popular; Rangers use 'New' and 'Rising' to find undiscovered posts."
+  },
+  {
+    "challengeId": "rng_019",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a post with a brilliant theory about a movie, but it's written in poor English. What's the best Ranger action?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Upvote for the idea and leave a supportive comment"
+      },
+      { "id": "b", "label": "Correct the grammar and repost it" },
+      { "id": "c", "label": "Downvote because it's hard to read" },
+      { "id": "d", "label": "Report it for low quality" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers value ideas over perfect presentation; they encourage the author to improve without discarding the content."
+  },
+  {
+    "challengeId": "rng_020",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A post that is highly upvoted is always the best content to engage with.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Popularity doesn't always equal quality; Rangers look beyond the vote count."
+  },
+  {
+    "challengeId": "rng_021",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that answers a question perfectly, but it's buried under a dozen joke replies. What should you do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Upvote the useful comment and reply with a thank you"
+      },
+      { "id": "b", "label": "Downvote the jokes to move the answer up" },
+      { "id": "c", "label": "Ignore it – the user will find it anyway" },
+      { "id": "d", "label": "Post the same answer yourself to get the credit" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers amplify valuable contributions by giving them visibility and appreciation."
+  },
+  {
+    "challengeId": "rng_022",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should only surface posts that align with their personal interests.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers are generalists who seek out value across topics, not just their own preferences."
+  },
+  {
+    "challengeId": "rng_023",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "Which of these is the most effective way to help a post gain traction?",
+    "options": [
+      { "id": "a", "label": "Upvote and leave a thoughtful comment" },
+      { "id": "b", "label": "Share it on other social media" },
+      { "id": "c", "label": "Message the author to improve it" },
+      { "id": "d", "label": "Downvote other competing posts" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Upvoting and commenting are the primary ways to boost a post on Reddit itself."
+  },
+  {
+    "challengeId": "rng_024",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger's job is to find posts that will become popular, not to create popularity.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Rangers discover existing content, not manufacture popularity."
+  },
+  {
+    "challengeId": "rng_025",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a subreddit dedicated to a niche hobby with only 5 active users, but the content is fantastic. As a Ranger, you:",
+    "options": [
+      { "id": "a", "label": "Join and participate actively" },
+      { "id": "b", "label": "Keep it secret to preserve its exclusivity" },
+      { "id": "c", "label": "Report it for being too small" },
+      { "id": "d", "label": "Try to merge it with a larger subreddit" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers support and grow healthy communities by joining and contributing."
+  },
+  {
+    "challengeId": "rng_026",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Sorting by 'Rising' is a better strategy than sorting by 'Top' for finding new content.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Rising shows posts gaining momentum – perfect for a Ranger to jump in early."
+  },
+  {
+    "challengeId": "rng_027",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is well-written but contains a minor factual error. What's the Ranger approach?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Comment with a polite correction and link to a source"
+      },
+      { "id": "b", "label": "Downvote for inaccuracy" },
+      { "id": "c", "label": "Report it for misinformation" },
+      { "id": "d", "label": "Ignore it – errors are common" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers help improve content with constructive feedback, not punishment."
+  },
+  {
+    "challengeId": "rng_028",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should never interact with posts that have negative karma.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Negative karma doesn't always mean bad content; Rangers explore all areas."
+  },
+  {
+    "challengeId": "rng_029",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You discover a new subreddit that is exactly what you've been looking for, but it has no active moderation. What should you do?",
+    "options": [
+      { "id": "a", "label": "Volunteer to moderate and help it grow" },
+      { "id": "b", "label": "Leave it – unmoderated subreddits are dangerous" },
+      { "id": "c", "label": "Spam it with unrelated content" },
+      { "id": "d", "label": "Message the admins to close it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers don't just find things; they help nurture them."
+  },
+  {
+    "challengeId": "rng_030",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "The Ranger class is about being the first to comment on a new post.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Being first is irrelevant; it's about finding and elevating quality content."
+  },
+  {
+    "challengeId": "rng_031",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A post about a little-known historical event is gaining no traction. How can a Ranger help?",
+    "options": [
+      { "id": "a", "label": "Share it in a relevant comment section" },
+      { "id": "b", "label": "Downvote other posts to make it stand out" },
+      { "id": "c", "label": "Ignore it – history is boring to most" },
+      { "id": "d", "label": "Repost it with a clickbait title" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Sharing the post in a relevant context is a natural way to give it exposure."
+  },
+  {
+    "challengeId": "rng_032",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should prioritize posts that are humorous over posts that are informative.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers value all types of content; they don't favor one over the other."
+  },
+  {
+    "challengeId": "rng_033",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that provides a unique perspective on a popular topic, but it has only 1 upvote. What should you do?",
+    "options": [
+      { "id": "a", "label": "Upvote and reply to encourage discussion" },
+      { "id": "b", "label": "Ignore it – it's already been said" },
+      { "id": "c", "label": "Downvote to keep the consensus" },
+      { "id": "d", "label": "Copy the perspective and post it separately" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers give voice to minority viewpoints that add value."
+  },
+  {
+    "challengeId": "rng_034",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Rangers should only surface content that they personally agree with.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers are objective; they surface quality regardless of personal bias."
+  },
+  {
+    "challengeId": "rng_035",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A post has 50 upvotes and 200 comments – it's clearly engaged. What's the Ranger's next step?",
+    "options": [
+      { "id": "a", "label": "Read the comments to find hidden gems" },
+      { "id": "b", "label": "Move on – it's already successful" },
+      { "id": "c", "label": "Upvote the post and leave a generic comment" },
+      { "id": "d", "label": "Report it for being too popular" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Even in successful posts, Rangers dig into the comments to find underappreciated contributions."
+  },
+  {
+    "challengeId": "rng_036",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger's primary tool is the upvote button.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "The upvote is the simplest and most effective way to surface good content."
+  },
+  {
+    "challengeId": "rng_037",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a comment with a detailed guide to a complex topic, but it's 3 months old. How do you handle it?",
+    "options": [
+      { "id": "a", "label": "Upvote it anyway – quality is timeless" },
+      { "id": "b", "label": "Ignore it – old comments don't matter" },
+      { "id": "c", "label": "Report it for being outdated" },
+      { "id": "d", "label": "Post a new version and credit the original" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Good content remains valuable; Rangers don't let age diminish quality."
+  },
+  {
+    "challengeId": "rng_038",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "It's better to upvote a post than to comment on it.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Both actions help; commenting can drive engagement and encourage the author."
+  },
+  {
+    "challengeId": "rng_039",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is factually incorrect but has sparked a valuable discussion. What do you do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Comment with a correction and upvote for the discussion"
+      },
+      { "id": "b", "label": "Downvote the post because it's wrong" },
+      { "id": "c", "label": "Report it for misinformation" },
+      { "id": "d", "label": "Ignore it – it's not your job to fact-check" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers value conversation; they correct errors without killing the discussion."
+  },
+  {
+    "challengeId": "rng_040",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should always sort comments by 'Best' to find the most valuable ones.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Best shows the most upvoted; Rangers often sort by 'New' or 'Controversial' to find hidden replies."
+  },
+  {
+    "challengeId": "rng_041",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A new user posts a question that has been asked many times before. What's the Ranger approach?",
+    "options": [
+      { "id": "a", "label": "Answer kindly and link to previous discussions" },
+      { "id": "b", "label": "Downvote and tell them to search" },
+      { "id": "c", "label": "Report as duplicate" },
+      { "id": "d", "label": "Ignore it – they should have searched" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers welcome new users and help them find information, even if it's repetitive."
+  },
+  {
+    "challengeId": "rng_042",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Rangers should only engage with posts that have at least 10 comments to ensure discussion.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers often jump into low-comment posts to kickstart discussion."
+  },
+  {
+    "challengeId": "rng_043",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a post with a great idea but it's buried in a subreddit with a different focus. What should you do?",
+    "options": [
+      { "id": "a", "label": "Crosspost it to a more relevant subreddit" },
+      { "id": "b", "label": "Leave it – it doesn't belong here" },
+      { "id": "c", "label": "Report it for being off-topic" },
+      { "id": "d", "label": "Ask the OP to delete and repost elsewhere" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers help content find its proper audience through crossposting."
+  },
+  {
+    "challengeId": "rng_044",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger's job is to be the first to upvote a new post.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "The goal is to surface quality, not to claim first upvote."
+  },
+  {
+    "challengeId": "rng_045",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is long and detailed but poorly structured. How do you respond?",
+    "options": [
+      { "id": "a", "label": "Read it thoroughly and engage with the content" },
+      { "id": "b", "label": "Skip it – too long" },
+      { "id": "c", "label": "Downvote for being too wordy" },
+      { "id": "d", "label": "Reply with a summary to help others" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers value substance; they take the time to understand and respond to long-form content."
+  },
+  {
+    "challengeId": "rng_046",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Rangers should focus on posts that are visually appealing (images, videos).",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers value all types of content, not just media-rich ones."
+  },
+  {
+    "challengeId": "rng_047",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a comment with a brilliant insight but it's written in all caps. What's the Ranger move?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Upvote for the insight, reply gently about the caps"
+      },
+      { "id": "b", "label": "Downvote for shouting" },
+      { "id": "c", "label": "Ignore it – all caps is unprofessional" },
+      { "id": "d", "label": "Report it for improper formatting" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers focus on the message, not the delivery."
+  },
+  {
+    "challengeId": "rng_048",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should never sort by 'New' because it's full of low-quality posts.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "New is the frontier; Rangers brave it to find gems."
+  },
+  {
+    "challengeId": "rng_049",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "A post from a new user with 0 karma gets downvoted immediately. What should a Ranger do?",
+    "options": [
+      { "id": "a", "label": "Upvote and leave a welcoming comment" },
+      { "id": "b", "label": "Downvote too – it's probably low quality" },
+      { "id": "c", "label": "Report it for spam" },
+      { "id": "d", "label": "Ignore it – new users need to earn karma" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers protect and encourage newcomers, giving them a chance to contribute."
+  },
+  {
+    "challengeId": "rng_050",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "The Ranger class is about being a curator of quality content.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Exactly – Rangers curate and amplify the best of what the community has to offer."
+  },
+  {
+    "challengeId": "mnd_001",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts: 'I just lost my job and feel worthless.' What is the most supportive reply?",
+    "options": [
+      { "id": "a", "label": "'It's just a job, you'll find another one.'" },
+      {
+        "id": "b",
+        "label": "'That's really tough. I'm here if you want to talk about how you're feeling.'"
+      },
+      { "id": "c", "label": "'You should update your resume immediately.'" },
+      { "id": "d", "label": "'Lots of people lose their jobs, get over it.'" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Validating the emotion before offering solutions is key to being a Mender."
+  },
+  {
+    "challengeId": "mnd_002",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A new user makes a post that is awkwardly worded and gets mocked. What's the best Mender response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Privately message them to encourage and offer advice"
+      },
+      { "id": "b", "label": "Publicly defend them and ask others to be kind" },
+      { "id": "c", "label": "Ignore it – they'll learn" },
+      { "id": "d", "label": "Downvote the post to hide it" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Public defense shows the community's standards of kindness and supports the user openly."
+  },
+  {
+    "challengeId": "mnd_003",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Telling someone to 'just be positive' is always helpful.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Toxic positivity dismisses real pain; Menders validate feelings first."
+  },
+  {
+    "challengeId": "mnd_004",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment where someone reveals they are struggling with depression. What should you do?",
+    "options": [
+      { "id": "a", "label": "Reply with empathy and offer to listen" },
+      { "id": "b", "label": "Direct them to a suicide hotline and move on" },
+      { "id": "c", "label": "Tell them to get over it" },
+      { "id": "d", "label": "Report the comment for self-harm" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders offer a human connection; hotline info can be added but is not the only response."
+  },
+  {
+    "challengeId": "mnd_005",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "It's best to give advice immediately when someone is upset.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Often, people need to be heard before they are ready for advice."
+  },
+  {
+    "challengeId": "mnd_006",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts a long, sad story about their pet passing away. What is the most compassionate reply?",
+    "options": [
+      { "id": "a", "label": "'I'm so sorry for your loss. Pets are family.'" },
+      { "id": "b", "label": "'You can always get another pet.'" },
+      { "id": "c", "label": "'At least it's not a person.'" },
+      { "id": "d", "label": "'How old was it?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Acknowledging the depth of loss is the most supportive response."
+  },
+  {
+    "challengeId": "mnd_007",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should always try to solve the problem, not just listen.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sometimes listening is the solution; Menders offer presence, not just fixes."
+  },
+  {
+    "challengeId": "mnd_008",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You notice a user is consistently posting negative comments about themselves. What's a good Mender action?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Reply with encouragement and point out their positive contributions"
+      },
+      { "id": "b", "label": "Tell them to stop being negative" },
+      { "id": "c", "label": "Ignore it – they're just attention-seeking" },
+      { "id": "d", "label": "Downvote their comments to discourage negativity" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders gently challenge negative self-talk with genuine appreciation."
+  },
+  {
+    "challengeId": "mnd_009",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender should never disagree with someone who is upset.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders can disagree kindly, but they always respect the other's feelings."
+  },
+  {
+    "challengeId": "mnd_010",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user asks for advice on a break-up. What's the best Mender response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'That hurts – I've been there. What's been hardest for you?'"
+      },
+      { "id": "b", "label": "'Just forget about them and move on.'" },
+      { "id": "c", "label": "'You're better off without them.'" },
+      { "id": "d", "label": "'There are plenty of fish in the sea.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Open-ended questions that invite sharing are more supportive than dismissive platitudes."
+  },
+  {
+    "challengeId": "mnd_011",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Sharing your own similar experience is always helpful when someone is venting.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "It can be helpful if done briefly, but sometimes it shifts focus away from the person. Menders listen first."
+  },
+  {
+    "challengeId": "mnd_012",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A new member posts an introduction that is a bit cringy. Several users make fun of it. What should a Mender do?",
+    "options": [
+      { "id": "a", "label": "Post a welcoming reply and ignore the mockery" },
+      { "id": "b", "label": "Reply to the mockers asking them to be kind" },
+      { "id": "c", "label": "Report the mockers" },
+      {
+        "id": "d",
+        "label": "Send a private message to the new user with encouragement"
+      }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A public welcome sets a positive tone and counters the mockery without engaging directly."
+  },
+  {
+    "challengeId": "mnd_013",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should avoid threads where there is conflict.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders are peacemakers; they enter conflicts to de-escalate and heal."
+  },
+  {
+    "challengeId": "mnd_014",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is slightly offensive but not overtly hateful. How do you respond as a Mender?",
+    "options": [
+      { "id": "a", "label": "Reply calmly explaining why it might be hurtful" },
+      { "id": "b", "label": "Report it to moderators" },
+      { "id": "c", "label": "Downvote and move on" },
+      { "id": "d", "label": "Ignore it – it's not that bad" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders gently educate rather than punish, fostering understanding."
+  },
+  {
+    "challengeId": "mnd_015",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender should always agree with the person they are supporting.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders can offer different perspectives kindly; support doesn't mean blind agreement."
+  },
+  {
+    "challengeId": "mnd_016",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts about feeling lonely. What is the most helpful Mender reply?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'I hear you. It can be really hard. Would you like to talk about it?'"
+      },
+      { "id": "b", "label": "'Join a club or volunteer to meet people.'" },
+      { "id": "c", "label": "'Loneliness is a phase, it will pass.'" },
+      { "id": "d", "label": "'You should get a pet.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Offering a listening ear is the most direct and compassionate response."
+  },
+  {
+    "challengeId": "mnd_017",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "It's important to use emojis to show empathy in replies.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Emojis can help, but sincerity is what matters most."
+  },
+  {
+    "challengeId": "mnd_018",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user being bullied in a thread. What's the best Mender action?",
+    "options": [
+      { "id": "a", "label": "Publicly defend the user and report the bullies" },
+      { "id": "b", "label": "Privately message the user to comfort them" },
+      { "id": "c", "label": "Tell the user to ignore the bullies" },
+      { "id": "d", "label": "Post a sarcastic comment to mock the bullies" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Public defense stops the bullying in its tracks and models community solidarity."
+  },
+  {
+    "challengeId": "mnd_019",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should never report posts, even if they are harmful.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Reporting harmful content is also a form of protection; Menders can report while offering support."
+  },
+  {
+    "challengeId": "mnd_020",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user complains about a minor inconvenience. What should a Mender do?",
+    "options": [
+      { "id": "a", "label": "Acknowledge their frustration and empathize" },
+      { "id": "b", "label": "Tell them it's not a big deal" },
+      { "id": "c", "label": "Ignore it – it's trivial" },
+      { "id": "d", "label": "Joke about it to lighten the mood" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Even minor feelings are valid; Menders treat all emotions with respect."
+  },
+  {
+    "challengeId": "mnd_021",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender should always prioritize the feelings of the person they're helping over the truth.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders balance compassion with honesty, but they deliver truth kindly."
+  },
+  {
+    "challengeId": "mnd_022",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post celebrating a small victory. What's the best Mender reply?",
+    "options": [
+      { "id": "a", "label": "'That's wonderful! I'm so proud of you.'" },
+      { "id": "b", "label": "'That's nothing, wait until you achieve more.'" },
+      { "id": "c", "label": "'Okay.'" },
+      { "id": "d", "label": "'Why are you posting this?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders celebrate others' wins, no matter how small."
+  },
+  {
+    "challengeId": "mnd_023",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "It's okay to give tough love as a Mender.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Tough love can hurt; Menders prefer gentle, empathetic guidance."
+  },
+  {
+    "challengeId": "mnd_024",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user shares a personal trauma. What's the most appropriate Mender response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'Thank you for trusting us with this. You're not alone.'"
+      },
+      { "id": "b", "label": "'That's awful. You need to see a therapist.'" },
+      { "id": "c", "label": "'I don't know what to say.'" },
+      { "id": "d", "label": "'Why are you sharing this here?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Gratitude and solidarity are more supportive than clinical advice."
+  },
+  {
+    "challengeId": "mnd_025",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should avoid offering advice unless asked.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sometimes a gentle suggestion is helpful, but it should be offered with care and not unsolicited advice."
+  },
+  {
+    "challengeId": "mnd_026",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post where someone is criticized for a mistake they made. How should a Mender respond?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Acknowledge the mistake but remind them it's human"
+      },
+      { "id": "b", "label": "Agree with the criticism to show objectivity" },
+      { "id": "c", "label": "Ignore it – they need to learn" },
+      { "id": "d", "label": "Defend them even if they're wrong" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders offer compassion without excusing harm."
+  },
+  {
+    "challengeId": "mnd_027",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender's role is to be a cheerleader for everyone.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders are supportive, but they also listen and validate, not just cheerlead."
+  },
+  {
+    "challengeId": "mnd_028",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts about feeling overwhelmed by exams. What is the best Mender reply?",
+    "options": [
+      { "id": "a", "label": "'That sounds stressful. How can I support you?'" },
+      { "id": "b", "label": "'Just study harder.'" },
+      { "id": "c", "label": "'Exams are easy, don't worry.'" },
+      { "id": "d", "label": "'You should drop out.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Offering support, not solutions, is the Mender way."
+  },
+  {
+    "challengeId": "mnd_029",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should always respond to every negative comment they see.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Not every negative comment needs a response; Menders prioritize where they can make a difference."
+  },
+  {
+    "challengeId": "mnd_030",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user who is consistently positive and uplifting. How can a Mender encourage them?",
+    "options": [
+      { "id": "a", "label": "Reply with appreciation for their kindness" },
+      { "id": "b", "label": "Give them an award" },
+      { "id": "c", "label": "Upvote their comments" },
+      { "id": "d", "label": "All of the above" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Menders nurture positive contributors with recognition and support."
+  },
+  {
+    "challengeId": "mnd_031",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender should avoid expressing their own opinions if they might conflict with the person they're helping.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders can share opinions kindly; honesty builds trust."
+  },
+  {
+    "challengeId": "mnd_032",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts a rant that is angry and slightly misdirected. What's the best Mender response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Acknowledge their frustration and ask clarifying questions"
+      },
+      { "id": "b", "label": "Tell them they're overreacting" },
+      { "id": "c", "label": "Report them for being angry" },
+      { "id": "d", "label": "Ignore it – rants are not productive" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders help de-escalate by understanding the root emotion."
+  },
+  {
+    "challengeId": "mnd_033",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "It's better to reply privately than publicly when offering support.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Public support can help others and model good behavior, but both are valid."
+  },
+  {
+    "challengeId": "mnd_034",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post from a user who is being overly self-critical. What should a Mender do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Gently point out their strengths and achievements"
+      },
+      { "id": "b", "label": "Agree with them to show empathy" },
+      { "id": "c", "label": "Tell them to stop being so hard on themselves" },
+      { "id": "d", "label": "Ignore it – they're just fishing for compliments" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders help people see themselves more positively without dismissing their feelings."
+  },
+  {
+    "challengeId": "mnd_035",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender should only engage with posts that are explicitly asking for help.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sometimes people need help but don't ask; Menders can offer support proactively."
+  },
+  {
+    "challengeId": "mnd_036",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts a picture of a drawing they made and says 'I'm terrible at art.' What's the best Mender reply?",
+    "options": [
+      { "id": "a", "label": "'I think it's great! What inspired you?'" },
+      { "id": "b", "label": "'You're right, it's not great.'" },
+      { "id": "c", "label": "'Keep practicing.'" },
+      { "id": "d", "label": "'That's not art.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders encourage effort and curiosity, not just talent."
+  },
+  {
+    "challengeId": "mnd_037",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should avoid using humor in their replies.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Appropriate humor can be healing, but it must be used sensitively."
+  },
+  {
+    "challengeId": "mnd_038",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user who is repeatedly asking for reassurance. What's a good Mender approach?",
+    "options": [
+      { "id": "a", "label": "Provide reassurance each time with patience" },
+      { "id": "b", "label": "Tell them to stop being needy" },
+      { "id": "c", "label": "Ignore them after the first time" },
+      { "id": "d", "label": "Ask them why they need so much reassurance" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders understand that some people need more support; patience is key."
+  },
+  {
+    "challengeId": "mnd_039",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "It's important to maintain emotional boundaries as a Mender.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Menders must care for themselves to avoid burnout."
+  },
+  {
+    "challengeId": "mnd_040",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts about a conflict with a friend. What's the best Mender advice?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'That sounds painful. Would you like to talk about what happened?'"
+      },
+      {
+        "id": "b",
+        "label": "'You should apologize even if you're not wrong.'"
+      },
+      { "id": "c", "label": "'You're better off without them.'" },
+      { "id": "d", "label": "'Just ignore them.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders help people process emotions before jumping to solutions."
+  },
+  {
+    "challengeId": "mnd_041",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "A Mender's reply should always end with a question to keep the conversation going.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Questions can help, but not every reply needs one."
+  },
+  {
+    "challengeId": "mnd_042",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user who is happy about a small achievement. What is a Mender's reply?",
+    "options": [
+      { "id": "a", "label": "'That's awesome! I'm really happy for you.'" },
+      { "id": "b", "label": "'That's nothing compared to what I've done.'" },
+      { "id": "c", "label": "'Okay.'" },
+      { "id": "d", "label": "'Why are you boasting?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders celebrate others' joy without comparison."
+  },
+  {
+    "challengeId": "mnd_043",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should avoid giving advice about serious issues like mental health.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders can offer support and resources, but they are not therapists."
+  },
+  {
+    "challengeId": "mnd_044",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user is grieving a loss. What is the most appropriate Mender response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'I'm so sorry for your loss. Sending you strength.'"
+      },
+      { "id": "b", "label": "'They're in a better place.'" },
+      { "id": "c", "label": "'Time heals all wounds.'" },
+      { "id": "d", "label": "'You'll get over it.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Simple empathy is more comforting than clichés."
+  },
+  {
+    "challengeId": "mnd_045",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should always be optimistic, even when others are upset.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Menders validate emotions, not just push positivity."
+  },
+  {
+    "challengeId": "mnd_046",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user who is proud of their work. What should a Mender say?",
+    "options": [
+      { "id": "a", "label": "'You should be proud – you worked hard!'" },
+      { "id": "b", "label": "'It's okay, I guess.'" },
+      { "id": "c", "label": "'I could do better.'" },
+      { "id": "d", "label": "'Why are you showing off?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders affirm and encourage effort."
+  },
+  {
+    "challengeId": "mnd_047",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should avoid using the word 'should' in their replies.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "'Should' can sound judgmental; Menders prefer softer language."
+  },
+  {
+    "challengeId": "mnd_048",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts about feeling anxious about a presentation. What's a helpful Mender reply?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'That's normal. What part is most worrying you?'"
+      },
+      { "id": "b", "label": "'Just relax, it's not a big deal.'" },
+      { "id": "c", "label": "'You'll probably mess up.'" },
+      { "id": "d", "label": "'Do deep breathing.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Validating and inviting exploration is more supportive than dismissing or giving quick fixes."
+  },
+  {
+    "challengeId": "mnd_049",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should never share their own struggles when trying to help someone.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Shared experiences can build connection, but should not dominate the conversation."
+  },
+  {
+    "challengeId": "mnd_050",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is dismissive of someone's feelings. What's the best Mender response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Reply to the dismissive comment with a gentle correction"
+      },
+      { "id": "b", "label": "Report the comment" },
+      { "id": "c", "label": "Ignore it" },
+      { "id": "d", "label": "Reply to the original person and validate them" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Directly supporting the person who was dismissed is the most healing action."
+  },
+  {
+    "challengeId": "wrd_001",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that contains a harmful misinformation about vaccines. What should a Warder do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Reply with a calm, factual correction and a reliable source"
+      },
+      { "id": "b", "label": "Report it immediately without engaging" },
+      { "id": "c", "label": "Downvote and move on" },
+      { "id": "d", "label": "Engage in a heated debate to prove them wrong" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders correct misinformation with evidence, not emotion."
+  },
+  {
+    "challengeId": "wrd_002",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "It's more effective to report harmful content than to argue with the person who posted it.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Arguing rarely changes minds; reporting removes the content."
+  },
+  {
+    "challengeId": "wrd_003",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user being unfairly attacked for their opinion. What's the best Warder response?",
+    "options": [
+      { "id": "a", "label": "Post a calm, rational defense of the user" },
+      { "id": "b", "label": "Attack the attackers back" },
+      { "id": "c", "label": "Report the attackers" },
+      { "id": "d", "label": "Ignore it – they can defend themselves" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A calm defense de-escalates and shows solidarity without adding fuel."
+  },
+  {
+    "challengeId": "wrd_004",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should never report comments, even if they are abusive, because it limits free speech.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Abusive speech is not free speech; Warders protect the community by reporting it."
+  },
+  {
+    "challengeId": "wrd_005",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "A post contains a rumor that could harm someone's reputation. What should a Warder do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Comment with a correction and ask the OP to edit"
+      },
+      { "id": "b", "label": "Report it for spreading misinformation" },
+      { "id": "c", "label": "Share it to warn others" },
+      { "id": "d", "label": "Ignore it – it's not your responsibility" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Rumors can cause real harm; reporting and correction are appropriate."
+  },
+  {
+    "challengeId": "wrd_006",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should prioritize protecting the community over being liked.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Warders often make unpopular decisions for the greater good."
+  },
+  {
+    "challengeId": "wrd_007",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is factually wrong but not harmful. What's the best Warder approach?",
+    "options": [
+      { "id": "a", "label": "Politely correct it with a source" },
+      { "id": "b", "label": "Report it for being incorrect" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Ignore it – it's not a big deal" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders promote accuracy without overreacting."
+  },
+  {
+    "challengeId": "wrd_008",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "It's okay to use sarcasm when correcting misinformation.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sarcasm can escalate; Warders remain calm and factual."
+  },
+  {
+    "challengeId": "wrd_009",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is borderline rule-breaking but has good discussion. What's the Warder move?",
+    "options": [
+      { "id": "a", "label": "Report it and let the mods decide" },
+      { "id": "b", "label": "Leave it – the discussion is valuable" },
+      { "id": "c", "label": "Post a warning comment" },
+      { "id": "d", "label": "Downvote it to discourage rule-breaking" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders trust the moderation process; they report and let mods judge."
+  },
+  {
+    "challengeId": "wrd_010",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always side with the victim in any conflict.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders seek truth and fairness, not blindly taking sides."
+  },
+  {
+    "challengeId": "wrd_011",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You discover a comment that is plagiarized from another source. What should you do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Reply with a link to the original and ask for credit"
+      },
+      { "id": "b", "label": "Report it for plagiarism" },
+      { "id": "c", "label": "Ignore it – plagiarism is common" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Plagiarism is a form of dishonesty; Warders report it to uphold integrity."
+  },
+  {
+    "challengeId": "wrd_012",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always engage with trolls to shut them down.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Engaging trolls gives them attention; reporting and ignoring is more effective."
+  },
+  {
+    "challengeId": "wrd_013",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that contains unverified news. What's the best Warder action?",
+    "options": [
+      { "id": "a", "label": "Comment asking for a reliable source" },
+      { "id": "b", "label": "Report it as misinformation" },
+      { "id": "c", "label": "Share it anyway – it might be true" },
+      { "id": "d", "label": "Ignore it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders encourage verification before spreading information."
+  },
+  {
+    "challengeId": "wrd_014",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "It's okay to use ad hominem attacks if the other person is wrong.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders argue against ideas, not people."
+  },
+  {
+    "challengeId": "wrd_015",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is sexist. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Reply with a respectful counterargument" },
+      { "id": "b", "label": "Report it for hate speech" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Ignore it – it's just an opinion" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Sexism is harmful; reporting is the appropriate response."
+  },
+  {
+    "challengeId": "wrd_016",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should only correct misinformation if it's in their area of expertise.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders can point to reliable sources even if they aren't experts."
+  },
+  {
+    "challengeId": "wrd_017",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user being doxed in a comment. What's the urgent Warder action?",
+    "options": [
+      { "id": "a", "label": "Report the comment immediately" },
+      { "id": "b", "label": "Reply asking the user to delete it" },
+      { "id": "c", "label": "Ignore it – it might be a joke" },
+      { "id": "d", "label": "Share it to warn others" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Doxing is a serious violation; immediate reporting is crucial."
+  },
+  {
+    "challengeId": "wrd_018",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always give people the benefit of the doubt.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders are fair but not naive; they weigh evidence."
+  },
+  {
+    "challengeId": "wrd_019",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is misleading but not intentionally harmful. What's the best response?",
+    "options": [
+      { "id": "a", "label": "Politely point out the error" },
+      { "id": "b", "label": "Report it for being misleading" },
+      { "id": "c", "label": "Ignore it" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders educate before escalating."
+  },
+  {
+    "challengeId": "wrd_020",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should avoid engaging with users who are clearly trolling.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Engaging trolls feeds them; Warders report and move on."
+  },
+  {
+    "challengeId": "wrd_021",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You find a comment that spreads a conspiracy theory. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Reply with a factual rebuttal and sources" },
+      { "id": "b", "label": "Report it as misinformation" },
+      { "id": "c", "label": "Ignore it – it's harmless" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Correcting with evidence is the best approach; reporting may also be appropriate."
+  },
+  {
+    "challengeId": "wrd_022",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should never downvote posts, only report them.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Downvoting is a legitimate tool for low-quality content; Warders use all tools appropriately."
+  },
+  {
+    "challengeId": "wrd_023",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is intentionally spreading fear about a public health issue. What's the best Warder action?",
+    "options": [
+      { "id": "a", "label": "Report it and provide a source in the report" },
+      { "id": "b", "label": "Engage in a debate to disprove it" },
+      { "id": "c", "label": "Share a counter-post" },
+      { "id": "d", "label": "Ignore it – freedom of speech" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Reporting with evidence is the most effective way to remove harmful content."
+  },
+  {
+    "challengeId": "wrd_024",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always prioritize the truth over feelings.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders balance truth with compassion; how they deliver truth matters."
+  },
+  {
+    "challengeId": "wrd_025",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is a personal attack on another user. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Report it for harassment" },
+      { "id": "b", "label": "Reply with a warning" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Ignore it – people are sensitive" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Personal attacks are against Reddit rules; reporting is the correct response."
+  },
+  {
+    "challengeId": "wrd_026",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "It's acceptable to use aggressive language when correcting someone who is clearly wrong.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders maintain civility even when others are wrong."
+  },
+  {
+    "challengeId": "wrd_027",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You discover a post that appears to be astroturfing (fake grassroots promotion). What's the Warder approach?",
+    "options": [
+      { "id": "a", "label": "Report it to moderators with evidence" },
+      { "id": "b", "label": "Call it out in the comments" },
+      { "id": "c", "label": "Ignore it – it's common" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Astroturfing undermines trust; reporting is the best action."
+  },
+  {
+    "challengeId": "wrd_028",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should only report content that violates the subreddit's rules, not Reddit's sitewide rules.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders uphold all rules that protect the community."
+  },
+  {
+    "challengeId": "wrd_029",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user being harassed in multiple comments. What's the most effective Warder action?",
+    "options": [
+      { "id": "a", "label": "Report each harassing comment" },
+      { "id": "b", "label": "Reply to the user offering support" },
+      { "id": "c", "label": "Publicly call out the harasser" },
+      { "id": "d", "label": "Message the mods about the situation" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Bringing the pattern to mods' attention is more effective than piecemeal reports."
+  },
+  {
+    "challengeId": "wrd_030",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should never delete their own comments, even if they are wrong.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders can admit mistakes and edit or delete to correct misinformation."
+  },
+  {
+    "challengeId": "wrd_031",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is overly political and causing division. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Remain neutral and report if it breaks rules" },
+      { "id": "b", "label": "Take a side to balance the discussion" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Ignore it – politics are divisive" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders enforce rules, not political agendas."
+  },
+  {
+    "challengeId": "wrd_032",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always provide a source when correcting misinformation.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Sources add credibility and help others verify."
+  },
+  {
+    "challengeId": "wrd_033",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is self-promotional and spammy. What's the best Warder action?",
+    "options": [
+      { "id": "a", "label": "Report it as spam" },
+      { "id": "b", "label": "Reply with a warning" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Ignore it – it's not harmful" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Spam reduces community quality; reporting is appropriate."
+  },
+  {
+    "challengeId": "wrd_034",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should avoid reporting posts that are popular, even if they break rules.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rules apply equally; popularity doesn't exempt content."
+  },
+  {
+    "challengeId": "wrd_035",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user who is repeatedly posting anti-science content. What's the best approach?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Provide scientific sources in reply and report if it crosses the line"
+      },
+      { "id": "b", "label": "Report every post" },
+      { "id": "c", "label": "Ignore it – it's their opinion" },
+      { "id": "d", "label": "Downvote all their posts" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Education combined with reporting for clear misinformation."
+  },
+  {
+    "challengeId": "wrd_036",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should use the 'report' button generously.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Report only when genuinely needed; over-reporting reduces effectiveness."
+  },
+  {
+    "challengeId": "wrd_037",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a blatant lie but has many upvotes. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Comment with the truth and sources" },
+      { "id": "b", "label": "Report it" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "All of the above" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Multiple actions can be effective: comment, report, and downvote."
+  },
+  {
+    "challengeId": "wrd_038",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always use the 'report' option for any comment they disagree with.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Disagreement is not a rule violation; Warders differentiate."
+  },
+  {
+    "challengeId": "wrd_039",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that contains a swear word but is otherwise constructive. What should you do?",
+    "options": [
+      { "id": "a", "label": "Ignore it – it's not harmful" },
+      { "id": "b", "label": "Report it for profanity" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Reply asking them to be civil" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Minor profanity doesn't necessarily warrant action; Warders focus on harm."
+  },
+  {
+    "challengeId": "wrd_040",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always fact-check comments before engaging.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Ensuring accuracy is central to the Warder's role."
+  },
+  {
+    "challengeId": "wrd_041",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You discover a post that is a scam targeting users. What's the immediate Warder action?",
+    "options": [
+      { "id": "a", "label": "Report it as spam/scam" },
+      { "id": "b", "label": "Warn users in the comments" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "All of the above" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Warn, report, and downvote to minimize harm."
+  },
+  {
+    "challengeId": "wrd_042",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should avoid getting involved in arguments about politics.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders can engage in political discussions but must remain factual and civil."
+  },
+  {
+    "challengeId": "wrd_043",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is subtly racist. What's the best Warder response?",
+    "options": [
+      { "id": "a", "label": "Report it for hate speech" },
+      { "id": "b", "label": "Reply with a counter-argument" },
+      { "id": "c", "label": "Ignore it – it's subtle" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Racism, even subtle, violates Reddit's policies; reporting is appropriate."
+  },
+  {
+    "challengeId": "wrd_044",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should use the 'report' button as a first resort, not a last resort.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders often start with education; reporting is for clear violations."
+  },
+  {
+    "challengeId": "wrd_045",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a conspiracy theory about a natural disaster. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Comment with scientific facts and sources" },
+      { "id": "b", "label": "Report it" },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "All of the above" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Combining education and reporting is effective."
+  },
+  {
+    "challengeId": "wrd_046",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should only correct misinformation if they are absolutely certain.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Certainty prevents spreading new errors."
+  },
+  {
+    "challengeId": "wrd_047",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is a personal insult to the OP. What's the best Warder action?",
+    "options": [
+      { "id": "a", "label": "Report the insult" },
+      { "id": "b", "label": "Reply defending the OP" },
+      { "id": "c", "label": "Downvote the insult" },
+      { "id": "d", "label": "All of the above" }
+    ],
+    "correctOptionId": "d",
+    "explanation": "Reporting, defending, and downvoting are all appropriate."
+  },
+  {
+    "challengeId": "wrd_048",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always assume good faith when engaging with others.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Assuming good faith leads to more productive conversations."
+  },
+  {
+    "challengeId": "wrd_049",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a rumor about a celebrity. What should a Warder do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Comment that it's unverified and ask for sources"
+      },
+      { "id": "b", "label": "Report it for misinformation" },
+      { "id": "c", "label": "Ignore it – celebrities don't matter" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Warders combat rumors by asking for verification."
+  },
+  {
+    "challengeId": "wrd_050",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should not get involved in disputes between two users.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Warders can mediate or report if disputes become toxic."
+  },
+  {
+    "challengeId": "wvr_001",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a thread about favorite childhood memories. Which opener is best?",
+    "options": [
+      { "id": "a", "label": "'What's your favorite childhood memory?'" },
+      { "id": "b", "label": "'I remember playing in the park.'" },
+      { "id": "c", "label": "'Childhood memories are overrated.'" },
+      { "id": "d", "label": "'Let's talk about something else.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "An open-ended question invites everyone to share."
+  },
+  {
+    "challengeId": "wvr_002",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "The best way to start a creative thread is with a fully formed story.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Leaving room for others to add is key."
+  },
+  {
+    "challengeId": "wvr_003",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What superpower would you choose?' is dying. What's the best revival comment?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'I'd choose teleportation – imagine the travel!'"
+      },
+      { "id": "b", "label": "'This is a boring question.'" },
+      { "id": "c", "label": "'First.'" },
+      { "id": "d", "label": "'Who cares?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Adding a personal perspective can re-ignite interest."
+  },
+  {
+    "challengeId": "wvr_004",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Asking a question that is too specific can limit participation.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Broad questions invite more responses."
+  },
+  {
+    "challengeId": "wvr_005",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a single sentence: 'I love pizza.' What's the best Weaving reply to encourage discussion?",
+    "options": [
+      { "id": "a", "label": "'What's your favorite topping and why?'" },
+      { "id": "b", "label": "'Me too.'" },
+      { "id": "c", "label": "'Pizza is overrated.'" },
+      { "id": "d", "label": "'Okay.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Turning a statement into a question expands the conversation."
+  },
+  {
+    "challengeId": "wvr_006",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should focus on writing long, detailed posts to spark discussion.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Brevity can also be effective; the key is engagement."
+  },
+  {
+    "challengeId": "wvr_007",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What would you do with a time machine?' has few replies. How do you revive it?",
+    "options": [
+      { "id": "a", "label": "'I'd go back to the 80s – what about you?'" },
+      { "id": "b", "label": "'Time travel is impossible.'" },
+      { "id": "c", "label": "'This is stupid.'" },
+      { "id": "d", "label": "'+1'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Sharing your own answer and asking others keeps it going."
+  },
+  {
+    "challengeId": "wvr_008",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "A Weaver should always reply to every comment in their thread to keep it alive.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Engagement is good, but not every comment needs a reply; quality over quantity."
+  },
+  {
+    "challengeId": "wvr_009",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a discussion on books. Which opener would be most inclusive?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'What are you reading right now and what do you think of it?'"
+      },
+      { "id": "b", "label": "'Who is the best author?'" },
+      { "id": "c", "label": "'Read any good books lately?'" },
+      { "id": "d", "label": "'I like fantasy, anyone else?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "It invites sharing and opinion, and is specific enough to prompt detail."
+  },
+  {
+    "challengeId": "wvr_010",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Humor is always a good way to start a thread.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Humor depends on context; not all topics suit humor."
+  },
+  {
+    "challengeId": "wvr_011",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the most beautiful place you've visited?' is getting repetitive answers. What can a Weaver do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Ask a follow-up: 'What made it beautiful for you?'"
+      },
+      { "id": "b", "label": "Post a photo to compete" },
+      { "id": "c", "label": "Say 'I've been there too'" },
+      { "id": "d", "label": "Ignore it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A follow-up question deepens the discussion."
+  },
+  {
+    "challengeId": "wvr_012",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should use provocative titles to attract attention.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Provocative titles can mislead; honest titles build trust."
+  },
+  {
+    "challengeId": "wvr_013",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is a one-word reply. How can you weave it into a conversation?",
+    "options": [
+      { "id": "a", "label": "Reply with a question about their comment" },
+      { "id": "b", "label": "Ignore it" },
+      { "id": "c", "label": "Copy it" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Engaging the one-word reply can turn it into a thread."
+  },
+  {
+    "challengeId": "wvr_014",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "A Weaver's main goal is to get as many upvotes as possible.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "The goal is to foster discussion, not chase karma."
+  },
+  {
+    "challengeId": "wvr_015",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a thread about unpopular opinions. What's the best way to frame it?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'What's your most controversial opinion? Let's hear it.'"
+      },
+      { "id": "b", "label": "'Unpopular opinions only – no judging.'" },
+      {
+        "id": "c",
+        "label": "'I think pineapple on pizza is great – fight me.'"
+      },
+      { "id": "d", "label": "'Post your unpopular opinion below.'" }
+    ],
+    "correctOptionId": "b",
+    "explanation": "Setting a non-judgmental tone encourages participation."
+  },
+  {
+    "challengeId": "wvr_016",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should only post original content, never share external links.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sharing interesting links can spark great discussions."
+  },
+  {
+    "challengeId": "wvr_017",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What would you do with $1 million?' is getting few replies. What's a good Weaver intervention?",
+    "options": [
+      { "id": "a", "label": "Post: 'I'd invest it – what about you?'" },
+      { "id": "b", "label": "Post: 'Money is not everything.'" },
+      { "id": "c", "label": "Post: 'That's too much money.'" },
+      {
+        "id": "d",
+        "label": "Post: 'First reply gets $1 million (not really).'"
+      }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Adding a personal take and a question keeps it going."
+  },
+  {
+    "challengeId": "wvr_018",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should avoid topics that are too emotional.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Emotional topics can create deep connections and meaningful discussions."
+  },
+  {
+    "challengeId": "wvr_019",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a simple question: 'How was your day?' What's the best reply to encourage more?",
+    "options": [
+      { "id": "a", "label": "'It was good, thanks! And you?'" },
+      { "id": "b", "label": "'Fine.'" },
+      { "id": "c", "label": "'Not great.'" },
+      { "id": "d", "label": "'Why do you ask?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Reciprocal interest keeps the exchange going."
+  },
+  {
+    "challengeId": "wvr_020",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always be the first to comment on a new post.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Quality of reply matters more than being first."
+  },
+  {
+    "challengeId": "wvr_021",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the best movie of all time?' is getting hostile arguments. How can a Weaver de-escalate?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'Everyone has their own taste – what makes a movie great for you?'"
+      },
+      { "id": "b", "label": "'The Godfather is objectively the best.'" },
+      { "id": "c", "label": "'You're all wrong.'" },
+      { "id": "d", "label": "'Let's move on to another topic.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Shifting from competition to personal perspective reduces hostility."
+  },
+  {
+    "challengeId": "wvr_022",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should use clickbait titles to attract more views.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Honest titles build trust; clickbait disappoints."
+  },
+  {
+    "challengeId": "wvr_023",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You find a thread with great potential but it's gone quiet. What's the best revival comment?",
+    "options": [
+      { "id": "a", "label": "'I'd love to hear more perspectives on this.'" },
+      { "id": "b", "label": "'Dead thread.'" },
+      { "id": "c", "label": "'Boring.'" },
+      { "id": "d", "label": "'Anyone else?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Politely inviting more responses can revive it."
+  },
+  {
+    "challengeId": "wvr_024",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should never post images or videos, only text.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Visuals can enhance discussions."
+  },
+  {
+    "challengeId": "wvr_025",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a thread about gaming. Which opener is most engaging?",
+    "options": [
+      { "id": "a", "label": "'What game has the best story and why?'" },
+      { "id": "b", "label": "'What's your favorite game?'" },
+      { "id": "c", "label": "'Do you play games?'" },
+      { "id": "d", "label": "'I like Call of Duty.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Asking 'why' invites deeper responses."
+  },
+  {
+    "challengeId": "wvr_026",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "A Weaver should always respond to every comment in their own thread.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Engagement is good, but it's okay to let conversations flow without replying to each."
+  },
+  {
+    "challengeId": "wvr_027",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the best food in the world?' is getting short answers. What can a Weaver do?",
+    "options": [
+      { "id": "a", "label": "Ask: 'What makes it the best for you?'" },
+      { "id": "b", "label": "Post a list of foods" },
+      { "id": "c", "label": "Say 'Pizza is the best.'" },
+      { "id": "d", "label": "Ignore it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Follow-up questions encourage elaboration."
+  },
+  {
+    "challengeId": "wvr_028",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should avoid starting threads that are too personal.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Personal threads can build strong community bonds."
+  },
+  {
+    "challengeId": "wvr_029",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a simple statement: 'I love cats.' What's the best Weaving response?",
+    "options": [
+      { "id": "a", "label": "'Cats are awesome! What's your favorite breed?'" },
+      { "id": "b", "label": "'Dogs are better.'" },
+      { "id": "c", "label": "'Okay.'" },
+      { "id": "d", "label": "'I have a cat too.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Expanding on the topic with a question encourages dialogue."
+  },
+  {
+    "challengeId": "wvr_030",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should use humor to defuse tense situations.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "When used appropriately, humor can lighten the mood."
+  },
+  {
+    "challengeId": "wvr_031",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a thread about travel. Which title is best?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'What's the most surprising thing you've learned while traveling?'"
+      },
+      { "id": "b", "label": "'Where have you traveled?'" },
+      { "id": "c", "label": "'Travel is the best education.'" },
+      { "id": "d", "label": "'I went to Paris.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "It invites stories and lessons, not just lists."
+  },
+  {
+    "challengeId": "wvr_032",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always post during peak hours for maximum visibility.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Posting time matters, but quality matters more."
+  },
+  {
+    "challengeId": "wvr_033",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What would you change about your city?' is getting few replies. How to revive?",
+    "options": [
+      { "id": "a", "label": "'I'd add more parks – what about you?'" },
+      { "id": "b", "label": "'This is boring.'" },
+      { "id": "c", "label": "'I don't care.'" },
+      { "id": "d", "label": "'City living is terrible.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Sharing your own idea and prompting others works."
+  },
+  {
+    "challengeId": "wvr_034",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should avoid threads that are likely to attract controversy.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Controversial topics can create vibrant discussion if handled well."
+  },
+  {
+    "challengeId": "wvr_035",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment with an interesting idea but no elaboration. What's the best Weaver reply?",
+    "options": [
+      { "id": "a", "label": "'That's intriguing – can you tell me more?'" },
+      { "id": "b", "label": "'I disagree.'" },
+      { "id": "c", "label": "'Okay.'" },
+      { "id": "d", "label": "'You're wrong.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Encouraging elaboration builds conversation."
+  },
+  {
+    "challengeId": "wvr_036",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should use formatting (bold, bullets) to make their posts more readable.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Good formatting improves engagement."
+  },
+  {
+    "challengeId": "wvr_037",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the worst advice you've ever received?' is getting popular. How can a Weaver keep it going?",
+    "options": [
+      { "id": "a", "label": "Ask: 'How did you realize it was bad advice?'" },
+      { "id": "b", "label": "Post: 'That's funny.'" },
+      { "id": "c", "label": "Say: 'I've never received bad advice.'" },
+      { "id": "d", "label": "Ignore it." }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A follow-up question deepens the narrative."
+  },
+  {
+    "challengeId": "wvr_038",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should avoid using abbreviations like 'lol' and 'omg'.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Abbreviations can make replies feel more casual and approachable."
+  },
+  {
+    "challengeId": "wvr_039",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a photo with no context. What's the best Weaver response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'Great shot! Can you tell us the story behind it?'"
+      },
+      { "id": "b", "label": "'Nice photo.'" },
+      { "id": "c", "label": "'Where is this?'" },
+      { "id": "d", "label": "'Looks fake.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Asking for the story invites engagement."
+  },
+  {
+    "challengeId": "wvr_040",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always use standard Reddit language and avoid inside jokes.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Inside jokes can build a sense of community if appropriate."
+  },
+  {
+    "challengeId": "wvr_041",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the most overrated movie?' is getting heated. What's the best Weaver approach?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Ask: 'What made it overrated for you?' to shift to personal experience"
+      },
+      { "id": "b", "label": "Take a side to join the debate" },
+      { "id": "c", "label": "Tell everyone to calm down" },
+      { "id": "d", "label": "Change the topic" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Redirecting from argument to personal perspective reduces heat."
+  },
+  {
+    "challengeId": "wvr_042",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always mention a specific example in their questions to guide answers.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sometimes open-ended is better; it depends on the topic."
+  },
+  {
+    "challengeId": "wvr_043",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You find a thread with lots of comments but the discussion is shallow. What can a Weaver do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Ask a deeper question that builds on the top comments"
+      },
+      { "id": "b", "label": "Post a meme" },
+      { "id": "c", "label": "Say 'This is shallow.'" },
+      { "id": "d", "label": "Leave it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Elevating the conversation is a Weavers' specialty."
+  },
+  {
+    "challengeId": "wvr_044",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should only start threads they are experts in.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Curiosity and learning can be great drivers of discussion."
+  },
+  {
+    "challengeId": "wvr_045",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread is dying after a few replies. What's the best Weaver move?",
+    "options": [
+      { "id": "a", "label": "Reply with a new angle or question" },
+      { "id": "b", "label": "Let it die – it's natural" },
+      { "id": "c", "label": "Repost it later" },
+      { "id": "d", "label": "Ask for upvotes" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A fresh angle can revive interest."
+  },
+  {
+    "challengeId": "wvr_046",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should use emojis sparingly.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Emojis can add tone; use them appropriately."
+  },
+  {
+    "challengeId": "wvr_047",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a thread about music. Which opener is best?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'What song has had the biggest impact on your life and why?'"
+      },
+      { "id": "b", "label": "'Favorite song?'" },
+      { "id": "c", "label": "'Music is life.'" },
+      { "id": "d", "label": "'Any music fans here?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "The 'why' invites storytelling."
+  },
+  {
+    "challengeId": "wvr_048",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should avoid asking 'yes/no' questions.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Open-ended questions stimulate more discussion."
+  },
+  {
+    "challengeId": "wvr_049",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is a long story. What's the best Weaver reply?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'Thank you for sharing – that really resonated with me.'"
+      },
+      { "id": "b", "label": "'Too long, didn't read.'" },
+      { "id": "c", "label": "'I had a similar experience.'" },
+      { "id": "d", "label": "'Cool story.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Validating a personal story encourages further sharing."
+  },
+  {
+    "challengeId": "wvr_050",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always end their posts with a question.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "It's a good tactic but not a rule."
+  },
+  {
+    "challengeId": "rng_051",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a post with zero comments but a compelling title. What should a Ranger do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Read it and start a discussion with a thoughtful comment"
+      },
+      {
+        "id": "b",
+        "label": "Ignore it – no comments means it's not interesting"
+      },
+      { "id": "c", "label": "Downvote it" },
+      { "id": "d", "label": "Report it as incomplete" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers don't judge by comments; they create conversation."
+  },
+  {
+    "challengeId": "rng_052",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should always sort by 'Top' of the week to find quality content.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Top of the week is already popular; Rangers hunt for fresh content."
+  },
+  {
+    "challengeId": "rng_053",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is incredibly insightful but buried under many replies. What's the best Ranger action?",
+    "options": [
+      { "id": "a", "label": "Upvote and reply to highlight it" },
+      { "id": "b", "label": "Ignore it – it's too deep" },
+      { "id": "c", "label": "Downvote other replies to bring it up" },
+      { "id": "d", "label": "Repost the insight as a new comment" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Upvoting and replying gives it visibility."
+  },
+  {
+    "challengeId": "rng_054",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Rangers should only upvote posts, never downvote.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Rangers use downvotes for low-quality content as well."
+  },
+  {
+    "challengeId": "rng_055",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You discover a subreddit that has amazing content but is rarely posted to. What should a Ranger do?",
+    "options": [
+      { "id": "a", "label": "Become an active contributor to help it grow" },
+      { "id": "b", "label": "Keep it a secret" },
+      { "id": "c", "label": "Contact the admins to promote it" },
+      { "id": "d", "label": "Ignore it – it's too small" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers nurture communities by participating."
+  },
+  {
+    "challengeId": "rng_056",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger should never engage with posts that have negative karma.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Negative karma can be a sign of a hidden gem."
+  },
+  {
+    "challengeId": "rng_057",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is well-written but about a niche topic. What's a Ranger to do?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Upvote and comment to encourage more niche content"
+      },
+      { "id": "b", "label": "Ignore it – niche topics don't gain traction" },
+      { "id": "c", "label": "Downvote because it's too specific" },
+      { "id": "d", "label": "Report it for being off-topic" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers support diversity of content."
+  },
+  {
+    "challengeId": "rng_058",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "Rangers should prioritize posts that are educational over posts that are entertaining.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Both have value; Rangers balance them."
+  },
+  {
+    "challengeId": "rng_059",
+    "playerClass": "RANGER",
+    "type": "multiple_choice",
+    "prompt": "You find a post that is a deep analysis of a movie, but it has only 2 upvotes. What's the Ranger move?",
+    "options": [
+      { "id": "a", "label": "Upvote and share your thoughts in the comments" },
+      { "id": "b", "label": "Ignore it – analysis is boring" },
+      { "id": "c", "label": "Downvote because you disagree" },
+      { "id": "d", "label": "Report it for spoilers" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Rangers appreciate depth and encourage it."
+  },
+  {
+    "challengeId": "rng_060",
+    "playerClass": "RANGER",
+    "type": "true_false",
+    "prompt": "A Ranger's role is to be the first to upvote a new post.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Being first is not the goal; surfacing quality is."
+  },
+  {
+    "challengeId": "mnd_051",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts: 'I'm so stressed about work.' What's the best Mender reply?",
+    "options": [
+      { "id": "a", "label": "'That sounds tough. Want to talk about it?'" },
+      { "id": "b", "label": "'Just relax, it's just work.'" },
+      { "id": "c", "label": "'Quit your job.'" },
+      { "id": "d", "label": "'I'm stressed too.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Acknowledging and inviting dialogue is supportive."
+  },
+  {
+    "challengeId": "mnd_052",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should use 'I' statements to show empathy.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "I statements (like 'I hear you') convey personal connection."
+  },
+  {
+    "challengeId": "mnd_053",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a user who is very excited about a new hobby. What should a Mender say?",
+    "options": [
+      { "id": "a", "label": "'That's great! Tell me more about it.'" },
+      { "id": "b", "label": "'That's a waste of time.'" },
+      { "id": "c", "label": "'I don't care.'" },
+      { "id": "d", "label": "'You'll get bored soon.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Celebrating others' enthusiasm is a Mender trait."
+  },
+  {
+    "challengeId": "mnd_054",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should avoid asking personal questions.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Respectful personal questions can deepen connection."
+  },
+  {
+    "challengeId": "mnd_055",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user posts a rant about a bad day. What's the most helpful Mender reply?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'That sounds really frustrating. I'm here for you.'"
+      },
+      { "id": "b", "label": "'You should have done things differently.'" },
+      { "id": "c", "label": "'Bad days happen, get over it.'" },
+      { "id": "d", "label": "'Why are you telling us?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Validation without judgment is key."
+  },
+  {
+    "challengeId": "mnd_056",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should always offer a solution when someone vents.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sometimes people just want to be heard."
+  },
+  {
+    "challengeId": "mnd_057",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment from a user who is clearly upset about a personal issue. What's the best Mender action?",
+    "options": [
+      { "id": "a", "label": "Reply with a gentle, caring message" },
+      { "id": "b", "label": "Report it for being off-topic" },
+      { "id": "c", "label": "Ignore it – it's not your problem" },
+      { "id": "d", "label": "Give them a sarcastic reply" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A caring message can make a huge difference."
+  },
+  {
+    "challengeId": "mnd_058",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should not share their own struggles when helping others.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Sharing can build rapport if done briefly."
+  },
+  {
+    "challengeId": "mnd_059",
+    "playerClass": "MENDER",
+    "type": "multiple_choice",
+    "prompt": "A user is proud of a small achievement. What should a Mender reply?",
+    "options": [
+      { "id": "a", "label": "'That's awesome – you deserve to celebrate!'" },
+      { "id": "b", "label": "'That's nothing special.'" },
+      { "id": "c", "label": "'I could do that too.'" },
+      { "id": "d", "label": "'Why are you sharing this?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Menders amplify joy."
+  },
+  {
+    "challengeId": "mnd_060",
+    "playerClass": "MENDER",
+    "type": "true_false",
+    "prompt": "Menders should always end their replies with a question to engage the user.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "It's not required; sometimes a statement of support is enough."
+  },
+  {
+    "challengeId": "wrd_051",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a clear attempt to manipulate public opinion. What's the best Warder action?",
+    "options": [
+      { "id": "a", "label": "Report it with evidence of manipulation" },
+      { "id": "b", "label": "Engage in debate to expose it" },
+      { "id": "c", "label": "Ignore it – manipulation is common" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Reporting is the most effective way to combat coordinated manipulation."
+  },
+  {
+    "challengeId": "wrd_052",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always try to educate the poster before reporting.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "For clear rule-breaking, reporting is appropriate without prior education."
+  },
+  {
+    "challengeId": "wrd_053",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is subtly manipulative but not directly false. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Point out the manipulative language" },
+      { "id": "b", "label": "Report it for being manipulative" },
+      { "id": "c", "label": "Ignore it – it's not breaking rules" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Calling out manipulation can help others see it."
+  },
+  {
+    "challengeId": "wrd_054",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should avoid using the downvote button because it's subjective.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Downvotes are a valid tool for expressing disapproval of content."
+  },
+  {
+    "challengeId": "wrd_055",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is a logical fallacy. What's the best Warder response?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Point out the fallacy and explain why it's flawed"
+      },
+      { "id": "b", "label": "Report it for being misleading" },
+      { "id": "c", "label": "Ignore it – fallacies are common" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Educating on logical fallacies improves discourse."
+  },
+  {
+    "challengeId": "wrd_056",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should only correct factual errors, not opinions.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Opinions are subjective; Warders focus on facts."
+  },
+  {
+    "challengeId": "wrd_057",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a conspiracy theory about a government. What's the best Warder action?",
+    "options": [
+      { "id": "a", "label": "Reply with factual counterpoints and sources" },
+      { "id": "b", "label": "Report it as misinformation" },
+      { "id": "c", "label": "Ignore it – it's just a theory" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Combating conspiracies requires evidence."
+  },
+  {
+    "challengeId": "wrd_058",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always give the benefit of the doubt to new users.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "New users may not know the rules; Warders can educate gently."
+  },
+  {
+    "challengeId": "wrd_059",
+    "playerClass": "WARDER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is intentionally divisive. What should a Warder do?",
+    "options": [
+      { "id": "a", "label": "Report it if it violates community guidelines" },
+      { "id": "b", "label": "Engage in debate to counter it" },
+      { "id": "c", "label": "Ignore it – divisiveness is not a rule" },
+      { "id": "d", "label": "Downvote it" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "If it breaks rules, report; otherwise, it may be best to ignore."
+  },
+  {
+    "challengeId": "wrd_060",
+    "playerClass": "WARDER",
+    "type": "true_false",
+    "prompt": "Warders should always try to find common ground with those they disagree with.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Finding common ground reduces conflict."
+  },
+  {
+    "challengeId": "wvr_051",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You want to start a thread about personal growth. Which opener is best?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'What's one thing you've learned about yourself recently?'"
+      },
+      { "id": "b", "label": "'I've learned to be more patient.'" },
+      { "id": "c", "label": "'Personal growth is hard.'" },
+      { "id": "d", "label": "'Do you like self-help?'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "A question invites others to share their experiences."
+  },
+  {
+    "challengeId": "wvr_052",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always use rhetorical questions in their posts.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Real questions generate more discussion."
+  },
+  {
+    "challengeId": "wvr_053",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the best investment you've made?' is going slow. How can a Weaver boost it?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Share your own best investment and ask for details"
+      },
+      { "id": "b", "label": "Say 'Investing is risky.'" },
+      { "id": "c", "label": "Ignore it" },
+      { "id": "d", "label": "Post a meme" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Personal sharing prompts reciprocation."
+  },
+  {
+    "challengeId": "wvr_054",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should avoid threads about politics.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Political threads can be valuable if kept respectful."
+  },
+  {
+    "challengeId": "wvr_055",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a comment that is a one-sentence story. What's the best Weaver reply?",
+    "options": [
+      { "id": "a", "label": "'That's intriguing – what happened next?'" },
+      { "id": "b", "label": "'Nice.'" },
+      { "id": "c", "label": "'I don't get it.'" },
+      { "id": "d", "label": "'Boring.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Encouraging elaboration builds a story."
+  },
+  {
+    "challengeId": "wvr_056",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always post in subreddits with large audiences.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "Smaller subreddits can have more engaged audiences."
+  },
+  {
+    "challengeId": "wvr_057",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "A thread about 'What's the most important quality in a friend?' is getting generic answers. How to deepen it?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'Can you share a time a friend showed you that quality?'"
+      },
+      { "id": "b", "label": "'Loyalty is the most important.'" },
+      { "id": "c", "label": "'This is boring.'" },
+      { "id": "d", "label": "'I have no friends.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Asking for stories personalizes the topic."
+  },
+  {
+    "challengeId": "wvr_058",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always include a call-to-action in their posts.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "false",
+    "explanation": "A call-to-action can help, but isn't mandatory."
+  },
+  {
+    "challengeId": "wvr_059",
+    "playerClass": "WEAVER",
+    "type": "multiple_choice",
+    "prompt": "You see a post that is a simple question: 'How are you?' What's the best Weaver reply to spark a conversation?",
+    "options": [
+      {
+        "id": "a",
+        "label": "'I'm doing well, thanks! I just finished a great book – what about you?'"
+      },
+      { "id": "b", "label": "'Fine.'" },
+      { "id": "c", "label": "'Why do you ask?'" },
+      { "id": "d", "label": "'Not good.'" }
+    ],
+    "correctOptionId": "a",
+    "explanation": "Adding a detail and asking a follow-up keeps it going."
+  },
+  {
+    "challengeId": "wvr_060",
+    "playerClass": "WEAVER",
+    "type": "true_false",
+    "prompt": "Weavers should always upvote replies to their threads to encourage participation.",
+    "options": [
+      { "id": "true", "label": "True" },
+      { "id": "false", "label": "False" }
+    ],
+    "correctOptionId": "true",
+    "explanation": "Upvoting replies shows appreciation and encourages more."
+  }
+]

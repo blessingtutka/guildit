@@ -1,4 +1,4 @@
-import { ChevronLeft, Sparkles } from 'lucide-react';
+import { ChevronLeft, Sword } from 'lucide-react';
 import { ACTION_LABELS } from '../../../shared/web';
 import type { ActionType, ActionStatus } from '../../../shared/api';
 import { ACTION_BASE_POINTS, ACTION_DAILY_CAPS } from '../../../shared/api';
@@ -33,7 +33,7 @@ export function TrialIntroView({
       </button>
 
       <div className="text-center flex flex-col items-center gap-2 mt-2">
-        <Sparkles className="size-10" style={{ color }} />
+        <Sword className="size-10" style={{ color }} />
         <h1
           className="font-display text-xl font-bold tracking-wide"
           style={{ color }}
@@ -58,7 +58,7 @@ export function TrialIntroView({
               key={action}
               className="flex items-center justify-between p-3 rounded-xl border"
               style={{
-                borderColor: depleted ? 'var(--color-border)' : `${color}40`,
+                borderColor: depleted ? 'var(--color-border)' : `${color}`,
                 backgroundColor: depleted ? 'transparent' : `${color}0d`,
                 opacity: depleted ? 0.5 : 1,
               }}
