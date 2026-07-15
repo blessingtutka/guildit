@@ -22,6 +22,7 @@ export function MyGuildView({
   leaving,
   onLeave,
 }: MyGuildViewProps) {
+  console.log(guild);
   return (
     <div className="flex flex-col flex-1 px-4 py-4 gap-4 overflow-y-auto">
       {/* Guild Header */}
@@ -114,17 +115,17 @@ export function MyGuildView({
           Members ({guild.members.length})
         </p>
         <div className="space-y-2">
-          {guild.members.map((memberId) => (
+          {guild.members.map((member) => (
             <div
-              key={memberId}
+              key={member.id}
               className="flex items-center justify-between text-sm"
             >
               <span className="text-foreground font-medium truncate">
-                {memberId === player.userId
+                {member.id === player.userId
                   ? `${player.username} (you)`
-                  : player.username}
+                  : member.name}
               </span>
-              {guild.guild.founderId === memberId && (
+              {guild.guild.founderId === member.id && (
                 <span className="text-xs text-primary font-semibold bg-primary/10 rounded px-2 py-0.5">
                   Founder
                 </span>
