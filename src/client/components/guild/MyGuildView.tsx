@@ -120,7 +120,9 @@ export function MyGuildView({
               className="flex items-center justify-between text-sm"
             >
               <span className="text-foreground font-medium truncate">
-                {memberId === player.userId ? `${memberId} (you)` : memberId}
+                {memberId === player.userId
+                  ? `${player.username} (you)`
+                  : player.username}
               </span>
               {guild.guild.founderId === memberId && (
                 <span className="text-xs text-primary font-semibold bg-primary/10 rounded px-2 py-0.5">

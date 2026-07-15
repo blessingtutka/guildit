@@ -11,6 +11,7 @@ import {
   POST_CAP_LEVEL_STEP,
 } from '../../../shared/api';
 import { ClassIcon } from '../common/ClassIcon';
+import { RefreshCw } from 'lucide-react';
 
 type PlayerHeroCardProps = Readonly<{
   player: Player & { level: number };
@@ -46,7 +47,7 @@ export function PlayerHeroCard({ player, onChangeClass }: PlayerHeroCardProps) {
       className="relative rounded-2xl overflow-hidden p-4"
       style={{
         background: `linear-gradient(135deg, ${color}18, ${color}05)`,
-        border: `1px solid ${color}30`,
+        border: `1px solid ${color}`,
       }}
     >
       {/* Change Class button */}
@@ -54,9 +55,10 @@ export function PlayerHeroCard({ player, onChangeClass }: PlayerHeroCardProps) {
         variant="ghost"
         size="xs"
         onClick={onChangeClass}
-        className="absolute top-3 right-3 text-xs text-muted-foreground"
+        className="absolute top-4 right-2 text-xs text-muted-foreground border border-muted-foreground
+          hover:border-foreground flex items-center gap-0.5"
       >
-        ✦ Change class
+        <RefreshCw className="size-3" /> Change class
       </Button>
 
       <div className="flex items-center gap-4 pr-16">
@@ -84,7 +86,7 @@ export function PlayerHeroCard({ player, onChangeClass }: PlayerHeroCardProps) {
             <Badge
               variant="outline"
               className="text-[10px] px-1.5 py-0 font-bold flex items-center gap-0.5"
-              style={{ borderColor: `${color}60`, color }}
+              style={{ borderColor: `${color}`, color }}
             >
               <ClassIcon classMeta={meta} />
               {meta.name}

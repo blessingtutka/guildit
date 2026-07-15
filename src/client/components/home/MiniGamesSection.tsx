@@ -1,7 +1,7 @@
 import React from 'react';
 import type { GuildStatus } from '../../../shared/api';
 import type { AppPage } from '../../pages/HomePage';
-import { Swords, Lock, ArrowRight, Sword, Dices } from 'lucide-react';
+import { Swords, Lock, ArrowRight, Sword, Skull } from 'lucide-react';
 
 type MiniGamesSectionProps = Readonly<{
   color: string;
@@ -94,7 +94,7 @@ export function MiniGamesSection({
           onClick={() => onNavigate('duel')}
         />
         <GameCard
-          icon={<Dices className="w-7 h-7 text-foreground" />}
+          icon={<Skull className="w-7 h-7 text-foreground" />}
           title="Guild Raid"
           subtitle="Battle 3 waves of enemies with your guild"
           badge="GUILD"

@@ -1,3 +1,4 @@
+import { ChevronLeft, GamepadDirectional, Skull } from 'lucide-react';
 import type { GuildStatus } from '../../../shared/api';
 
 const RAID_WAVES = 3;
@@ -17,7 +18,7 @@ export function RaidIntroView({
 }: RaidIntroViewProps) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center gap-6 px-6 py-8 text-center">
-      <div className="text-5xl animate-bounce-subtle">🏴‍☠️</div>
+      <Skull className="size-12 animate-bounce-subtle text-primary" />
       <div>
         <h1 className="font-display text-2xl font-bold tracking-wider text-foreground mb-2">
           Guild Raid
@@ -54,8 +55,9 @@ export function RaidIntroView({
           </span>
         </div>
         {guild.isComplete && (
-          <span className="text-xs text-primary font-semibold">
-            ⚔️ Full roster — maximum damage!
+          <span className="text-xs text-primary font-semibold flex gap-1 items-center justify-center">
+            <GamepadDirectional className="size-3" />
+            Full roster — maximum damage!
           </span>
         )}
       </div>
@@ -63,16 +65,18 @@ export function RaidIntroView({
       <div className="flex flex-col w-full max-w-sm gap-3">
         <button
           onClick={onStart}
-          className="w-full py-3.5 rounded-xl font-bold text-white text-lg transition-all hover:scale-105 hover:shadow-lg active:scale-95"
+          className="w-full py-3.5 rounded-xl font-bold text-white text-lg transition-all hover:scale-105 hover:shadow-lg active:scale-95
+          flex items-center justify-center text-center gap-1.5"
           style={{ backgroundColor: playerColor }}
         >
-          🏴‍☠️ Start Raid
+          <Skull className="size-5" /> Start Raid
         </button>
         <button
           onClick={onBack}
-          className="text-sm text-muted-foreground hover:text-foreground"
+          className="text-sm text-muted-foreground rounded-xl hover:text-foreground flex items-center justify-center gap-1 py-2.5 border border-muted-foreground
+          hover:border-foreground transition-colors"
         >
-          ← Back
+          <ChevronLeft className="size-3.5" /> Back
         </button>
       </div>
     </div>

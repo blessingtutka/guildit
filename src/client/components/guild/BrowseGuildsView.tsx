@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronLeft, Landmark } from 'lucide-react';
 import { useState } from 'react';
 
-type GuildEntry = { guildId: string; score: number };
+type GuildEntry = { guildId: string; name: string; score: number };
 
 type BrowseGuildsViewProps = Readonly<{
   guilds: GuildEntry[];
@@ -79,7 +79,7 @@ export function BrowseGuildsView({
             >
               <div>
                 <p className="text-sm font-semibold text-foreground">
-                  {g.guildId.replace(/^guild_\d+_/, '')}
+                  {g.name || g.guildId.replace(/^guild_\d+_/, '')}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Score: {g.score.toLocaleString()}
