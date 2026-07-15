@@ -1,8 +1,11 @@
 import { ProgressBar } from '../common/ProgressBar';
 import { ACTION_LABELS } from '../../../shared/web';
 import { ACTION_BASE_POINTS, ACTION_DAILY_CAPS } from '../../../shared/api';
-import type { ActionType, GuildStatus } from '../../../shared/api';
-import type { ActionStatus } from '../../hooks/useAction';
+import type {
+  ActionStatus,
+  ActionType,
+  GuildStatus,
+} from '../../../shared/api';
 
 const RAID_WAVES = 3;
 

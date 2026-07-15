@@ -13,11 +13,7 @@ import type {
   ActionType,
   GuildStatus,
 } from '../../shared/api';
-import {
-  CLASS_ACTIONS,
-  ACTION_BASE_POINTS,
-  ACTION_DAILY_CAPS,
-} from '../../shared/api';
+import { CLASS_ACTIONS } from '../../shared/api';
 
 type GuildRaidPageProps = Readonly<{
   player: Player & { level: number };
@@ -53,6 +49,7 @@ export function GuildRaidPage({
   onPlayerUpdate,
   onBack,
 }: GuildRaidPageProps) {
+  const ACTIONS_ENABLED = false;
   const playerClass = player.class as PlayerClass;
   const playerColor = classColor(playerClass);
   const actions = CLASS_ACTIONS[playerClass];
@@ -65,9 +62,13 @@ export function GuildRaidPage({
   const [totalDamage, setTotalDamage] = useState(0);
   const [flashing, setFlashing] = useState<'boss' | 'guild' | null>(null);
 
-  const { statuses, perform, fetchAllStatuses, error, clearError } = useAction(
-    player.userId
-  );
+  const {
+    statuses,
+    performGuildRaidAttack,
+    fetchAllStatuses,
+    error,
+    clearError,
+  } = useAction(player.userId);
 
   useEffect(() => {
     void fetchAllStatuses(actions);
@@ -82,16 +83,18 @@ export function GuildRaidPage({
 
   const handleAttack = useCallback(
     async (action: ActionType) => {
-      const status = statuses[action];
-      if (status && status.remaining <= 0) {
-        toast.error('⏳ No uses left for this action today');
+      if (!ACTIONS_ENABLED) {
+        toast.info('⛔ Actions are disabled (under construction)');
         return;
       }
 
-      const result = await perform(action);
+      // Call the placeholder with the real player
+      const result = await performGuildRaidAttack(action, player);
       if (!result) return;
 
+      // Update the parent with the new player (points updated)
       onPlayerUpdate(result.player);
+
       const dmg = result.pointsEarned;
       setTotalDamage((t) => t + dmg);
 
@@ -114,6 +117,7 @@ export function GuildRaidPage({
         `⚔️ ${ACTION_LABELS[action].label}! -${Math.floor(dmg * 0.8)} boss HP`
       );
 
+      // Check win/lose conditions
       if (newBossHp <= 0) {
         const nextWave = wave + 1;
         if (nextWave >= RAID_WAVES) {
@@ -122,13 +126,22 @@ export function GuildRaidPage({
           setWave(nextWave);
           setBoss(generateBossWave(nextWave));
           setBossHp(100);
-          toast.success(`✅ Wave ${wave + 1} cleared! Next wave incoming...`);
+          toast.success(`Wave ${wave + 1} cleared! Next wave incoming...`);
         }
       } else if (newGuildHp <= 0) {
         setPhase('result');
       }
     },
-    [statuses, perform, onPlayerUpdate, bossHp, guildHp, boss, wave]
+    [
+      ACTIONS_ENABLED,
+      performGuildRaidAttack,
+      player,
+      onPlayerUpdate,
+      bossHp,
+      boss.power,
+      guildHp,
+      wave,
+    ]
   );
 
   const isComplete = phase === 'result';
@@ -143,10 +156,6 @@ export function GuildRaidPage({
     setGuildHp(100);
     setTotalDamage(0);
   };
-
-  // Unused import suppression
-  void ACTION_BASE_POINTS;
-  void ACTION_DAILY_CAPS;
 
   return (
     <PageShell player={player} onBack={onBack} title="Guild Raid">

@@ -6,7 +6,8 @@ import type {
   PlayerClass,
   ClientChallenge,
 } from '../../shared/api';
-import { SYSTEM_VERIFIED_ACTIONS } from '../../shared/api';
+import { ACTION_DAILY_CAPS, SYSTEM_VERIFIED_ACTIONS } from '../../shared/api';
+import { toast } from 'sonner';
 
 interface ApiError {
   status: 'error';
@@ -34,6 +35,8 @@ export interface PerformResult {
 }
 
 export function useAction(userId: string | null) {
+  const ACTIONS_ENABLED = false;
+
   const [statuses, setStatuses] = useState<
     Partial<Record<ActionType, ActionStatus>>
   >({});
@@ -83,6 +86,44 @@ export function useAction(userId: string | null) {
     []
   );
 
+  const performGuildRaidAttack = useCallback(
+    async (
+      action: ActionType,
+      player: Player & { level: number }
+    ): Promise<PerformResult | null> => {
+      if (!userId) return null;
+
+      // Simulate network delay
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      const pointsEarned = Math.floor(Math.random() * 20) + 10;
+      const cap = ACTION_DAILY_CAPS[action] ?? 5;
+      const used = (statuses[action]?.usedToday ?? 0) + 1;
+      const remaining = Math.max(0, cap - used);
+
+      setStatuses((prev) => ({
+        ...prev,
+        [action]: { cap, usedToday: used, remaining },
+      }));
+
+      // Update the player's points (and maybe level if you want to simulate)
+      const updatedPlayer: Player & { level: number } = {
+        ...player,
+        points: player.points + pointsEarned,
+      };
+
+      return {
+        player: updatedPlayer,
+        action,
+        pointsEarned,
+        leveledUp: false,
+        remainingToday: remaining,
+        challengeResult: { correct: true, explanation: 'Guild raid attack' },
+      };
+    },
+    [userId, statuses]
+  );
+
   const perform = useCallback(
     async (
       action: ActionType,
@@ -90,6 +131,10 @@ export function useAction(userId: string | null) {
       chosenOptionId: string
     ): Promise<PerformResult | null> => {
       if (!userId) return null;
+      if (!ACTIONS_ENABLED) {
+        toast.info('⛔ Actions are disabled (under construction)');
+        return null;
+      }
       try {
         const res = await fetch('/api/action', {
           method: 'POST',
@@ -133,5 +178,6 @@ export function useAction(userId: string | null) {
     perform,
     fetchAllStatuses,
     fetchChallenge,
+    performGuildRaidAttack,
   };
 }

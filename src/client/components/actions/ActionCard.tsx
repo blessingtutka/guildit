@@ -1,7 +1,6 @@
 import { ACTION_LABELS } from '../../../shared/web';
-import type { ActionType } from '../../../shared/api';
+import type { ActionType, ActionStatus } from '../../../shared/api';
 import { ACTION_BASE_POINTS, ACTION_DAILY_CAPS } from '../../../shared/api';
-import type { ActionStatus } from '../../hooks/useAction';
 
 type ActionCardProps = Readonly<{
   action: ActionType;

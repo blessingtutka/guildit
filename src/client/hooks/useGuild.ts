@@ -3,7 +3,7 @@ import type { Guild, GuildStatus } from '../../shared/api';
 
 interface GuildState {
   guild: GuildStatus | null;
-  guilds: { guildId: string; score: number }[];
+  guilds: { guildId: string; name: string; score: number }[];
   loading: boolean;
   error: string | null;
 }
@@ -48,7 +48,7 @@ export function useGuild(userId: string | null) {
       setState((s) => ({ ...s, loading: true, error: null }));
       const res = await fetch('/api/guild?limit=20');
       const data = await parseOrThrow<{
-        guilds: { guildId: string; score: number }[];
+        guilds: { guildId: string; name: string; score: number }[];
       }>(res);
       setState((s) => ({ ...s, guilds: data.guilds, loading: false }));
       return data.guilds;
