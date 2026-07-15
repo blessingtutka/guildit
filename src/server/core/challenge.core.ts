@@ -17,7 +17,7 @@ interface ChallengeDefinition {
   playerClass: PlayerClass;
 }
 
-const CHALLENGE_BANK: ChallengeDefinition[] = challengeData;
+const CHALLENGE_BANK = challengeData as unknown as ChallengeDefinition[];
 
 export function getRandomChallenge(playerClass: PlayerClass): ClientChallenge {
   const pool = CHALLENGE_BANK.filter((c) => c.playerClass === playerClass);

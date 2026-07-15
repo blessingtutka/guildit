@@ -10,11 +10,7 @@
     "esModuleInterop": true,
     "rootDir": "../src/server"
   },
-  "include": [
-    "../src/server/**/*",
-    "src/server/**/*.json",
-    "src/server/core/challenges.json"
-  ],
+  "include": ["../src/server/**/*", "../src/server/**/*.json"],
   "exclude": [],
   "references": [
     {
