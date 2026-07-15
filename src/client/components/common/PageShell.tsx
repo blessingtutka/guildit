@@ -49,7 +49,7 @@ export function PageShell({
       const payload: any = n.payload ?? {};
       const duelId = payload?.duelId ?? payload?.invite?.duelId ?? null;
       if (duelId) {
-        navigate(`/duel?open=${encodeURIComponent(duelId)}`);
+        void navigate(`/duel?open=${encodeURIComponent(duelId)}`);
         return;
       }
 
@@ -60,7 +60,7 @@ export function PageShell({
 
   const handleViewAll = useCallback(() => {
     if (onViewAllNotifications) return onViewAllNotifications();
-    navigate('/notifications');
+    void navigate('/notifications');
   }, [navigate, onViewAllNotifications]);
 
   return (
