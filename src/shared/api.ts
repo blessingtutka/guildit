@@ -25,9 +25,14 @@ export interface Guild {
   members: string[]; // array of userIds
 }
 
+export interface GuildMember {
+  id: string;
+  name: string;
+}
+
 export interface GuildStatus {
   guild: Omit<Guild, 'members'>;
-  members: string[];
+  members: GuildMember[];
   classesPresent: PlayerClass[];
   totalPoints: number;
   multiplier: number;
@@ -108,6 +113,12 @@ export const ACTION_BASE_POINTS: Record<ActionType, number> = {
   WEAVER_ENCHANT: 25,
 };
 
+export const SYSTEM_VERIFIED_ACTIONS: ActionType[] = [
+  'WEAVER_CRAFT',
+  'MENDER_COUNSEL',
+  'WEAVER_INSPIRE',
+];
+
 // Which actions belong to which class
 export const CLASS_ACTIONS: Record<PlayerClass, ActionType[]> = {
   RANGER: [
@@ -125,6 +136,49 @@ export const CLASS_ACTIONS: Record<PlayerClass, ActionType[]> = {
   WARDER: ['WARDER_DEFEND', 'WARDER_GUARD', 'WARDER_FORTIFY', 'WARDER_VERDICT'],
   WEAVER: ['WEAVER_INVOKE', 'WEAVER_CRAFT', 'WEAVER_INSPIRE', 'WEAVER_ENCHANT'],
 };
+
+export const MANUAL_CLASS_ACTIONS: Record<PlayerClass, ActionType[]> = {
+  RANGER: CLASS_ACTIONS.RANGER.filter(
+    (a) => !SYSTEM_VERIFIED_ACTIONS.includes(a)
+  ),
+  MENDER: CLASS_ACTIONS.MENDER.filter(
+    (a) => !SYSTEM_VERIFIED_ACTIONS.includes(a)
+  ),
+  WARDER: CLASS_ACTIONS.WARDER.filter(
+    (a) => !SYSTEM_VERIFIED_ACTIONS.includes(a)
+  ),
+  WEAVER: CLASS_ACTIONS.WEAVER.filter(
+    (a) => !SYSTEM_VERIFIED_ACTIONS.includes(a)
+  ),
+};
+
+export interface ActionStatus {
+  cap: number;
+  usedToday: number;
+  remaining: number;
+}
+
+// Challenge
+export type ChallengeType = 'multiple_choice' | 'true_false';
+
+export interface ChallengeOption {
+  id: string;
+  label: string;
+}
+
+export interface ClientChallenge {
+  challengeId: string;
+  type: ChallengeType;
+  prompt: string;
+  options: ChallengeOption[];
+  playerClass: PlayerClass;
+}
+
+export interface ChallengeSubmitResult {
+  correct: boolean;
+  explanation?: string;
+  scoreFraction: number;
+}
 
 // ===============================================
 // POINT EVENTS — passive (Reddit event triggers)
@@ -175,6 +229,42 @@ export interface ActionMetadata {
   threadSentiment: 'positive' | 'neutral' | 'negative';
   playerClass: PlayerClass;
 }
+
+export const REACHABLE_PASSIVE_EVENTS: PointEvent[] = [
+  'POST_CREATED',
+  'COMMENT_CREATED',
+  'REPLY_RECEIVED',
+  'SUPPORTIVE_REPLY',
+  'DEFENSE_REPLY',
+  'WARDER_GUARD',
+];
+
+export const PASSIVE_EVENT_DESCRIPTIONS: Record<PointEvent, string> = {
+  POST_CREATED: 'You publish a new post',
+  COMMENT_CREATED: 'You write a comment',
+  REPLY_RECEIVED: 'Someone replies to your post or comment',
+  SUPPORTIVE_REPLY: 'Your comment reads as encouraging or kind',
+  DEFENSE_REPLY: 'Your comment defends someone being treated unfairly',
+  WARDER_GUARD: 'You defend someone as a Warder',
+  UPVOTE_RECEIVED: 'Not available — Reddit does not expose vote events to apps',
+  DOWNVOTE_RECEIVED:
+    'Not available — Reddit does not expose vote events to apps',
+  AWARD_RECEIVED: 'Not available — Reddit does not expose award events to apps',
+  CONTENT_SAVED: 'Not available — Reddit does not expose save events to apps',
+  QUALITY_COMMENT: 'Not available — no Devvit event for comment quality',
+  RANGER_DISCOVER: 'Earned through Solo Trial, not passive activity',
+  MENDER_COUNSEL:
+    'Earned through Solo Trial + verified upvotes, not passive activity',
+  WEAVER_INSPIRE:
+    'Earned through Solo Trial + verified replies, not passive activity',
+};
+
+export const PASSIVE_CLASS_AFFINITY: Record<PlayerClass, PointEvent[]> = {
+  RANGER: ['POST_CREATED'],
+  MENDER: ['SUPPORTIVE_REPLY'],
+  WARDER: ['WARDER_GUARD'],
+  WEAVER: ['REPLY_RECEIVED'],
+};
 
 // ===============================================
 // LEVEL SYSTEM

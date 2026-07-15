@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import { connectRealtime, disconnectRealtime } from '@devvit/web/client';
 import type { DuelInvite, PlayerClass } from '../../shared/api';
 
 interface ApiError {
@@ -13,8 +14,11 @@ async function parseOrThrow<T>(res: Response): Promise<T> {
   return data as T;
 }
 
+function userChannel(userId: string): string {
+  return `user_${userId}_notifications`;
+}
+
 const CLASSES: PlayerClass[] = ['RANGER', 'MENDER', 'WARDER', 'WEAVER'];
-const INVITE_POLL_INTERVAL_MS = 3000;
 
 export interface OpponentEntry {
   userId: string;
@@ -25,12 +29,14 @@ export interface OpponentEntry {
 export function useDuel(userId: string | null, perClassLimit = 5) {
   const [opponents, setOpponents] = useState<OpponentEntry[]>([]);
   const [loadingOpponents, setLoadingOpponents] = useState(true);
-
   const [incoming, setIncoming] = useState<DuelInvite[]>([]);
   const [outgoing, setOutgoing] = useState<DuelInvite[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const inviteTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Track realtime connection for cleanup
+  const channelRef = useRef<string | null>(null);
+
+  // Opponents
   const refreshOpponents = useCallback(async () => {
     if (!userId) return;
     try {
@@ -71,12 +77,7 @@ export function useDuel(userId: string | null, perClassLimit = 5) {
     }
   }, [userId, perClassLimit]);
 
-  useEffect(() => {
-    void refreshOpponents();
-    // Intentionally NOT on the invite poll timer — see file header comment.
-  }, [refreshOpponents]);
-
-  // ── Invites — polled on their own fast interval, opponents untouched ───────
+  // Invites
   const refreshInvites = useCallback(async () => {
     if (!userId) return;
     try {
@@ -90,49 +91,140 @@ export function useDuel(userId: string | null, perClassLimit = 5) {
       setOutgoing(out.invites);
       setError(null);
     } catch (err) {
-      console.error('Failed to poll invites:', err);
+      console.error('Failed to load invites:', err);
       setError(err instanceof Error ? err.message : 'Failed to load invites');
     }
   }, [userId]);
 
+  // Realtime connection
   useEffect(() => {
-    if (!userId) return;
-    void refreshInvites();
-    inviteTimerRef.current = setInterval(
-      refreshInvites,
-      INVITE_POLL_INTERVAL_MS
-    );
+    if (!userId) {
+      if (channelRef.current) {
+        disconnectRealtime(channelRef.current);
+        channelRef.current = null;
+      }
+      return;
+    }
+
+    const channel = userChannel(userId);
+    channelRef.current = channel;
+
+    console.log(`[Duel] Connecting to ${channel}`);
+
+    try {
+      connectRealtime({
+        channel,
+        onMessage: (message: unknown) => {
+          console.log('[Duel] Realtime message', message);
+
+          const event = message as {
+            type?: string;
+          };
+
+          // Only refresh duel invites for duel-related events
+          switch (event.type) {
+            case 'duel_invite':
+            case 'duel_accepted':
+            case 'duel_declined':
+            case 'duel_cancelled':
+              console.log(`[Duel] Refreshing invites due to ${event.type}`);
+              void refreshInvites();
+              break;
+
+            default:
+              break;
+          }
+        },
+      });
+
+      console.log(`[Duel] Connected to ${channel}`);
+    } catch (err) {
+      console.error('[Duel] Failed realtime connection', err);
+    }
+
     return () => {
-      if (inviteTimerRef.current) clearInterval(inviteTimerRef.current);
+      console.log(`[Duel] Disconnecting from ${channel}`);
+      disconnectRealtime(channel);
+      if (channelRef.current === channel) {
+        channelRef.current = null;
+      }
     };
   }, [userId, refreshInvites]);
 
+  // Initial load
+  useEffect(() => {
+    void refreshOpponents();
+  }, [refreshOpponents]);
+
+  useEffect(() => {
+    void refreshInvites();
+  }, [refreshInvites]);
+
+  // polling I don't know but I don't like it
+  // useEffect(() => {
+  //   if (!userId) return;
+
+  //   const interval = setInterval(() => {
+  //     void refreshInvites();
+  //   }, 30000); // Every 30 seconds
+
+  //   return () => clearInterval(interval);
+  // }, [userId, refreshInvites]);
+
+  // Actions
   const sendInvite = useCallback(
     async (toUserId: string) => {
-      if (!userId) return;
-      const res = await fetch('/api/duel/invite', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fromUserId: userId, toUserId }),
-      });
-      const invite = await parseOrThrow<DuelInvite>(res);
-      setOutgoing((prev) => [...prev, invite]);
-      return invite;
+      if (!userId) {
+        console.warn('sendInvite aborted: no userId');
+        return null;
+      }
+
+      console.debug('sendInvite: attempting', { fromUserId: userId, toUserId });
+
+      try {
+        const res = await fetch('/api/duel/invite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fromUserId: userId, toUserId }),
+        });
+
+        console.debug('sendInvite: response status', res.status);
+
+        const invite = await parseOrThrow<DuelInvite>(res);
+        // Optimistic update
+        setOutgoing((prev) => [...prev, invite]);
+        console.info('sendInvite: success', invite.inviteId);
+        return invite;
+      } catch (err) {
+        console.error('sendInvite: failed', err);
+        setError(err instanceof Error ? err.message : String(err));
+        void refreshInvites();
+        throw err;
+      }
     },
-    [userId]
+    [refreshInvites, userId]
   );
 
   const acceptInvite = useCallback(
     async (inviteId: string) => {
       if (!userId) return null;
-      const res = await fetch(`/api/duel/invite/${inviteId}/accept`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      });
-      const result = await parseOrThrow<{ duelId: string }>(res);
-      await refreshInvites();
-      return result;
+      try {
+        const res = await fetch(`/api/duel/invite/${inviteId}/accept`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId }),
+        });
+        const result = await parseOrThrow<{ duelId: string }>(res);
+        // Optimistic update - remove from incoming
+        setIncoming((prev) => prev.filter((inv) => inv.inviteId !== inviteId));
+        // Real-time will trigger refresh to confirm
+        return result;
+      } catch (err) {
+        console.error('Failed to accept invite:', err);
+        // Refresh to correct state
+        void refreshInvites();
+        throw err;
+      }
     },
     [userId, refreshInvites]
   );
@@ -140,12 +232,19 @@ export function useDuel(userId: string | null, perClassLimit = 5) {
   const declineInvite = useCallback(
     async (inviteId: string) => {
       if (!userId) return;
-      await fetch(`/api/duel/invite/${inviteId}/decline`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      });
-      await refreshInvites();
+      try {
+        await fetch(`/api/duel/invite/${inviteId}/decline`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId }),
+        });
+        // Optimistic update
+        setIncoming((prev) => prev.filter((inv) => inv.inviteId !== inviteId));
+      } catch (err) {
+        console.error('Failed to decline invite:', err);
+        void refreshInvites();
+        throw err;
+      }
     },
     [userId, refreshInvites]
   );
@@ -153,12 +252,19 @@ export function useDuel(userId: string | null, perClassLimit = 5) {
   const cancelInvite = useCallback(
     async (inviteId: string) => {
       if (!userId) return;
-      await fetch(`/api/duel/invite/${inviteId}/cancel`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      });
-      await refreshInvites();
+      try {
+        await fetch(`/api/duel/invite/${inviteId}/cancel`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId }),
+        });
+        // Optimistic update
+        setOutgoing((prev) => prev.filter((inv) => inv.inviteId !== inviteId));
+      } catch (err) {
+        console.error('Failed to cancel invite:', err);
+        void refreshInvites();
+        throw err;
+      }
     },
     [userId, refreshInvites]
   );
@@ -169,6 +275,7 @@ export function useDuel(userId: string | null, perClassLimit = 5) {
     refreshOpponents,
     incoming,
     outgoing,
+    refreshInvites,
     error,
     sendInvite,
     acceptInvite,

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// src/server/core/guild.service.ts
 import type { RedisClient } from '@devvit/web/server';
 import type { Guild, GuildStatus, PlayerClass } from '../../shared/api';
 import { GUILD_MULTIPLIERS } from '../../shared/api';
@@ -116,18 +114,22 @@ export async function getGuildStatus(
   }
 
   const members = await redis.zRange(`guild:${guildId}:members`, 0, -1);
-
   const memberIds = members.map((m: any) =>
     typeof m === 'string' ? m : m.member
   );
 
   const classesPresent = new Set<PlayerClass>();
   let totalPoints = 0;
+  const memberObjects: { id: string; name: string }[] = [];
 
   for (const memberId of memberIds) {
     const member = await redis.hGetAll(`player:${memberId}`);
     if (member?.class) classesPresent.add(member.class as PlayerClass);
     totalPoints += Number.parseInt(member?.points || '0');
+    memberObjects.push({
+      id: memberId,
+      name: member?.username || memberId,
+    });
   }
 
   const completedCount = ALL_CLASSES.filter((c) =>
@@ -150,7 +152,7 @@ export async function getGuildStatus(
       name: guild.name!,
       founderId: guild.founderId!,
     },
-    members: memberIds,
+    members: memberObjects,
     classesPresent: [...classesPresent],
     totalPoints,
     multiplier,
@@ -159,15 +161,21 @@ export async function getGuildStatus(
   };
 }
 
-// list guild for (for join/browse screen)
+// list guild for
 export async function listGuilds(
   redis: RedisClient,
   limit: number = 20
-): Promise<{ guildId: string; score: number }[]> {
+): Promise<{ guildId: string; name: string; score: number }[]> {
   const results = await redis.zRange('leaderboard:guilds', 0, limit - 1, {
     by: 'rank',
     reverse: true,
   });
 
-  return results.map((r: any) => ({ guildId: r.member, score: r.score }));
+  const guilds = [];
+  for (const r of results) {
+    const guildId = r.member;
+    const name = await redis.hGet(`guild:${guildId}`, 'name');
+    guilds.push({ guildId, name: name || 'Unknown', score: r.score });
+  }
+  return guilds;
 }

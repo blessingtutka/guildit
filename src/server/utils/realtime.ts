@@ -10,12 +10,15 @@ export async function publishToUser(
   userId: string,
   event: JsonValue
 ): Promise<void> {
+  const channel = userChannel(userId);
+
+  console.log(`[Realtime] Sending to ${channel}`);
+
   try {
-    await realtime.send(userChannel(userId), event);
+    await realtime.send(channel, event);
+
+    console.log(`[Realtime] Sent to ${channel}`);
   } catch (err) {
-    console.warn(
-      '[realtime] publishToUser failed, continuing without push:',
-      err
-    );
+    console.error(`[Realtime] Failed sending to ${channel}`, err);
   }
 }

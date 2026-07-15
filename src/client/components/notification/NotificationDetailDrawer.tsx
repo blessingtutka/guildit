@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Drawer,
   DrawerContent,
@@ -17,6 +16,8 @@ import {
   Trophy,
   Star,
   Shield,
+  Coins,
+  Zap,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { timeAgo } from '../../lib/time-utils';
@@ -42,6 +43,7 @@ const TYPE_LABEL: Record<NotificationType, string> = {
   guild_joined: 'Guild Joined',
   level_up: 'Level Up',
   raid_result: 'Raid Result',
+  points_earned: 'Points Earned',
 };
 
 const STATUS_LABEL: Record<NotificationType, string> = {
@@ -52,6 +54,7 @@ const STATUS_LABEL: Record<NotificationType, string> = {
   guild_joined: 'Joined',
   level_up: 'Completed',
   raid_result: 'Completed',
+  points_earned: 'Earned',
 };
 
 export function NotificationDetailDrawer({
@@ -61,7 +64,7 @@ export function NotificationDetailDrawer({
   onClose,
   onDelete,
   userId,
-}: NotificationDetailDrawerProps & { userId?: string | null }) {
+}: NotificationDetailDrawerProps) {
   const navigate = useNavigate();
   if (!notification) return null;
 
@@ -74,40 +77,50 @@ export function NotificationDetailDrawer({
     avatarColor,
     createdAt,
     read,
+    payload,
   } = notification;
 
   const getIcon = () => {
+    const className = 'size-5';
     switch (type) {
       case 'duel_invite':
-        return <Swords className="size-6" />;
+        return <Swords className={className} />;
       case 'duel_accepted':
-        return <Check className="size-6" />;
+        return <Check className={className} />;
       case 'duel_declined':
-        return <X className="size-6" />;
+        return <X className={className} />;
       case 'guild_invite':
       case 'guild_joined':
-        return <Users className="size-6" />;
+        return <Users className={className} />;
       case 'level_up':
-        return <Star className="size-6" />;
+        return <Star className={className} />;
       case 'raid_result':
-        return <Trophy className="size-6" />;
+        return <Trophy className={className} />;
+      case 'points_earned':
+        return <Coins className={className} />;
       default:
-        return <Shield className="size-6" />;
+        return <Shield className={className} />;
     }
+  };
+
+  const getPointsEarned = () => {
+    if (type !== 'points_earned') return null;
+    const points = (payload as any)?.points ?? (payload as any)?.amount ?? 0;
+    return points;
   };
 
   const renderActions = () => {
     switch (type) {
       case 'duel_invite':
         return (
-          <>
+          <div className="flex gap-2 w-full">
             <Button
               onClick={async () => {
                 if (!userId) return;
                 try {
-                  const payload = notification.payload as any;
                   const inviteId =
-                    payload?.inviteId ?? payload?.invite?.inviteId;
+                    (payload as any)?.inviteId ??
+                    (payload as any)?.invite?.inviteId;
                   if (!inviteId) return onClose();
 
                   const res = await fetch(
@@ -129,20 +142,20 @@ export function NotificationDetailDrawer({
                 }
               }}
               disabled={busy}
-              className="flex-1 font-bold text-white flex items-center justify-center gap-2"
+              className="flex-1 h-9 text-sm font-medium text-white flex items-center justify-center gap-1.5"
               style={{ backgroundColor: avatarColor, border: 'none' }}
             >
-              <Check className="size-4" />
-              {busy ? 'Accepting...' : 'Accept Challenge'}
+              <Check className="size-3.5" />
+              {busy ? 'Accepting...' : 'Accept'}
             </Button>
             <Button
               variant="outline"
               onClick={async () => {
                 if (!userId) return;
                 try {
-                  const payload = notification.payload as any;
                   const inviteId =
-                    payload?.inviteId ?? payload?.invite?.inviteId;
+                    (payload as any)?.inviteId ??
+                    (payload as any)?.invite?.inviteId;
                   if (!inviteId) return onClose();
 
                   await fetch(`/api/duel/invite/${inviteId}/decline`, {
@@ -156,140 +169,202 @@ export function NotificationDetailDrawer({
                 }
               }}
               disabled={busy}
-              className="flex-1 flex items-center justify-center gap-2"
+              className="flex-1 h-9 text-sm flex items-center justify-center gap-1.5"
             >
-              <X className="size-4" />
+              <X className="size-3.5" />
               Decline
             </Button>
-          </>
+          </div>
         );
+
       case 'duel_accepted':
         return (
           <Button
             onClick={() => {
-              // Navigate to duel
+              const duelId = (payload as any)?.duelId ?? null;
+              if (duelId) {
+                void navigate(`/duel?open=${encodeURIComponent(duelId)}`);
+              }
               onClose();
             }}
-            className="flex-1 font-bold"
+            className="w-full h-9 text-sm font-medium flex items-center justify-center gap-1.5"
+            style={{ backgroundColor: avatarColor, border: 'none' }}
           >
-            <Swords className="size-4 mr-2" />
+            <Swords className="size-3.5" />
             View Duel
           </Button>
         );
+
       case 'duel_declined':
         return (
           <Button
             variant="outline"
             onClick={() => onDelete(id)}
-            className="flex-1 flex items-center justify-center gap-2"
+            className="w-full h-9 text-sm flex items-center justify-center gap-1.5"
           >
-            <Ban className="size-4" />
+            <Ban className="size-3.5" />
             Dismiss
           </Button>
         );
-      case 'guild_invite':
-        return (
-          <>
-            <Button
-              onClick={() => {
-                // Handle accept
-                onClose();
-              }}
-              className="flex-1 font-bold"
-            >
-              <Check className="size-4 mr-2" />
-              Accept Invite
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                // Handle decline
-                onClose();
-              }}
-              className="flex-1 flex items-center justify-center gap-2"
-            >
-              <X className="size-4" />
-              Decline
-            </Button>
-          </>
-        );
-      case 'guild_joined':
+
+      case 'points_earned':
         return (
           <Button
-            onClick={() => {
-              // Navigate to guild
-              onClose();
-            }}
-            className="flex-1 font-bold"
+            onClick={onClose}
+            className="w-full h-9 text-sm font-medium flex items-center justify-center gap-1.5"
+            style={{ backgroundColor: avatarColor, border: 'none' }}
           >
-            <Users className="size-4 mr-2" />
-            View Guild
-          </Button>
-        );
-      case 'level_up':
-        return (
-          <Button onClick={onClose} className="flex-1 font-bold">
-            <Star className="size-4 mr-2" />
+            <Zap className="size-3.5" />
             Continue
           </Button>
         );
+
+      case 'level_up':
+        return (
+          <Button
+            onClick={onClose}
+            className="w-full h-9 text-sm font-medium flex items-center justify-center gap-1.5"
+            style={{ backgroundColor: avatarColor, border: 'none' }}
+          >
+            <Star className="size-3.5" />
+            Continue
+          </Button>
+        );
+
       case 'raid_result':
         return (
           <Button
             onClick={() => {
-              // Navigate to raid report
+              const raidId = (payload as any)?.raidId ?? null;
+              if (raidId) {
+                void navigate(`/raid/${raidId}`);
+              }
               onClose();
             }}
-            className="flex-1 font-bold"
+            className="w-full h-9 text-sm font-medium flex items-center justify-center gap-1.5"
+            style={{ backgroundColor: avatarColor, border: 'none' }}
           >
-            <Trophy className="size-4 mr-2" />
+            <Trophy className="size-3.5" />
             View Report
           </Button>
         );
+
+      case 'guild_invite':
+        return (
+          <div className="flex gap-2 w-full">
+            <Button
+              onClick={() => {
+                const guildId = (payload as any)?.guildId ?? null;
+                if (guildId) {
+                  void navigate(`/guild/${guildId}`);
+                }
+                onClose();
+              }}
+              disabled={busy}
+              className="flex-1 h-9 text-sm font-medium text-white flex items-center justify-center gap-1.5"
+              style={{ backgroundColor: avatarColor, border: 'none' }}
+            >
+              <Check className="size-3.5" />
+              Accept
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                onClose();
+              }}
+              disabled={busy}
+              className="flex-1 h-9 text-sm flex items-center justify-center gap-1.5"
+            >
+              <X className="size-3.5" />
+              Decline
+            </Button>
+          </div>
+        );
+
+      case 'guild_joined':
+        return (
+          <Button
+            onClick={() => {
+              const guildId = (payload as any)?.guildId ?? null;
+              if (guildId) {
+                void navigate(`/guild/${guildId}`);
+              }
+              onClose();
+            }}
+            className="w-full h-9 text-sm font-medium flex items-center justify-center gap-1.5"
+            style={{ backgroundColor: avatarColor, border: 'none' }}
+          >
+            <Users className="size-3.5" />
+            View Guild
+          </Button>
+        );
+
       default:
         return (
           <Button
             variant="outline"
             onClick={() => onDelete(id)}
-            className="flex-1 flex items-center justify-center gap-2"
+            className="w-full h-9 text-sm flex items-center justify-center gap-1.5"
           >
-            <Ban className="size-4" />
-            Dismiss
+            <Ban className="size-3.5" />
+            Dismiss This
           </Button>
         );
     }
   };
 
+  const pointsEarned = getPointsEarned();
+  const Icon = getIcon();
+
   return (
     <Drawer open={open} onOpenChange={(v) => !v && onClose()}>
       <DrawerContent>
-        <DrawerHeader className="text-center">
-          <DrawerTitle className="font-display tracking-widest text-lg">
+        <DrawerHeader className="text-center pb-2">
+          <DrawerTitle className="font-display tracking-widest text-base">
             {title}
           </DrawerTitle>
-          <DrawerDescription className="text-xs">
+          <DrawerDescription className="text-xs text-muted-foreground">
             {read ? 'Read' : 'Unread'} · {STATUS_LABEL[type] || type}
           </DrawerDescription>
         </DrawerHeader>
 
-        <div className="px-6 py-4 flex flex-col items-center gap-3">
-          <div
-            className="size-16 rounded-full flex items-center justify-center font-bold text-xl"
-            style={{ backgroundColor: `${avatarColor}20`, color: avatarColor }}
-          >
-            {avatarInitial?.toUpperCase() ?? '?'}
+        <div className="px-6 py-3 flex flex-col items-center gap-2.5">
+          {/* Avatar with initial and icon overlay */}
+          <div className="relative">
+            <div
+              className="size-14 rounded-full flex items-center justify-center font-bold text-xl"
+              style={{
+                backgroundColor: `${avatarColor}20`,
+                color: avatarColor,
+              }}
+            >
+              {avatarInitial?.toUpperCase() ?? '?'}
+            </div>
+            {/* Icon badge overlay */}
+            <div
+              className="absolute -bottom-1 -right-1 size-8 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: avatarColor }}
+            >
+              <div className="text-white size-4">{Icon}</div>
+            </div>
           </div>
+
           <div className="text-center">
-            <p className="font-semibold text-base text-foreground">{title}</p>
+            <p className="font-semibold text-sm text-foreground">{title}</p>
             {subtitle && (
-              <p className="text-sm text-muted-foreground">{subtitle}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
+            )}
+            {type === 'points_earned' && pointsEarned !== null && (
+              <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                <Coins className="size-3.5" />+{pointsEarned} points
+              </div>
             )}
           </div>
         </div>
 
         <div className="px-6 pb-2">
-          <div className="border-t border-border pt-4">
-            <div className="space-y-2 text-sm">
+          <div className="border-t border-border pt-3">
+            <div className="space-y-1.5 text-xs">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Received</span>
                 <span>{new Date(createdAt).toLocaleString()}</span>
@@ -318,16 +393,16 @@ export function NotificationDetailDrawer({
           </div>
         </div>
 
-        <DrawerFooter className="pt-2">
+        <DrawerFooter className="pt-2 pb-3">
           {renderActions()}
           <Button
             variant="ghost"
             onClick={() => onDelete(id)}
             disabled={busy}
-            className="w-full text-muted-foreground hover:text-destructive"
+            className="w-full h-8 text-xs text-muted-foreground hover:text-destructive"
           >
-            <Ban className="size-4 mr-2" />
-            Remove Notification
+            <Ban className="size-3.5 mr-1.5" />
+            Remove
           </Button>
         </DrawerFooter>
       </DrawerContent>

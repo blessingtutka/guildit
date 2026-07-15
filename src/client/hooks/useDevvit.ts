@@ -4,19 +4,54 @@ import type {
   WebviewToDevvitMessage,
 } from '../../shared/api';
 
-// Send TO Devvit server
+const TO_HOST_PREFIX = '__GUILDIT_WEBVIEW__';
+const FROM_HOST_PREFIX = '__GUILDIT_HOST__';
+
+// Send TO Devvit server (webview → host)
 export function sendToDevvit(msg: WebviewToDevvitMessage) {
-  console.log('➡️ Sending to Devvit:', msg);
-  window.parent.postMessage(msg, '*');
+  const payload = TO_HOST_PREFIX + JSON.stringify(msg);
+
+  window.parent.postMessage(payload, '*');
 }
 
-// Listen for messages FROM Devvit server
+// Safe type guard
+function isObjectMessage(data: unknown): data is Record<string, unknown> {
+  return typeof data === 'object' && data !== null;
+}
+
 export function useDevvit(onMessage: (msg: DevvitToWebviewMessage) => void) {
   const stableHandler = useCallback(
     (e: MessageEvent) => {
-      if (e.data && typeof e.data === 'object' && 'type' in e.data) {
-        console.log('⬅️ Received Devvit message:', e.data);
-        onMessage(e.data as DevvitToWebviewMessage);
+      const d = e.data;
+      if (!d) return;
+
+      // 1. STRING MESSAGES (host → webview)
+      if (typeof d === 'string') {
+        if (d.startsWith(FROM_HOST_PREFIX)) {
+          try {
+            const parsed = JSON.parse(d.slice(FROM_HOST_PREFIX.length));
+            console.log('⬅️ Devvit message (string):', parsed);
+            onMessage(parsed as DevvitToWebviewMessage);
+          } catch (err) {
+            console.warn('Failed to parse Devvit message:', err);
+          }
+        }
+        return;
+      }
+
+      // 2. OBJECT MESSAGES (host → webview)
+      if (isObjectMessage(d)) {
+        if ('__guildit_host' in d && 'message' in d) {
+          console.log('⬅️ Devvit message (wrapped):', d.message);
+          onMessage(d.message as DevvitToWebviewMessage);
+          return;
+        }
+
+        if ('type' in d) {
+          console.log('⬅️ Devvit message (object):', d);
+          onMessage(d as DevvitToWebviewMessage);
+          return;
+        }
       }
     },
     [onMessage]
@@ -25,7 +60,7 @@ export function useDevvit(onMessage: (msg: DevvitToWebviewMessage) => void) {
   useEffect(() => {
     window.addEventListener('message', stableHandler);
 
-    console.log('➡️ Sending READY to Devvit');
+    // notify host webview is ready
     sendToDevvit({ type: 'READY' });
 
     return () => window.removeEventListener('message', stableHandler);

@@ -43,14 +43,13 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
     loadingOpponents,
     incoming,
     outgoing,
+    refreshInvites,
     error,
     sendInvite,
     acceptInvite,
     declineInvite,
     cancelInvite,
   } = useDuel(player.userId);
-
-  const { notifications, markAsRead } = useNotifications(player.userId);
 
   const openDuel = useCallback(async (id: string) => {
     const res = await fetch(`/api/duel/${id}`);
@@ -61,6 +60,23 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
     setView('playing');
   }, []);
 
+  const { notifications, markAsRead } = useNotifications(
+    player.userId,
+    (notification) => {
+      if (
+        notification.type === 'duel_invite' ||
+        notification.type === 'duel_accepted' ||
+        notification.type === 'duel_declined'
+      ) {
+        void refreshInvites();
+      }
+      if (notification.type === 'duel_accepted') {
+        const payload = notification.payload as { duelId?: string };
+        if (payload.duelId) void openDuel(payload.duelId);
+      }
+    }
+  );
+
   // If a URL param requests opening a duel, handle it.
   const location = useLocation();
   useEffect(() => {
@@ -68,22 +84,12 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
     const open = params.get('open');
     if (open && open !== openDuelId) {
       void openDuel(open);
-      // remove the param from the URL without reloading
       params.delete('open');
       const search = params.toString();
       const newUrl = `${location.pathname}${search ? `?${search}` : ''}`;
       globalThis.history.replaceState({}, '', newUrl);
     }
   }, [location.search, openDuel, openDuelId]);
-
-  useEffect(() => {
-    const accepted = [...incoming, ...outgoing].find(
-      (i) => i.status === 'accepted' && i.duelId
-    );
-    if (accepted?.duelId && accepted.duelId !== openDuelId) {
-      void openDuel(accepted.duelId);
-    }
-  }, [incoming, outgoing, openDuelId, openDuel]);
 
   const handleHeaderBack = useCallback(() => {
     const exit = onBack ?? onExit;
@@ -127,10 +133,49 @@ export function DuelPage({ player, onBack, onExit }: DuelPageProps) {
     if (!previewOpponent) return;
     setBusyId(previewOpponent.userId);
     try {
+      // Check for an already accepted invite (incoming or outgoing)
+      const acceptedInvite =
+        incoming.find(
+          (i) =>
+            i.fromUserId === previewOpponent.userId &&
+            i.status === 'accepted' &&
+            i.duelId
+        ) ||
+        outgoing.find(
+          (i) =>
+            i.toUserId === previewOpponent.userId &&
+            i.status === 'accepted' &&
+            i.duelId
+        );
+
+      if (acceptedInvite) {
+        await openDuel(acceptedInvite.duelId!);
+        return;
+      }
+
+      const incomingPending = incoming.find(
+        (i) => i.fromUserId === previewOpponent.userId && i.status === 'pending'
+      );
+      if (incomingPending) {
+        const result = await acceptInvite(incomingPending.inviteId);
+        if (result?.duelId) {
+          await openDuel(result.duelId);
+        }
+        return;
+      }
+
+      const outgoingPending = outgoing.find(
+        (i) => i.toUserId === previewOpponent.userId && i.status === 'pending'
+      );
+      if (outgoingPending) {
+        setView('invitations');
+        return;
+      }
+
       await sendInvite(previewOpponent.userId);
       setView('invitations');
     } catch (err) {
-      console.error('Failed to send invite:', err);
+      console.error('Failed to start duel:', err);
     } finally {
       setBusyId(null);
     }
@@ -292,10 +337,7 @@ function DuelReplay({
       onSelectNotification={onSelectNotification}
       onViewAllNotifications={onViewAllNotifications}
     >
-      <div
-        ref={containerRef}
-        className="flex h-full min-h-full w-full items-center justify-center"
-      />
+      <div ref={containerRef} className="w-full h-full flex-1" />
     </PageShell>
   );
 }
